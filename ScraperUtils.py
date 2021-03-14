@@ -1,5 +1,6 @@
 from pybaseball import playerid_lookup
-import csv
+import csv, urllib.parse as urlparse, requests
+from urllib.parse import parse_qs
 
 class ScraperUtils:
     GET_POS_URL = "https://www.fangraphs.com/players/{}/{}/stats?"
@@ -39,11 +40,16 @@ class ScraperUtils:
             #print(p)
             return playerId
 
-    def getPlayerPosition(fullName, playerId):
+    def getPlayerPosition(self, fullName, playerId):
         formattedName = fullName.replace(' ', '-')
         formattedName = formattedName.lower()
         url = self.GET_POS_URL.format(formattedName, playerid_lookup)
-        #position = ...
+        page = requests.get(url)
+        newUrl = page.url
+        print(newUrl)
+        parsed = urlparse.urlparse(newUrl)
+        position = parse_qs(parsed.query)["position"]
+        return position
 
     def checkForJr(self, string):
         temp = string

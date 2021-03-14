@@ -1,8 +1,8 @@
-import ScraperUtils, requests, pandas as pd, json
+import ScraperUtils
 
-STAT_URL = "https://www.fangraphs.com/players/{}/{}/stats?"
-url = STAT_URL.format("tommy-la-stella", 12371)
-page = requests.get(url)
-data = page.url
-#data = json.loads(page.text)
-print(data)
+name = "Tommy La Stella"
+pid = 12371
+s = ScraperUtils.ScraperUtils()
+
+position = s.getPlayerPosition(name, pid)
+print(position)
