@@ -1,0 +1,5 @@
+In a Chadwick Register lookup:
+    - If a player name has middle name, format {first + middle}, {last}
+        - Ex. {Hyun Jin}, {Ryu}
+    -If player name has period, format {$. $.}
+        - Ex. "j. t."
