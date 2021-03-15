@@ -43,7 +43,7 @@ class ScraperUtils:
     def getPlayerPosition(self, fullName, playerId):
         formattedName = fullName.replace(' ', '-')
         formattedName = formattedName.lower()
-        url = self.GET_POS_URL.format(formattedName, playerid_lookup)
+        url = self.GET_POS_URL.format(formattedName, playerId)
         page = requests.get(url)
         newUrl = page.url
         print(newUrl)

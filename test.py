@@ -5,4 +5,4 @@ pid = 12371
 s = ScraperUtils.ScraperUtils()
 
 position = s.getPlayerPosition(name, pid)
-print(position)
+print(position[0])
