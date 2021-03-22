@@ -34,3 +34,11 @@ KeyError(0)
 Error getting stats for Alek Manoah. key = wOBA
 KeyError(0)
 Error getting stats for Kohei Arihara. key = wOBA
+ZeroDivisionError('float division by zero')
+Error getting stats for Carlos Rodon. key = K%
+ZeroDivisionError('float division by zero')
+Error getting stats for Bryan Abreu. key = K%
+ZeroDivisionError('float division by zero')
+Error getting stats for Bryan Abreu. key = K%
+ZeroDivisionError('float division by zero')
+Error getting stats for Bryan Abreu. key = K%

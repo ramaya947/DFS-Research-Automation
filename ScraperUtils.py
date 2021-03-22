@@ -37,18 +37,21 @@ class ScraperUtils:
             playerId = None
             p = playerid_lookup(last)
             print(e)
-            #print(p)
             return playerId
 
     def getPlayerPosition(self, fullName, playerId):
         formattedName = fullName.replace(' ', '-')
+        formattedName = formattedName.replace('.', '')
         formattedName = formattedName.lower()
         url = self.GET_POS_URL.format(formattedName, playerId)
         page = requests.get(url)
         newUrl = page.url
-        print(newUrl)
         parsed = urlparse.urlparse(newUrl)
-        position = parse_qs(parsed.query)["position"]
+        try:
+            position = parse_qs(parsed.query)["position"]
+        except Exception as e:
+            position = None
+            print("Couldn't get position for {}, ERROR: {}".format(fullName, str(e)))
         return position
 
     def checkForJr(self, string):
@@ -60,7 +63,8 @@ class ScraperUtils:
         return temp
 
     def checkInCsvRecords(self, fullName, team):
-        file = open("MissingPlayerIds.csv")
+        file = open("MissingPlayerIds.csv", "w")
+        #output 
         csv_reader = csv.reader(file, delimiter=',')
         line_count = 0
         for row in csv_reader:

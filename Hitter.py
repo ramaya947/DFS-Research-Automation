@@ -4,12 +4,13 @@ import requests, json
 import ScraperUtils
 
 class Hitter:
-    STAT_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position=P&season={}&split=&z=1614959387TEAM_CHANGE"
+    STAT_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
     fullName = ""
     firstName = ""
     lastName = ""
     playerId = None
     team = ""
+    position = ""
     rawStatData = None
     statYear = None
     oppPitcher = None
@@ -26,7 +27,8 @@ class Hitter:
         self.fullName = self.scraperUtil.checkForJr(name)
         self.breakUpName(self.fullName)
         self.playerId = self.scraperUtil.getFangraphsId(self.preFormattedName, self.team, self.lastName, self.firstName, self.statYear)
-        if self.playerId != None:
+        if self.playerId != None and self.playerId != -1:
+            self.position = self.scraperUtil.getPlayerPosition(self.fullName, self.playerId)
             #self.getHitterData()
             pass
 

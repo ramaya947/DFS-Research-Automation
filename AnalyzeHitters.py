@@ -30,7 +30,8 @@ class AnalyzeHitters:
 
                 if appearances != 0:
                     hitter = Hitter.Hitter(name, team, pitcher)
-                    self.hitters.append(hitter)
+                    if hitter.playerId != None or hitter.playerId != -1:
+                        self.hitters.append(hitter)
 
     def formatTeamName(self, teamName):
 

@@ -4,7 +4,7 @@ from pybaseball import cache
 import Pitcher
 import TeamAverages
 
-games = mlbgame.day(2021, 3, 14)
+games = mlbgame.day(2021, 3, 17)
 
 cache.enable()
 
