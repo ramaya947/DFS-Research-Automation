@@ -1,6 +1,9 @@
-import statsapi, datetime, PitcherClass, requests, json
+import statsapi, datetime, PitcherClass, requests, json, TeamAverages, LeagueAverages
+from pybaseball import playerid_reverse_lookup
 
-PITCHER_SPLITS_URL = "https://statsapi.mlb.com/api/v1/people/{}/stats?stats=statSplits&leagueListId=mlb_hist&group=pitching&gameType=S&sitCodes=vl,vr&season={}"
+PITCHER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position=P&season={}&split=&z=1614959387TEAM_CHANGE"
+teamAvg = TeamAverages.TeamAverages()
+leagueAvg = LeagueAverages.LeagueAverages()
 
 #Get games for either today or a specified day
 def getDaysGames(date = None):
@@ -48,20 +51,24 @@ def getGamesProbablePitchers(game, pitchers):
     for p in homeRoster:
         if pitcherHome in p["person"]["fullName"]:
             print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
-            pitcher = PitcherClass.PitcherClass(p)
-            pitcher.stats = getMostRecentStats(pitcher.pid)
+            pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg)
+            pitcher.fid = getFangraphsId(pitcher)
+            pitcher.stats = getMostRecentStats(pitcher.fid)
             pitcher.setOtherInformation(setOtherInfo(game, "home"))
             pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
-            if pitcher.stats != None:
+            if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                pitcher.assessSelf()
                 pitchers.append(pitcher)
     for p in awayRoster:
         if pitcherHome in p["person"]["fullName"]:
             print("Found {} with pid: {}".format(pitcherAway, p["person"]["id"]))
-            pitcher = PitcherClass.PitcherClass(p)
-            pitcher.stats = getMostRecentStats(pitcher.pid)
+            pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg)
+            pitcher.fid = getFangraphsId(pitcher)
+            pitcher.stats = getMostRecentStats(pitcher.fid)
             pitcher.setOtherInformation(setOtherInfo(game, "away"))
             pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
             if pitcher.stats != None:
+                pitcher.assessSelf()
                 pitchers.append(pitcher)
 
 def setOtherInfo(data, location):
@@ -82,6 +89,17 @@ def getPitcherHandedness(data):
     
     return handedness
 
+def getFangraphsId(pitcher):
+    data = playerid_reverse_lookup([pitcher.pid], "mlbam")
+    
+    fid = None
+    try:
+        fid = data.at[0, "key_fangraphs"]
+    except:
+        print("Couldn't get fangraphs ID for {}".format(pitcher.name))
+
+    return fid
+
 def getMostRecentStats(pid):
     d = datetime.datetime.now()
     year = d.year
@@ -90,22 +108,23 @@ def getMostRecentStats(pid):
     offset = 0
     while (offset <= 2 and statsL == None and statsR == None):
         adjustedYear = year - offset
-        url = PITCHER_SPLITS_URL.format(pid, adjustedYear)
+        url = PITCHER_STATS_URL.format(pid, adjustedYear)
         data = requests.get(url)
         data = json.loads(data.text)
-        data = data['stats'][0]['splits']
+        #print("Data from {}".format(url))
+        #print(data)
 
         if (len(data) == 0):
             offset += 1
             continue
 
         for obj in data:
-            if obj['split']['code'] == "vl":
-                statsL = obj['stat']
-                statsL['season'] = obj['season']
-            elif obj['split']['code'] == "vr":
-                statsL = obj['stat']
-                statsL['season'] = obj['season']
+            if obj['Split'] == "vs L":
+                statsL = obj
+                statsL['season'] = obj['Season']
+            elif obj['Split'] == "vs R":
+                statsR = obj
+                statsR['season'] = obj['Season']
 
     stats = { 'vsL': statsL, 'vsR': statsR }
     return stats
