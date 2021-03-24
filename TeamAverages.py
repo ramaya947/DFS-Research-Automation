@@ -26,7 +26,7 @@ class TeamAverages:
         "New York Mets": "NYM",
         "Washington Nationals": "WSN",
         "Philadelphia Phillies": "PHI",
-        "Milwuakee Brewers": "MIL",
+        "Milwaukee Brewers": "MIL",
         "St. Louis Cardinals": "STL",
         "Chicago Cubs": "CHC",
         "Pittsburgh Pirates": "PIT",

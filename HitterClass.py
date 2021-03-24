@@ -1,41 +1,27 @@
-class PitcherClass:
+class HitterClass:
     pid = None
     fid = None
     name = None
     position = None
     handedness = None
-    oppTeamId = None
-    oppTeamName = None
-    oppTeamRoster = None
+    oppPitcher = None
     teamId = None
     teamName = None
     stadiumId = None
     stadiumName = None
     stats = None
     overall = None
-    ratingL = None
-    ratingR = None
-    teamAvgs = None
     leagueAvgs = None
-    pitchers = None
-    gameInfo = None
 
-    def __init__(self, data, teamAvgs, leagueAvgs, oppRoster, gameInfo):
+    def __init__(self, data, leagueAvgs):
         self.pid = data['person']['id']
         self.name = data['person']['fullName']
         self.position = data['position']['abbreviation']
-        self.teamAvgs = teamAvgs
         self.leagueAvgs = leagueAvgs
-        self.ratingL = 0.0
-        self.ratingR = 0.0
         self.overall = 0.0
         self.stats = {}
-        self.oppTeamRoster = oppRoster
-        self.gameInfo = gameInfo
 
     def setOtherInformation(self, data):
-        self.oppTeamId = data['oppTeamId']
-        self.oppTeamName = data['oppTeamName']
         self.teamId = data['teamId']
         self.teamName = data['teamName']
         self.stadiumId = data['stadiumId']
@@ -53,7 +39,6 @@ class PitcherClass:
         for key in pitchingStatsToUse:
             try:
                 lgAvg = self.leagueAvgs.averages[key]
-                debugKey = key
                 if key == "BB%":
                     if vsL[key] >= lgAvg:
                         self.ratingL += (vsL[key] / lgAvg) * 1
@@ -107,8 +92,6 @@ class PitcherClass:
                 #print(errorString)
                 print(e)
 
-        self.calcAvgRating()
-
         oppTeamKey = self.teamAvgs.getTeamKey(self.oppTeamName)
         teamStats = self.teamAvgs.averages[oppTeamKey]
 
@@ -147,10 +130,7 @@ class PitcherClass:
         
         self.applyInningWeight(avgIP)
 
-    def calcAvgRating(self):
-        self.overall = (self.ratingL + self.ratingR) / 2
-
-    def applyInningWeight(self, avgIP):
+    def applyInningWeight(self, avgIP): #CHANGE TO AT BAT WEIGHT
         innings = self.stats['vsL']['IP'] + self.stats['vsR']['IP']
         factor = (innings /avgIP)
         self.overall = self.overall * factor
