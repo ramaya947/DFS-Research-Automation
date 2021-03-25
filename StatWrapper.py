@@ -1,9 +1,13 @@
-import statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamAverages, LeagueAverages
+import csv, statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamAverages, LeagueAverages
 from pybaseball import playerid_reverse_lookup
 
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 teamAvg = TeamAverages.TeamAverages()
 leagueAvg = LeagueAverages.LeagueAverages()
+file = open("MissingPlayerIds.csv", "a+")
+
+def cleanUp():
+    file.close()
 
 #Get games for either today or a specified day
 def getDaysGames(date = None):
@@ -46,10 +50,15 @@ def createHitters(pitcher, hitters):
 
     for player in roster:
         #Create hitter
-        hitter = HitterClass.HitterClass(player, leagueAvg)
+        hitter = HitterClass.HitterClass(player, leagueAvg, pitcher)
         hitter.fid = getFangraphsId(hitter)
+        if hitter.fid == None:
+            continue
         hitter.stats = getMostRecentStats(hitter.fid, hitter.position)
-        hitter.setOtherInformation(pitcher.gameInfo)
+        hitter.setOtherInformation(setHitterOtherInfo(pitcher.gameInfo, pitcher.home))
+        hitter.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(hitter.pid)}))
+
+        hitters.append(hitter)
 
 def getGamesProbablePitchers(game, pitchers):
     homeRoster = getTeamRoster(game["home_id"])["roster"]
@@ -66,6 +75,8 @@ def getGamesProbablePitchers(game, pitchers):
                 print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game)
                 pitcher.fid = getFangraphsId(pitcher)
+                if pitcher.fid == None:
+                    continue
                 pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
                 pitcher.setOtherInformation(setOtherInfo(game, "home"))
                 pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
@@ -84,6 +95,8 @@ def getGamesProbablePitchers(game, pitchers):
                 print("Found {} with pid: {}".format(pitcherAway, p["person"]["id"]))
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, homeRoster, game)
                 pitcher.fid = getFangraphsId(pitcher)
+                if pitcher.fid == None:
+                    continue
                 pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
                 pitcher.setOtherInformation(setOtherInfo(game, "away"))
                 pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
@@ -107,6 +120,31 @@ def assessPitchers(pitchers):
     for pitcher in pitchers:
         pitcher.assessSelf(avgIP)
 
+def assessHitters(hitters):
+    avgPA = 0
+    count = 0
+    for hitter in hitters:
+        if hitter.position != 'P':
+            avgPA += hitter.stats['vsL']['PA'] + hitter.stats['vsR']['PA']
+            count += 1
+    avgPA = avgPA / count
+
+    for hitter in hitters:
+        if hitter.position != "P":
+            hitter.assessSelf(avgPA)
+
+def setHitterOtherInfo(data, location):
+    info = {
+        'oppTeamId': data['away_id'] if location == "away" else data['home_id'],
+        'oppTeamName': data['away_name'] if location == "away" else data['home_name'],
+        'teamId': data['home_id'] if location == "away" else data['away_id'],
+        'teamName': data['home_name'] if location == "away" else data['away_name'],
+        'stadiumId': data['venue_id'],
+        'stadiumName': data['venue_name'],
+    }
+
+    return info
+
 def setOtherInfo(data, location):
     info = {
         'oppTeamId': data['away_id'] if location == "home" else data['home_id'],
@@ -114,7 +152,8 @@ def setOtherInfo(data, location):
         'teamId': data['home_id'] if location == "home" else data['away_id'],
         'teamName': data['home_name'] if location == "home" else data['away_name'],
         'stadiumId': data['venue_id'],
-        'stadiumName': data['venue_name']
+        'stadiumName': data['venue_name'],
+        'homeOrAway': location
     }
 
     return info
@@ -134,11 +173,34 @@ def getFangraphsId(player, retrying = None):
     except:
         print("Couldn't get fangraphs ID for {}".format(player.name))
         if retrying == None:
-            return askUserForFID(player.name)
+            return checkInCsvRecords(player.pid, player.name)
 
     if fid == -1 and retrying == None:
-        return askUserForFID(player.name)
+        return checkInCsvRecords(player.pid, player.name)
 
+    return fid
+
+def checkInCsvRecords(pid, name):
+    file.seek(0)
+    csv_reader = csv.reader(file, delimiter=',')
+    line_count = 0
+    fid = None
+    for row in csv_reader:
+        if line_count > 0:
+            try:
+                if row[0] == str(pid):
+                    fid = row[1]
+                    return fid
+            except:
+                pass
+        line_count += 1
+    
+    #Player Not Found
+    fid = askUserForFID(name)
+    if fid == None or fid == "":
+        return None
+
+    file.write("{},{},\n".format(pid, fid))
     return fid
 
 def askUserForFID(name):

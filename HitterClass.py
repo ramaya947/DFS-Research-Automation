@@ -13,13 +13,14 @@ class HitterClass:
     overall = None
     leagueAvgs = None
 
-    def __init__(self, data, leagueAvgs):
+    def __init__(self, data, leagueAvgs, pitcher):
         self.pid = data['person']['id']
         self.name = data['person']['fullName']
         self.position = data['position']['abbreviation']
         self.leagueAvgs = leagueAvgs
         self.overall = 0.0
         self.stats = {}
+        self.oppPitcher = pitcher
 
     def setOtherInformation(self, data):
         self.teamId = data['teamId']
@@ -27,110 +28,65 @@ class HitterClass:
         self.stadiumId = data['stadiumId']
         self.stadiumName = data['stadiumName']
 
-    def assessSelf(self, avgIP):
-        vsL = {}
-        vsR = {}
-        pitchingStatsToUse = ["BB%", "K%", "BABIP", "AVG", "wOBA"]
+    def assessSelf(self, avgPA):
+        ps = self.oppPitcher.stats['vsL'] if self.handedness == "L" else self.oppPitcher.stats['vsR']
+        ps['ISO'] = ps['SLG'] - ps['AVG']
+        hs = self.stats['vsL'] if self.oppPitcher.handedness == "L" else self.stats['vsR']
+
+        #First compare to league Average
         hittingStatsToUse = ["BB%", "K%", "ISO", "BABIP", "wOBA"]
-
-        vsL = self.stats['vsL']
-        vsR = self.stats['vsR']
-
-        for key in pitchingStatsToUse:
-            try:
-                lgAvg = self.leagueAvgs.averages[key]
-                if key == "BB%":
-                    if vsL[key] >= lgAvg:
-                        self.ratingL += (vsL[key] / lgAvg) * 1
-                        #Pitcher allows worse than league average base on balls rate vs L
-                    if vsR[key] >= lgAvg:
-                        self.ratingR += (vsR[key] / lgAvg) * 1
-                        #Pitcher allows worse than league average base on balls rate vs R
-                elif key == "K%":
-                    if vsL[key] <= lgAvg:
-                        self.ratingL += (lgAvg / vsL[key]) * 1
-                        #Pitchers strikes out less than lg avg vs L
-                    else:
-                        self.ratingL -= (vsL[key] / lgAvg) * 1
-                    if vsR[key] <= lgAvg:
-                        self.ratingR += (lgAvg / vsR[key]) * 1
-                        #Pitchers strikes out less than lg avg vs R
-                    else:
-                        self.ratingR -= (vsR[key] / lgAvg) * 1
-                elif key == "BABIP":
-                    if vsL[key] >= lgAvg:
-                        self.ratingL += (vsL[key] / lgAvg) * 1.5
-                        #Pitcher is unlucky vs L
-                    else:
-                        self.ratingL -= (lgAvg / vsL[key]) * 1.5
-                    if vsR[key] >= lgAvg:
-                        self.ratingR += (vsR[key] / lgAvg) * 1.5
-                        #Pitcher is unlucky vs R
-                    else:
-                        self.ratingR -= (lgAvg / vsR[key]) * 1.5
-                elif key == "AVG":
-                    if vsL[key] >= lgAvg:
-                        self.ratingL += (vsL[key] / lgAvg) * 1
-                        #Pitcher gives up a lot of hits vs L
-                    if vsR[key] >= lgAvg:
-                        self.ratingR += (vsR[key] / lgAvg) * 1
-                        #Pitcher gives up a lot of hits vs R
-                elif key == "wOBA":
-                    if vsL[key] >= lgAvg:
-                        self.ratingL += (vsL[key] / lgAvg) * 2
-                        #Pitcher gives up big hits against L
-                    else:
-                        self.ratingL -= (lgAvg / vsL[key]) * 2
-                    if vsR[key] >= lgAvg:
-                        self.ratingR += (vsR[key] / lgAvg) * 2
-                        #Pitcher gives up big hits against R
-                    else:
-                        self.ratingR -= (lgAvg / vsR[key]) * 2
-
-            except ZeroDivisionError as e:
-                #errorString = "Error getting stats for {}. key = {}\n".format(self.name, debugKey)
-                #print(errorString)
-                print(e)
-
-        oppTeamKey = self.teamAvgs.getTeamKey(self.oppTeamName)
-        teamStats = self.teamAvgs.averages[oppTeamKey]
-
-        #["BB%", "K%", "ISO", "BABIP", "OPS", "wOBA"]
         for key in hittingStatsToUse:
             try:
                 lgAvg = self.leagueAvgs.averages[key]
-                teamStat = teamStats[key]
-                debugKey = key
-                
-                if key == "BB%":
-                    if teamStat >= lgAvg:
-                        self.overall += (teamStat / lgAvg) * 1
-                elif key == "K%":
-                    if teamStat <= lgAvg:
-                        self.overall += (lgAvg / teamStat) * 1
-                    else:
-                        self.overall -= (teamStat / lgAvg) * 1
-                elif key == "ISO":
-                    if teamStat >= lgAvg:
-                        self.overall += (teamStat / lgAvg) * 1.5
-                    else:
-                        self.overall -= (lgAvg / teamStat) * 1.5
-                elif key == "BABIP":
-                    if teamStat >= lgAvg:
-                        self.overall += (teamStat / lgAvg) * 1.5
-                    else:
-                        self.overall -= (lgAvg / teamStat) * 1.5
-                elif key == "wOBA":
-                    if teamStat >= lgAvg:
-                        self.overall += (teamStat / lgAvg) * 2
-                    else:
-                        self.overall -= (lgAvg / teamStat) * 2
-            except ZeroDivisionError as e:
-                print(e)
-        
-        self.applyInningWeight(avgIP)
+                hvp = (hs[key] + ps[key]) / 2
 
-    def applyInningWeight(self, avgIP): #CHANGE TO AT BAT WEIGHT
-        innings = self.stats['vsL']['IP'] + self.stats['vsR']['IP']
-        factor = (innings /avgIP)
+                if key == "BB%":
+                    if hs[key] >= lgAvg:
+                        self.overall += (hs[key] / lgAvg) * 1
+                    if hvp >= lgAvg:
+                        self.overall += (hvp / lgAvg) * 1
+                elif key == "K%":
+                    if hs[key] <= lgAvg:
+                        self.overall += (lgAvg / hs[key]) * 1
+                    else:
+                        self.overall -= (hs[key] / lgAvg) * 1
+                    if hvp <= lgAvg:
+                        self.overall += (lgAvg / hvp) * 1
+                    else:
+                        self.overall -= (hvp / lgAvg) * 1
+                elif key == "BABIP":
+                    if hs[key] >= lgAvg:
+                        self.overall += (hs[key] / lgAvg) * 1.5
+                    else:
+                        self.overall -= (lgAvg / hs[key]) * 1.5
+                    if hvp >= lgAvg:
+                        self.overall += (hvp / lgAvg) * 1.5
+                    else:
+                        self.overall -= (lgAvg / hvp) * 1.5
+                elif key == "ISO":
+                    if hs[key] >= lgAvg:
+                        self.overall += (hs[key] / lgAvg) * 1.5
+                    else:
+                        self.overall -= (lgAvg / hs[key]) * 1.5
+                    if hvp >= lgAvg:
+                        self.overall += (hvp / lgAvg) * 1.5
+                    else:
+                        self.overall -= (lgAvg / hvp) * 1.5
+                elif key == "wOBA":
+                    if hs[key] >= lgAvg:
+                        self.overall += (hs[key] / lgAvg) * 2
+                    else:
+                        self.overall -= (lgAvg / hs[key]) * 2
+                    if hvp >= lgAvg:
+                        self.overall += (hvp / lgAvg) * 2
+                    else:
+                        self.overall -= (lgAvg / hvp) * 2
+            except Exception as e:
+                print(e)
+
+        self.applyAtBat(hs['PA'], avgPA)
+
+
+    def applyAtBat(self, hpa, avgPA): #CHANGE TO AT BAT WEIGHT
+        factor = (hpa / avgPA)
         self.overall = self.overall * factor

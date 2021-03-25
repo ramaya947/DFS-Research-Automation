@@ -19,6 +19,7 @@ class PitcherClass:
     leagueAvgs = None
     pitchers = None
     gameInfo = None
+    homeOrAway = None
 
     def __init__(self, data, teamAvgs, leagueAvgs, oppRoster, gameInfo):
         self.pid = data['person']['id']
@@ -40,8 +41,10 @@ class PitcherClass:
         self.teamName = data['teamName']
         self.stadiumId = data['stadiumId']
         self.stadiumName = data['stadiumName']
+        self.home = data['homeOrAway']
 
     def assessSelf(self, avgIP):
+        pitcherStats = {}
         vsL = {}
         vsR = {}
         pitchingStatsToUse = ["BB%", "K%", "BABIP", "AVG", "wOBA"]
