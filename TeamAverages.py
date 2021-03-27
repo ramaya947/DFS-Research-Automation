@@ -30,7 +30,7 @@ class TeamAverages:
         "St. Louis Cardinals": "STL",
         "Chicago Cubs": "CHC",
         "Pittsburgh Pirates": "PIT",
-        "Cincinatti Reds": "CIN",
+        "Cincinnati Reds": "CIN",
         "Arizona Diamondbacks": "ARI",
         "Los Angeles Dodgers": "LAD",
         "San Francisco Giants": "SFG",

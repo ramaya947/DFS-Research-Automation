@@ -5,12 +5,16 @@ PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&pos
 teamAvg = TeamAverages.TeamAverages()
 leagueAvg = LeagueAverages.LeagueAverages()
 file = open("MissingPlayerIds.csv", "a+")
+manualFill = True
 
 def cleanUp():
     file.close()
 
 #Get games for either today or a specified day
-def getDaysGames(date = None):
+def getDaysGames(mf, date = None):
+    global manualFill
+    manualFill = mf
+
     if date == None:
         dt = datetime.datetime.now()
         
@@ -51,6 +55,8 @@ def createHitters(pitcher, hitters):
     for player in roster:
         #Create hitter
         hitter = HitterClass.HitterClass(player, leagueAvg, pitcher)
+        if hitter.position == "P":
+            continue
         hitter.fid = getFangraphsId(hitter)
         if hitter.fid == None:
             continue
@@ -74,7 +80,7 @@ def getGamesProbablePitchers(game, pitchers):
             if pitcherHome in p["person"]["fullName"]:
                 print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game)
-                pitcher.fid = getFangraphsId(pitcher)
+                pitcher.fid = getFangraphsId(pitcher, manualFill)
                 if pitcher.fid == None:
                     continue
                 pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
@@ -85,6 +91,8 @@ def getGamesProbablePitchers(game, pitchers):
                     pitchers.append(pitcher)
                 else:
                     pitcher.fid = askUserForFID(pitcher.name)
+                    if pitcher.fid == None:
+                        continue
                     pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
                     if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
                         #pitcher.assessSelf()
@@ -105,6 +113,8 @@ def getGamesProbablePitchers(game, pitchers):
                     pitchers.append(pitcher)
                 else:
                     pitcher.fid = askUserForFID(pitcher.name)
+                    if pitcher.fid == None:
+                        continue
                     pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
                     if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
                         #pitcher.assessSelf()
@@ -125,7 +135,17 @@ def assessHitters(hitters):
     count = 0
     for hitter in hitters:
         if hitter.position != 'P':
-            avgPA += hitter.stats['vsL']['PA'] + hitter.stats['vsR']['PA']
+            vsLPA = 0
+            try:
+                vsLPA = hitter.stats['vsL']['PA']
+            except:
+                vsLPA = 0
+            vsRPA = 0
+            try:
+                vsLPA = hitter.stats['vsR']['PA']
+            except:
+                vsLPA = 0
+            avgPA +=  vsLPA + vsRPA
             count += 1
     avgPA = avgPA / count
 
@@ -204,6 +224,9 @@ def checkInCsvRecords(pid, name):
     return fid
 
 def askUserForFID(name):
+    if not manualFill:
+        return None
+
     fid = input("Please provide {}'s confirmed Fangraphs ID:\n".format(name))
 
     if fid == None or fid == "":
@@ -240,3 +263,34 @@ def getMostRecentStats(pid, pos):
 
     stats = { 'vsL': statsL, 'vsR': statsR }
     return stats
+
+    def sortPitchers(pitchers):
+        pitchers.sort(key=lambda x: x.avgRating, reverse=True)
+        pSize = len(pitchers)
+        pitcherSet = None
+        if pSize == 0:
+            print("No probable pitchers")
+        elif pSize == 1:
+            print("Only 1 available pitcher")
+            pitcherSet = { "use": [pitchers[0]], "target": [pitchers[0]]}
+        
+        for x in range(0, pSize):
+            pitcher = pitchers[x]
+            if (x / (pSize - 1)) >= .75:
+                pitcherSet["use"].append(pitcher)
+            else:
+                pitcherSet["target"].append(pitcher)
+        
+        return pitchers
+
+    def writeSummary(players, pitchers):
+        summaryFile = open("Summary.txt", "w")
+
+        pSet = sortPitchers(pitchers)
+
+        output = "Pitchers to use:\n"
+        for pitcher in pSet["use"]:
+            output += "{} [{}] vs {} - Rating: {}\n".format(pitcher.name, pitcher.teamName, pitcher.oppTeamName, pitcher.overall)
+        output += "Catchers to use:\n"
+        for p in players['C']: 
+            output += "{} [{}] vs {} - Rating: {}\n".format(p.name, p.teamName, p.oppTeamName, p.overall)

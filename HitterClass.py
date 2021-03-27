@@ -33,6 +33,9 @@ class HitterClass:
         ps['ISO'] = ps['SLG'] - ps['AVG']
         hs = self.stats['vsL'] if self.oppPitcher.handedness == "L" else self.stats['vsR']
 
+        if hs == None:
+            return
+
         #First compare to league Average
         hittingStatsToUse = ["BB%", "K%", "ISO", "BABIP", "wOBA"]
         for key in hittingStatsToUse:
@@ -81,7 +84,7 @@ class HitterClass:
                         self.overall += (hvp / lgAvg) * 2
                     else:
                         self.overall -= (lgAvg / hvp) * 2
-            except Exception as e:
+            except ZeroDivisionError as e:
                 print(e)
 
         self.applyAtBat(hs['PA'], avgPA)
