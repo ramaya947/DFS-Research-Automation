@@ -3,6 +3,7 @@ class HitterClass:
     fid = None
     name = None
     position = None
+    salary = None
     handedness = None
     oppPitcher = None
     teamId = None
@@ -16,11 +17,17 @@ class HitterClass:
     def __init__(self, data, leagueAvgs, pitcher):
         self.pid = data['person']['id']
         self.name = data['person']['fullName']
-        self.position = data['position']['abbreviation']
+        self.position = self.getPositionForOutfielder(data['position']['abbreviation'])
         self.leagueAvgs = leagueAvgs
         self.overall = 0.0
         self.stats = {}
         self.oppPitcher = pitcher
+
+    def getPositionForOutfielder(self, pos):
+        if pos in ["OF", "LF", "CF", "RF"]:
+            return "OF"
+        else:
+            return pos
 
     def setOtherInformation(self, data):
         self.teamId = data['teamId']

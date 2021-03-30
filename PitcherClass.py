@@ -3,6 +3,7 @@ class PitcherClass:
     fid = None
     name = None
     position = None
+    salary = None
     handedness = None
     oppTeamId = None
     oppTeamName = None

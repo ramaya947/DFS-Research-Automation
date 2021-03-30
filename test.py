@@ -3,7 +3,7 @@ from pybaseball import playerid_reverse_lookup, cache, playerid_lookup
 
 def run(manualFill):
     cache.enable()
-    games = sw.getDaysGames(manualFill, "03/26/2021")
+    games = sw.getDaysGames(manualFill, "03/29/2021")
     pitchers = []
     hitters = []
     for game in games:
@@ -21,13 +21,17 @@ def run(manualFill):
 
     hitters.sort(key=lambda x: x.overall, reverse=True)
 
-    positions = ["C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"]
-    players = {}
+    hitters = sw.getPlayerSalaries(hitters)
+
+    players = {"C": [], "1B": [], "2B": [], "3B": [], "SS": [], "OF": []}
     for hitter in hitters:
         #print("({}) {} [ {} ]".format(hitter.position, hitter.name, hitter.overall))
-        if players[hitter.position] == None:
-            players[hitter.position] = []
-        players[hitter.position].append(hitter)
+        try:
+            players[hitter.position].append(hitter)
+        except Exception as e:
+            print(e)
+    
+    sw.getPlayerSalaries(pitchers)
 
     sw.writeSummary(players, pitchers)
     sw.cleanUp()

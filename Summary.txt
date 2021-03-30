@@ -1,0 +1,64 @@
+Pitchers to use:
+	Taijuan Walker $None [New York Mets] vs St. Louis Cardinals - Rating: -7.28491821878515
+	Zach Davies $None [Chicago Cubs] vs Arizona Diamondbacks - Rating: -10.525435684985457
+	Zach Plesac $None [Cleveland Indians] vs Kansas City Royals - Rating: -10.827237605427268
+	Dinelson Lamet $None [San Diego Padres] vs Colorado Rockies - Rating: -12.21714267282432
+	Domingo German $None [New York Yankees] vs Detroit Tigers - Rating: -19.98915008909677
+Catchers to use:
+	Andrew Knapp $3000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 4.248641655094657
+	Alejandro Kirk $3000 [Toronto Blue Jays] vs Zach Eflin - Rating: 3.3024175352073044
+	Kyle Higashioka $3000 [New York Yankees] vs Jose Urena - Rating: 2.3127950191515265
+	Danny Jansen $3000 [Toronto Blue Jays] vs Zach Eflin - Rating: 1.7014645501387329
+	Reese McGuire $3000 [Toronto Blue Jays] vs Zach Eflin - Rating: -4.170805112595819
+	Grayson Greiner $3000 [Detroit Tigers] vs Domingo German - Rating: -4.379414429955617
+	J.T. Realmuto $4000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: -6.101660123724358
+	Wilson Ramos $3000 [Detroit Tigers] vs Domingo German - Rating: -11.127567889485144
+	Gary Sanchez $3500 [New York Yankees] vs Jose Urena - Rating: -13.740334671769066
+First Basemen to use:
+	Luke Voit $5000 [New York Yankees] vs Jose Urena - Rating: 19.796506639289255
+	Rowdy Tellez $3500 [Toronto Blue Jays] vs Zach Eflin - Rating: 9.003929862939962
+	Rhys Hoskins $5500 [Philadelphia Phillies] vs T.J. Zeuch - Rating: -3.156436898113557
+	Miguel Cabrera $3500 [Detroit Tigers] vs Domingo German - Rating: -21.246386089187705
+Second Basemen to use:
+	DJ LeMahieu $5500 [New York Yankees] vs Jose Urena - Rating: 16.260850121361504
+	Jonathan Schoop $4000 [Detroit Tigers] vs Domingo German - Rating: 4.691538107447798
+	Brad Miller $3000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 4.035695254340224
+	Cavan Biggio $5000 [Toronto Blue Jays] vs Zach Eflin - Rating: 2.0018271390605777
+	Breyvic Valera $3000 [Toronto Blue Jays] vs Zach Eflin - Rating: -0.8997548076613139
+Third Basemen to use:
+	Jeimer Candelario $4000 [Detroit Tigers] vs Domingo German - Rating: 8.190760476039948
+	Gio Urshela $3500 [New York Yankees] vs Jose Urena - Rating: 5.961238194551227
+	Vladimir Guerrero Jr. $4000 [Toronto Blue Jays] vs Zach Eflin - Rating: 3.331689313707048
+	Alec Bohm $3500 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 2.759623272101344
+	Harold Castro $3000 [Detroit Tigers] vs Domingo German - Rating: 2.535929281960516
+	Miguel Andujar $3500 [New York Yankees] vs Jose Urena - Rating: -4.125147280410515
+	Niko Goodrum $3500 [Detroit Tigers] vs Domingo German - Rating: -20.55757122746987
+Shortstops to use:
+	Willi Castro $3500 [Detroit Tigers] vs Domingo German - Rating: 9.997834862739005
+	Didi Gregorius $5000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 7.096705309362475
+	Bo Bichette $5500 [Toronto Blue Jays] vs Zach Eflin - Rating: 5.4586960142191305
+	Gleyber Torres $4000 [New York Yankees] vs Jose Urena - Rating: 0.26232133163080495
+	Jean Segura $3500 [Philadelphia Phillies] vs T.J. Zeuch - Rating: -0.9157595247452981
+	Tyler Wade $3000 [New York Yankees] vs Jose Urena - Rating: -1.7005390441352564
+	Marcus Semien $4000 [Toronto Blue Jays] vs Zach Eflin - Rating: -12.750069742100555
+OutFielders to use:
+	Brett Gardner $3500 [New York Yankees] vs Jose Urena - Rating: 18.724309889263772
+	George Springer $4500 [Toronto Blue Jays] vs Zach Eflin - Rating: 18.370110925588175
+	Robbie Grossman $3500 [Detroit Tigers] vs Domingo German - Rating: 13.951979456651891
+	Teoscar Hernandez $4500 [Toronto Blue Jays] vs Zach Eflin - Rating: 13.249027350448387
+	Bryce Harper $6000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 12.478892947996988
+	Lourdes Gurriel Jr. $4000 [Toronto Blue Jays] vs Zach Eflin - Rating: 12.148270849600026
+	Mike Tauchman $3000 [New York Yankees] vs Jose Urena - Rating: 10.811877155582263
+	Jay Bruce $3000 [New York Yankees] vs Jose Urena - Rating: 7.702673220526528
+	Clint Frazier $4000 [New York Yankees] vs Jose Urena - Rating: 7.320769958922338
+	Giancarlo Stanton $5000 [New York Yankees] vs Jose Urena - Rating: 5.636033471107266
+	Aaron Hicks $4000 [New York Yankees] vs Jose Urena - Rating: 3.8468702122018477
+	Aaron Judge $6000 [New York Yankees] vs Jose Urena - Rating: 3.2453687192855836
+	JaCoby Jones $3500 [Detroit Tigers] vs Domingo German - Rating: 3.231395759195213
+	Adam Haseley $3000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: 1.701542546891819
+	Jonathan Davis $3000 [Toronto Blue Jays] vs Zach Eflin - Rating: 0.39496735631849933
+	Randal Grichuk $4500 [Toronto Blue Jays] vs Zach Eflin - Rating: -6.711161454942434
+	Victor Reyes $3000 [Detroit Tigers] vs Domingo German - Rating: -12.220631620809597
+	Andrew McCutchen $4000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: -14.433980312864257
+	Roman Quinn $3000 [Philadelphia Phillies] vs T.J. Zeuch - Rating: -15.399629237679749
+	Nomar Mazara $3500 [Detroit Tigers] vs Domingo German - Rating: -17.938575758658963

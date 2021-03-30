@@ -264,33 +264,78 @@ def getMostRecentStats(pid, pos):
     stats = { 'vsL': statsL, 'vsR': statsR }
     return stats
 
-    def sortPitchers(pitchers):
-        pitchers.sort(key=lambda x: x.avgRating, reverse=True)
-        pSize = len(pitchers)
-        pitcherSet = None
-        if pSize == 0:
-            print("No probable pitchers")
-        elif pSize == 1:
-            print("Only 1 available pitcher")
-            pitcherSet = { "use": [pitchers[0]], "target": [pitchers[0]]}
+def sortPitchers(pitchers):
+    pitchers.sort(key=lambda x: x.overall, reverse=True)
+    pSize = len(pitchers)
+    pitcherSet = {"use": [], "target": []}
+    if pSize == 0:
+        print("No probable pitchers")
+    elif pSize == 1:
+        print("Only 1 available pitcher")
+        pitcherSet = { "use": [pitchers[0]], "target": [pitchers[0]]}
+    
+    for x in range(0, pSize):
+        pitcher = pitchers[x]
+        if (x / (pSize - 1)) >= .75:
+            pitcherSet["use"].append(pitcher)
+        else:
+            pitcherSet["target"].append(pitcher)
+    
+    return pitcherSet
+
+def getPlayerSalaries(players):
+    FDFile = open("FDPlayerList.csv", "r")
+    FDFile.seek(0)
+    result = []
+
+    for player in players:
+        name = player.name
+        teamKey = teamAvg.getTeamKey(player.teamName)
+
+        lineCount = 0
+        csv_reader = csv.reader(FDFile, delimiter=',')
+        for row in csv_reader:
+            if lineCount > 0:
+                try:
+                    csvName = "{} {}".format(row[2], row[4])
+                    if name == csvName and teamKey == row[9]:
+                        player.salary = row[7]
+                        result.append(player)
+                except:
+                    pass
+            lineCount += 1
         
-        for x in range(0, pSize):
-            pitcher = pitchers[x]
-            if (x / (pSize - 1)) >= .75:
-                pitcherSet["use"].append(pitcher)
-            else:
-                pitcherSet["target"].append(pitcher)
-        
-        return pitchers
+        FDFile.seek(0)
+    
+    FDFile.close()
+    return result
 
-    def writeSummary(players, pitchers):
-        summaryFile = open("Summary.txt", "w")
+def writeSummary(players, pitchers):
+    summaryFile = open("Summary.txt", "w")
 
-        pSet = sortPitchers(pitchers)
+    pSet = sortPitchers(pitchers)
 
-        output = "Pitchers to use:\n"
-        for pitcher in pSet["use"]:
-            output += "{} [{}] vs {} - Rating: {}\n".format(pitcher.name, pitcher.teamName, pitcher.oppTeamName, pitcher.overall)
-        output += "Catchers to use:\n"
-        for p in players['C']: 
-            output += "{} [{}] vs {} - Rating: {}\n".format(p.name, p.teamName, p.oppTeamName, p.overall)
+    output = "Pitchers to use:\n"
+    for pitcher in pSet["use"]:
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, pitcher.overall)
+    output += "Catchers to use:\n"
+    for p in players['C']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+    output += "First Basemen to use:\n"
+    for p in players['1B']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+    output += "Second Basemen to use:\n"
+    for p in players['2B']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+    output += "Third Basemen to use:\n"
+    for p in players['3B']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+    output += "Shortstops to use:\n"
+    for p in players['SS']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+    output += "OutFielders to use:\n"
+    for p in players['OF']: 
+        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+
+    summaryFile.write(output)
+    summaryFile.close()
