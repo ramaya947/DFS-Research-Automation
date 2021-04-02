@@ -6,6 +6,7 @@ teamAvg = TeamAverages.TeamAverages()
 leagueAvg = LeagueAverages.LeagueAverages()
 file = open("MissingPlayerIds.csv", "a+")
 manualFill = True
+parkFactors = json.loads(open("ParkFactors.json", "r").read())
 
 def cleanUp():
     file.close()
@@ -71,6 +72,11 @@ def getGamesProbablePitchers(game, pitchers):
     awayRoster = getTeamRoster(game["away_id"])["roster"]
     pitcherHome = game["home_probable_pitcher"]
     pitcherAway = game["away_probable_pitcher"]
+    try:
+        parkFactorsForVenue = parkFactors[game['venue_name']]
+    except Exception as e:
+        print("\n\n\nError in getting Park Factors: {}\nCould not get Park Factors for {}\n\n\n".format(str(e), game['venue_name']))
+        parkFactorsForVenue = {"runs": 0, "hr": 0}
 
     print("{} vs {}".format(pitcherHome, pitcherAway))
 
@@ -79,7 +85,7 @@ def getGamesProbablePitchers(game, pitchers):
         for p in homeRoster:
             if pitcherHome in p["person"]["fullName"]:
                 print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
-                pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game)
+                pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher, manualFill)
                 if pitcher.fid == None:
                     continue
@@ -101,7 +107,7 @@ def getGamesProbablePitchers(game, pitchers):
         for p in awayRoster:
             if pitcherAway in p["person"]["fullName"]:
                 print("Found {} with pid: {}".format(pitcherAway, p["person"]["id"]))
-                pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, homeRoster, game)
+                pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, homeRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher)
                 if pitcher.fid == None:
                     continue
@@ -310,32 +316,36 @@ def getPlayerSalaries(players):
     FDFile.close()
     return result
 
-def writeSummary(players, pitchers):
+def writeSummary(players, pitchers, hrList):
     summaryFile = open("Summary.txt", "w")
 
     pSet = sortPitchers(pitchers)
 
     output = "Pitchers to use:\n"
     for pitcher in pSet["use"]:
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, pitcher.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} K% Average: {} K% vs L: {} K% vs R: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, round(pitcher.overall, 2), pitcher.kRate['avg'], pitcher.kRate['vsL'], pitcher.kRate['vsR'])
     output += "Catchers to use:\n"
     for p in players['C']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
     output += "First Basemen to use:\n"
     for p in players['1B']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
     output += "Second Basemen to use:\n"
     for p in players['2B']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
     output += "Third Basemen to use:\n"
     for p in players['3B']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
     output += "Shortstops to use:\n"
     for p in players['SS']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
     output += "OutFielders to use:\n"
     for p in players['OF']: 
-        output += "\t{} ${} [{}] vs {} - Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, p.overall)
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
+
+    output += "HR Ratings, Ranked\n"
+    for h in hrList:
+        output += "\t{} - HR Rating: {}\n".format(h.name, h.hrRating)
 
     summaryFile.write(output)
     summaryFile.close()

@@ -3,7 +3,7 @@ from pybaseball import playerid_reverse_lookup, cache, playerid_lookup
 
 def run(manualFill):
     cache.enable()
-    games = sw.getDaysGames(manualFill, "03/29/2021")
+    games = sw.getDaysGames(manualFill, "04/01/2021")
     pitchers = []
     hitters = []
     for game in games:
@@ -33,8 +33,9 @@ def run(manualFill):
     
     sw.getPlayerSalaries(pitchers)
 
-    sw.writeSummary(players, pitchers)
+    hitters.sort(key=lambda x: x.hrRating, reverse=True)
+    sw.writeSummary(players, pitchers, hitters)
     sw.cleanUp()
 
-manualFill = False
+manualFill = True
 run(manualFill)

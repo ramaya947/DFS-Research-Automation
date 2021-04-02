@@ -11,6 +11,8 @@ class HitterClass:
     stadiumId = None
     stadiumName = None
     stats = None
+    hrRating = None
+    parkFactors = None
     overall = None
     leagueAvgs = None
 
@@ -22,6 +24,8 @@ class HitterClass:
         self.overall = 0.0
         self.stats = {}
         self.oppPitcher = pitcher
+        self.hrRating = 0.0
+        self.parkFactors = pitcher.parkFactors
 
     def getPositionForOutfielder(self, pos):
         if pos in ["OF", "LF", "CF", "RF"]:
@@ -82,6 +86,7 @@ class HitterClass:
                         self.overall += (hvp / lgAvg) * 1.5
                     else:
                         self.overall -= (lgAvg / hvp) * 1.5
+                    self.hrRating += hvp + (hvp * self.parkFactors['hr'])
                 elif key == "wOBA":
                     if hs[key] >= lgAvg:
                         self.overall += (hs[key] / lgAvg) * 2
@@ -95,7 +100,6 @@ class HitterClass:
                 print(e)
 
         self.applyAtBat(hs['PA'], avgPA)
-
 
     def applyAtBat(self, hpa, avgPA): #CHANGE TO AT BAT WEIGHT
         factor = (hpa / avgPA)

@@ -13,7 +13,9 @@ class PitcherClass:
     stadiumId = None
     stadiumName = None
     stats = None
+    parkFactors = None
     overall = None
+    kRate = None
     ratingL = None
     ratingR = None
     teamAvgs = None
@@ -22,7 +24,7 @@ class PitcherClass:
     gameInfo = None
     homeOrAway = None
 
-    def __init__(self, data, teamAvgs, leagueAvgs, oppRoster, gameInfo):
+    def __init__(self, data, teamAvgs, leagueAvgs, oppRoster, gameInfo, parkFactors):
         self.pid = data['person']['id']
         self.name = data['person']['fullName']
         self.position = data['position']['abbreviation']
@@ -31,9 +33,16 @@ class PitcherClass:
         self.ratingL = 0.0
         self.ratingR = 0.0
         self.overall = 0.0
+        self.kRate = {
+            "avg": 0.0,
+            "vsL": 0.0,
+            "vsR": 0.0,
+            "opp": 0.0
+        }
         self.stats = {}
         self.oppTeamRoster = oppRoster
         self.gameInfo = gameInfo
+        self.parkFactors = parkFactors
 
     def setOtherInformation(self, data):
         self.oppTeamId = data['oppTeamId']
@@ -70,12 +79,15 @@ class PitcherClass:
                         self.ratingL += (lgAvg / vsL[key]) * 1
                         #Pitchers strikes out less than lg avg vs L
                     else:
-                        self.ratingL -= (vsL[key] / lgAvg) * 1
+                        self.ratingL -= (vsL[key] / lgAvg) * 1.5
                     if vsR[key] <= lgAvg:
                         self.ratingR += (lgAvg / vsR[key]) * 1
                         #Pitchers strikes out less than lg avg vs R
                     else:
-                        self.ratingR -= (vsR[key] / lgAvg) * 1
+                        self.ratingR -= (vsR[key] / lgAvg) * 1.5
+                    self.kRate["avg"] = (vsR[key] + vsL[key]) / 2
+                    self.kRate["vsL"] = vsL[key]
+                    self.kRate["vsR"] = vsR[key]
                 elif key == "BABIP":
                     if vsL[key] >= lgAvg:
                         self.ratingL += (vsL[key] / lgAvg) * 1.5
@@ -114,7 +126,7 @@ class PitcherClass:
         self.calcAvgRating()
 
         oppTeamKey = self.teamAvgs.getTeamKey(self.oppTeamName)
-        teamStats = self.teamAvgs.averages[oppTeamKey]
+        teamStats = self.teamAvgs.averages['vsL'][oppTeamKey] if self.handedness == "L" else self.teamAvgs.averages['vsR'][oppTeamKey]
 
         #["BB%", "K%", "ISO", "BABIP", "OPS", "wOBA"]
         for key in hittingStatsToUse:
@@ -131,6 +143,7 @@ class PitcherClass:
                         self.overall += (lgAvg / teamStat) * 1
                     else:
                         self.overall -= (teamStat / lgAvg) * 1
+                    self.kRate["opp"] = teamStat
                 elif key == "ISO":
                     if teamStat >= lgAvg:
                         self.overall += (teamStat / lgAvg) * 1.5

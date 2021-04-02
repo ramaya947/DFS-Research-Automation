@@ -1,0 +1,152 @@
+{
+    "Rogers Centre": 
+    {
+        "runs": 1.50,
+        "hr": 1.657
+    },
+    "Coors Field": 
+    {
+        "runs": 1.397,
+        "hr": 1.147
+    },
+    "Fenway Park": 
+    {
+        "runs": 1.272,
+        "hr": 1.011
+    },
+    "Great American Ball Park": 
+    {
+        "runs": 1.271,
+        "hr": 2.140
+    },
+    "Angel Stadium": 
+    {
+        "runs": 1.236,
+        "hr": 1.352
+    },
+    "Yankee Stadium": 
+    {
+        "runs": 1.159,
+        "hr": 1.565
+    },
+    "Chase Field": 
+    {
+        "runs": 1.120,
+        "hr": 0.936
+    },
+    "Progressive Field": 
+    {
+        "runs": 1.106,
+        "hr": 0.896
+    },
+    "Truist Park": 
+    {
+        "runs": 1.072,
+        "hr": 0.955
+    },
+    "PNC Park": 
+    {
+        "runs": 1.068,
+        "hr": 0.878
+    },
+    "Guaranteed Rate Field": 
+    {
+        "runs": 1.060,
+        "hr": 1.227
+    },
+    "Oracle Park": 
+    {
+        "runs": 1.048,
+        "hr": 1.083
+    },
+    "Kauffman Stadium": 
+    {
+        "runs": 1.047,
+        "hr": 0.870
+    },
+    "American Family Field": 
+    {
+        "runs": 1.036,
+        "hr": 1.152
+    },
+    "Globe Life Field": 
+    {
+        "runs": 1.000,
+        "hr": 0.857
+    },
+    "Citi Field": 
+    {
+        "runs": 0.987,
+        "hr": 1.257
+    },
+    "Citizens Bank Park": 
+    {
+        "runs": 0.971,
+        "hr": 1.314
+    },
+    "Busch Stadium": 
+    {
+        "runs": 0.970,
+        "hr": 0.965
+    },
+    "Tropicana Field": 
+    {
+        "runs": 0.955,
+        "hr": 0.829
+    },
+    "Dodger Stadium": 
+    {
+        "runs": 0.938,
+        "hr": 1.165
+    },
+    "Target Field": 
+    {
+        "runs": 0.936,
+        "hr": 0.821
+    },
+    "Petco Park": 
+    {
+        "runs": 0.899,
+        "hr": 1.171
+    },
+    "Comerica Park": 
+    {
+        "runs": 0.888,
+        "hr": 0.791
+    },
+    "T-Mobile Park": 
+    {
+        "runs": 0.888,
+        "hr": 1.044
+    },
+    "Oriole Park": 
+    {
+        "runs": 0.875,
+        "hr": 1.000
+    },
+    "Nationals Park": 
+    {
+        "runs": 0.845,
+        "hr": 0.778
+    },
+    "loanDepot park": 
+    {
+        "runs": 0.817,
+        "hr": 0.753
+    },
+    "Minute Maid Park": 
+    {
+        "runs": 0.776,
+        "hr": 0.716
+    },
+    "Oakland Coliseum": 
+    {
+        "runs": 0.775,
+        "hr": 0.628
+    },
+    "Wrigley Field": 
+    {
+        "runs": 0.741,
+        "hr": 0.741
+    }
+}

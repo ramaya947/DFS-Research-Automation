@@ -3,8 +3,12 @@ from datetime import datetime
 import requests
 
 class TeamAverages:
-    URL = "https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=all&qual=0&type=8&season={}&month=0&season1={}&ind=0&team=0,ts&rost=&age=&filter=&players=0"
+    URL = "https://www.fangraphs.com/leaders.aspx?pos=all&stats=bat&lg=all&qual=0&type=8&season={}&month={}&season1={}&ind=0&team=0,ts&rost=&age=&filter=&players=0"
     STATS = ["#", "Season", "G", "PA", "HR", "R", "RBI", "SB", "BB%", "K%", "ISO", "BABIP", "AVG", "OBP", "SLG", "wOBA", "wRC+", "EV", "BsR", "Off", "Def", "WAR"]
+    SPLIT_KEY = {
+        "vsL": 13,
+        "vsR": 14
+    }
     nameToAbbrev = {
         "Toronto Blue Jays": "TOR",
         "Baltimore Orioles": "BAL",
@@ -37,16 +41,27 @@ class TeamAverages:
         "San Diego Padres": "SDP",
         "Colorado Rockies": "COL"
     }
-    averages = {}
+    averages = {
+        "vsL": {},
+        "vsR": {}
+    }
     teamNameList = []
     
     def __init__(self):
         lastYear = datetime.now().year - 1
-        url = self.URL.format(lastYear, lastYear)
+        url = self.URL.format(lastYear, self.SPLIT_KEY['vsL'], lastYear)
         page = requests.get(url)
         dfs = pd.read_html(page.text)
         table = dfs[16] #May change in the future, watch out
+        self.getData(table, "vsL")
+        
+        url = self.URL.format(lastYear, self.SPLIT_KEY['vsR'], lastYear)
+        page = requests.get(url)
+        dfs = pd.read_html(page.text)
+        table = dfs[16] #May change in the future, watch out
+        self.getData(table, "vsR")
 
+    def getData(self, table, split):
         teamData = {}
         teamKey = ""
         for row in range(len(table) - 1):
@@ -67,7 +82,7 @@ class TeamAverages:
                     value = float(value)
                 teamData[teamKey][key] = value
         
-        self.averages = teamData
+        self.averages[split] = teamData
     
     def getTeamKey(self, teamName):
         try:
