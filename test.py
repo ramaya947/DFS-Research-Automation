@@ -1,9 +1,11 @@
-import statsapi, StatWrapper as sw, requests, json
+import statsapi, StatWrapper as sw, requests, json, datetime
 from pybaseball import playerid_reverse_lookup, cache, playerid_lookup
+from dateutil import tz
 
-def run(manualFill):
+def run(manualFill, slateStart, date, compare):
+    print("\n\n\nYou are still defaulting to year 2020 for stats due to limited sample size, adjust when ready\n\n\n")
     cache.enable()
-    games = sw.getDaysGames(manualFill, "04/01/2021")
+    games = sw.getDaysGames(manualFill, slateStart, compare, False, date)
     pitchers = []
     hitters = []
     for game in games:
@@ -37,5 +39,7 @@ def run(manualFill):
     sw.writeSummary(players, pitchers, hitters)
     sw.cleanUp()
 
-manualFill = True
-run(manualFill)
+manualFill = False
+ss = datetime.datetime(2021, 4, 6, 19, 0, 0)
+date = "04/06/2021"
+run(manualFill, ss, date, "after")

@@ -1,5 +1,6 @@
 import csv, statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamAverages, LeagueAverages
 from pybaseball import playerid_reverse_lookup
+from dateutil import tz
 
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 teamAvg = TeamAverages.TeamAverages()
@@ -11,8 +12,27 @@ parkFactors = json.loads(open("ParkFactors.json", "r").read())
 def cleanUp():
     file.close()
 
+def filterTime(game, slateStart, compare):
+    from_zone = tz.tzutc()
+    to_zone = tz.tzlocal()
+
+    dt = datetime.datetime.strptime(game['game_datetime'], "%Y-%m-%dT%H:%M:%SZ")
+    dt = dt.replace(tzinfo=from_zone)
+    local = dt.astimezone(to_zone)
+    
+    if compare == "before":
+        if local.time() <= slateStart.time():
+            return True
+        else:
+            return False
+    elif compare == "after":
+        if local.time() >= slateStart.time():
+            return True
+        else:
+            return False
+
 #Get games for either today or a specified day
-def getDaysGames(mf, date = None):
+def getDaysGames(mf, slateStart, compare, getImpliedTotals, date = None):
     global manualFill
     manualFill = mf
 
@@ -36,7 +56,26 @@ def getDaysGames(mf, date = None):
         date = "{}/{}/{}".format(month, day, year)
     
     games = statsapi.schedule(date)
-    return games
+    filteredGames = []
+    for game in games:
+        if filterTime(game, slateStart, compare):
+            filteredGames.append(game)
+
+    for game in filteredGames:
+        if getImpliedTotals:
+            game['impliedTotals'] = getTeamsImpliedTotals(game)
+
+    return filteredGames
+
+def getTeamsImpliedTotals(game):
+    set = {}
+    homeTotal = input("Please provide the implied total for {}:\n ".format(game['home_name']))
+    awayTotal = input("Please provide the implied total for {}:\n ".format(game['away_name']))
+    set['homeTotal'] = homeTotal
+    set['awayTotal'] = awayTotal
+    set['combinedTotal'] = homeTotal + awayTotal
+
+    return set
 
 def getGamebyID(gid):
     game = statsapi.schedule(game_id=gid)
@@ -249,6 +288,12 @@ def getMostRecentStats(pid, pos):
     offset = 0
     while (offset <= 2 and statsL == None and statsR == None):
         adjustedYear = year - offset
+
+        if adjustedYear == 2021:
+            offset += 1
+            continue
+        #TODO: REMOVE WHEN 2021 SAMPLE SIZE IS LARGE ENOUGH
+
         url = PLAYER_STATS_URL.format(pid, pos, adjustedYear)
         data = requests.get(url)
         data = json.loads(data.text)
@@ -260,12 +305,15 @@ def getMostRecentStats(pid, pos):
             continue
 
         for obj in data:
-            if obj['Split'] == "vs L":
-                statsL = obj
-                statsL['season'] = obj['Season']
-            elif obj['Split'] == "vs R":
-                statsR = obj
-                statsR['season'] = obj['Season']
+            try:
+                if obj['Split'] == "vs L":
+                    statsL = obj
+                    statsL['season'] = obj['Season']
+                elif obj['Split'] == "vs R":
+                    statsR = obj
+                    statsR['season'] = obj['Season']
+            except:
+                pass
 
     stats = { 'vsL': statsL, 'vsR': statsR }
     return stats
@@ -296,7 +344,7 @@ def getPlayerSalaries(players):
 
     for player in players:
         name = player.name
-        teamKey = teamAvg.getTeamKey(player.teamName)
+        teamKey = teamAvg.getFanduelTeamKey(player.teamName)
 
         lineCount = 0
         csv_reader = csv.reader(FDFile, delimiter=',')
@@ -316,6 +364,35 @@ def getPlayerSalaries(players):
     FDFile.close()
     return result
 
+def getStacks(players):
+    stacks = {}
+    addedTeams = []
+
+    for player in players:
+        if player.overall <= 0.0:
+            continue
+
+        team = player.teamName
+        if team not in addedTeams:
+            addedTeams.append(team)
+            stacks[team] = {}
+            stacks[team]['totalOverall'] = 0.0
+            stacks[team]['playerList'] = []
+
+        stacks[team]['totalOverall'] += player.overall
+        stacks[team]['playerList'].append(player)
+
+    result = []
+    for team in addedTeams:
+        var = {
+            "team": team,
+            "averageOverall": stacks[team]['totalOverall'] / len(stacks[team]['playerList']),
+            "players": stacks[team]['playerList']
+        }
+        result.append(var)
+    result.sort(key=lambda x: x['averageOverall'], reverse=True)
+    return result
+
 def writeSummary(players, pitchers, hrList):
     summaryFile = open("Summary.txt", "w")
 
@@ -323,29 +400,37 @@ def writeSummary(players, pitchers, hrList):
 
     output = "Pitchers to use:\n"
     for pitcher in pSet["use"]:
-        output += "\t{} ${} [{}] vs {} - Overall: {} K% Average: {} K% vs L: {} K% vs R: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, round(pitcher.overall, 2), pitcher.kRate['avg'], pitcher.kRate['vsL'], pitcher.kRate['vsR'])
-    output += "Catchers to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} K% Average: {} K% vs L: {} K% vs R: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, round(pitcher.overall, 2), round(pitcher.kRate['avg'], 2), round(pitcher.kRate['vsL'], 2), round(pitcher.kRate['vsR'], 2))
+    output += "\nPitchers to target:\n"
+    for pitcher in pSet["target"]:
+        output += "\t{} ${} [{}] vs {} - Overall: {} K% Average: {} K% vs L: {} K% vs R: {}\n".format(pitcher.name, pitcher.salary, pitcher.teamName, pitcher.oppTeamName, round(pitcher.overall, 2), round(pitcher.kRate['avg'], 2), round(pitcher.kRate['vsL'], 2), round(pitcher.kRate['vsR'], 2))
+    output += "\nCatchers to use:\n"
     for p in players['C']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
-    output += "First Basemen to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
+    output += "\nFirst Basemen to use:\n"
     for p in players['1B']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
-    output += "Second Basemen to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
+    output += "\nSecond Basemen to use:\n"
     for p in players['2B']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
-    output += "Third Basemen to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
+    output += "\nThird Basemen to use:\n"
     for p in players['3B']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
-    output += "Shortstops to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
+    output += "\nShortstops to use:\n"
     for p in players['SS']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
-    output += "OutFielders to use:\n"
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
+    output += "\nOutFielders to use:\n"
     for p in players['OF']: 
-        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / p.salary), 2))
+        output += "\t{} ${} [{}] vs {} - Overall: {} HR Rating: {} Value Rating: {}\n".format(p.name, p.salary, p.teamName, p.oppPitcher.name, round(p.overall, 2), round(p.hrRating, 2), round((p.overall / (float(p.salary) / 1000)), 2))
 
-    output += "HR Ratings, Ranked\n"
+    output += "\nHR Ratings, Ranked\n"
     for h in hrList:
-        output += "\t{} - HR Rating: {}\n".format(h.name, h.hrRating)
+        output += "\t{} - HR Rating: {} Overall: {}\n".format(h.name, h.hrRating, h.overall)
+    output += "\nStacks to Consider:\n"
+    for team in getStacks(hrList):
+        output += "{} - Avg Overall: {}\n".format(team['team'], team['averageOverall'])
+        for p in team['players']:
+            output += "\t[{}] {} ${} - Overall: {} Value Rating: {}\n".format(p.position, p.name, p.salary, round(p.overall, 2), round((p.overall / (float(p.salary) / 1000)), 2))
 
     summaryFile.write(output)
     summaryFile.close()
