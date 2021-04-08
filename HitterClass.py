@@ -15,6 +15,8 @@ class HitterClass:
     parkFactors = None
     overall = None
     leagueAvgs = None
+    matchupStats = None
+    oppMatchupStats = None
 
     def __init__(self, data, leagueAvgs, pitcher):
         self.pid = data['person']['id']
@@ -46,6 +48,9 @@ class HitterClass:
 
         if hs == None:
             return
+
+        self.matchupStats = hs
+        self.oppMatchupStats = ps
 
         #First compare to league Average
         hittingStatsToUse = ["BB%", "K%", "ISO", "BABIP", "wOBA"]
@@ -86,7 +91,7 @@ class HitterClass:
                         self.overall += (hvp / lgAvg) * 1.5
                     else:
                         self.overall -= (lgAvg / hvp) * 1.5
-                    self.hrRating += hvp + (hvp * self.parkFactors['hr'])
+                    #self.hrRating += hvp + (hvp * self.parkFactors['hr'])
                 elif key == "wOBA":
                     if hs[key] >= lgAvg:
                         self.overall += (hs[key] / lgAvg) * 2
@@ -100,7 +105,17 @@ class HitterClass:
                 print(e)
 
         self.applyAtBat(hs['PA'], avgPA)
+        self.calcHRRating(hs, ps)
 
     def applyAtBat(self, hpa, avgPA): #CHANGE TO AT BAT WEIGHT
         factor = (hpa / avgPA)
         self.overall = self.overall * factor
+
+    def calcHRRating(self, hs, ps):
+        try:
+            wISO = ((hs['ISO'] + ps['ISO']) / 2) / self.leagueAvgs.averages['ISO']
+            wHRFB = ((hs['HR/FB'] + ps['HR/FB']) / 2) / self.leagueAvgs.averages['HR/FB']
+            wHH = ((hs['Hard%'] + ps['Hard%']) / 2) / self.leagueAvgs.averages['Hard']
+            self.hrRating = wISO * wHRFB * wHH * self.parkFactors['hr']
+        except:
+            self.hrRating = 0.0

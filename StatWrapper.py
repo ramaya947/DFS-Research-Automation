@@ -1,6 +1,7 @@
 import csv, statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamAverages, LeagueAverages
 from pybaseball import playerid_reverse_lookup
 from dateutil import tz
+from openpyxl import Workbook
 
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 teamAvg = TeamAverages.TeamAverages()
@@ -434,3 +435,46 @@ def writeSummary(players, pitchers, hrList):
 
     summaryFile.write(output)
     summaryFile.close()
+
+def writeSummaryToCSV(hitters, pitchers):
+    wb = Workbook()
+    #Create Hitters Sheet
+    hitterSheet = wb.create_sheet("Hitters")
+    #Create Pitchers Sheet
+    pitcherSheet = wb.create_sheet("Pitchers")
+
+    #Append Hitters
+    wb.active = 0
+    appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
+    hitterSheet.append(appendRow)
+    for hitter in hitters:
+        appendRow = []
+        appendRow.append(hitter.position)
+        appendRow.append(hitter.name)
+        appendRow.append(hitter.teamName)
+        appendRow.append(hitter.salary)
+        appendRow.append(hitter.handedness)
+        appendRow.append(hitter.oppPitcher.name)
+        appendRow.append(round(hitter.overall, 2))
+        appendRow.append(round((hitter.overall / (float(hitter.salary) / 1000)), 2))
+
+        if hitter.matchupStats == None:
+            appendRow.append(0)
+            appendRow.append(0)
+            appendRow.append(0)
+            appendRow.append(0)
+            appendRow.append(0)
+            appendRow.append(0)
+        else:
+            appendRow.append(hitter.matchupStats['wOBA'])
+            appendRow.append(hitter.oppMatchupStats['wOBA'])
+            appendRow.append(hitter.matchupStats['ISO'])
+            appendRow.append(hitter.oppMatchupStats['ISO'])
+            appendRow.append(hitter.matchupStats['BABIP'])
+            appendRow.append(hitter.oppMatchupStats['BABIP'])
+        appendRow.append(hitter.hrRating)
+        appendRow.append(hitter.parkFactors['hr'])
+
+        hitterSheet.append(appendRow)
+
+    wb.save("Summary.xlsx")
