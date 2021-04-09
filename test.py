@@ -34,14 +34,14 @@ def run(manualFill, slateStart, date, compare):
         except Exception as e:
             print(e)
     
-    sw.getPlayerSalaries(pitchers)
+    pitchers = sw.getPlayerSalaries(pitchers)
 
     hitters.sort(key=lambda x: x.hrRating, reverse=True)
     sw.writeSummary(players, pitchers, hitters)
-    sw.writeSummaryToCSV(hitters, pitchers)
+    sw.writeSummaryToCSV(players, pitchers)
     sw.cleanUp()
 
-manualFill = False
-ss = datetime.datetime(2021, 4, 7, 13, 10, 0)
-date = "04/07/2021"
+manualFill = True
+ss = datetime.datetime(2021, 4, 9, 19, 0, 0)
+date = "04/09/2021"
 run(manualFill, ss, date, "after")

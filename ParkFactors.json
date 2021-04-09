@@ -119,7 +119,7 @@
         "runs": 0.888,
         "hr": 1.044
     },
-    "Oriole Park": 
+    "Oriole Park at Camden Yards": 
     {
         "runs": 0.875,
         "hr": 1.000
@@ -148,5 +148,10 @@
     {
         "runs": 0.741,
         "hr": 0.741
+    },
+    "TD Ballpark":
+    {
+        "runs": 1.0,
+        "hr": 1.12
     }
 }

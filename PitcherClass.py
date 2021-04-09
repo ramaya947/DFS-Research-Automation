@@ -13,6 +13,7 @@ class PitcherClass:
     stadiumId = None
     stadiumName = None
     stats = None
+    oppMatchupStats = None
     parkFactors = None
     overall = None
     kRate = None
@@ -127,6 +128,7 @@ class PitcherClass:
 
         oppTeamKey = self.teamAvgs.getTeamKey(self.oppTeamName)
         teamStats = self.teamAvgs.averages['vsL'][oppTeamKey] if self.handedness == "L" else self.teamAvgs.averages['vsR'][oppTeamKey]
+        self.oppMatchupStats = teamStats
 
         #["BB%", "K%", "ISO", "BABIP", "OPS", "wOBA"]
         for key in hittingStatsToUse:

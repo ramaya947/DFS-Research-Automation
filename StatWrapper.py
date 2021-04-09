@@ -325,9 +325,11 @@ def sortPitchers(pitchers):
     pitcherSet = {"use": [], "target": []}
     if pSize == 0:
         print("No probable pitchers")
+        return pitcherSet
     elif pSize == 1:
         print("Only 1 available pitcher")
         pitcherSet = { "use": [pitchers[0]], "target": [pitchers[0]]}
+        return pitcherSet
     
     for x in range(0, pSize):
         pitcher = pitchers[x]
@@ -357,7 +359,7 @@ def getPlayerSalaries(players):
                         player.salary = row[7]
                         result.append(player)
                 except:
-                    pass
+                    player.salary = -1000
             lineCount += 1
         
         FDFile.seek(0)
@@ -439,42 +441,68 @@ def writeSummary(players, pitchers, hrList):
 def writeSummaryToCSV(hitters, pitchers):
     wb = Workbook()
     #Create Hitters Sheet
-    hitterSheet = wb.create_sheet("Hitters")
+    #hitterSheet = wb.create_sheet("Hitters")
     #Create Pitchers Sheet
     pitcherSheet = wb.create_sheet("Pitchers")
 
     #Append Hitters
-    wb.active = 0
-    appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
-    hitterSheet.append(appendRow)
-    for hitter in hitters:
+    positions = ["C", "1B", "2B", "3B", "SS", "OF"]
+    for pos in positions:
+        sheet = wb.create_sheet(pos)
+        appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
+        sheet.append(appendRow)
+        for hitter in hitters[pos]:
+            appendRow = []
+            appendRow.append(hitter.position)
+            appendRow.append(hitter.name)
+            appendRow.append(hitter.teamName)
+            appendRow.append(hitter.salary)
+            appendRow.append(hitter.handedness)
+            appendRow.append(hitter.oppPitcher.name)
+            appendRow.append(round(hitter.overall, 2))
+            appendRow.append(round((hitter.overall / (float(hitter.salary) / 1000)), 2))
+
+            if hitter.matchupStats == None:
+                appendRow.append(0)
+                appendRow.append(0)
+                appendRow.append(0)
+                appendRow.append(0)
+                appendRow.append(0)
+                appendRow.append(0)
+            else:
+                appendRow.append(hitter.matchupStats['wOBA'])
+                appendRow.append(hitter.oppMatchupStats['wOBA'])
+                appendRow.append(hitter.matchupStats['ISO'])
+                appendRow.append(hitter.oppMatchupStats['ISO'])
+                appendRow.append(hitter.matchupStats['BABIP'])
+                appendRow.append(hitter.oppMatchupStats['BABIP'])
+            appendRow.append(hitter.hrRating)
+            appendRow.append(hitter.parkFactors['hr'])
+
+            sheet.append(appendRow)
+
+    appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "Park HR Factor"]
+    pitcherSheet.append(appendRow)
+    for pitcher in pitchers:
         appendRow = []
-        appendRow.append(hitter.position)
-        appendRow.append(hitter.name)
-        appendRow.append(hitter.teamName)
-        appendRow.append(hitter.salary)
-        appendRow.append(hitter.handedness)
-        appendRow.append(hitter.oppPitcher.name)
-        appendRow.append(round(hitter.overall, 2))
-        appendRow.append(round((hitter.overall / (float(hitter.salary) / 1000)), 2))
-
-        if hitter.matchupStats == None:
-            appendRow.append(0)
-            appendRow.append(0)
-            appendRow.append(0)
-            appendRow.append(0)
-            appendRow.append(0)
-            appendRow.append(0)
-        else:
-            appendRow.append(hitter.matchupStats['wOBA'])
-            appendRow.append(hitter.oppMatchupStats['wOBA'])
-            appendRow.append(hitter.matchupStats['ISO'])
-            appendRow.append(hitter.oppMatchupStats['ISO'])
-            appendRow.append(hitter.matchupStats['BABIP'])
-            appendRow.append(hitter.oppMatchupStats['BABIP'])
-        appendRow.append(hitter.hrRating)
-        appendRow.append(hitter.parkFactors['hr'])
-
-        hitterSheet.append(appendRow)
+        appendRow.append(pitcher.name)
+        appendRow.append(pitcher.teamName)
+        appendRow.append(pitcher.salary)
+        appendRow.append(pitcher.handedness)
+        appendRow.append(pitcher.oppTeamName)
+        appendRow.append(round(pitcher.overall, 2))
+        appendRow.append(round((hitter.overall / (float(pitcher.salary) / 1000)), 2))
+        appendRow.append(pitcher.kRate['vsL'])
+        appendRow.append(pitcher.kRate['vsR'])
+        appendRow.append(pitcher.kRate['opp'])
+        appendRow.append(round((pitcher.stats['vsL']['wOBA'] + pitcher.stats['vsR']['wOBA']) / 2, 2))
+        appendRow.append(pitcher.oppMatchupStats['wOBA'])
+        appendRow.append(round((pitcher.stats['vsL']['ISO'] + pitcher.stats['vsR']['ISO']) / 2, 2))
+        appendRow.append(pitcher.oppMatchupStats['ISO'])
+        appendRow.append(round((pitcher.stats['vsL']['BABIP'] + pitcher.stats['vsR']['BABIP']) / 2, 2))
+        appendRow.append(pitcher.oppMatchupStats['BABIP'])
+        appendRow.append(pitcher.parkFactors['hr'])
+        
+        pitcherSheet.append(appendRow)
 
     wb.save("Summary.xlsx")
