@@ -449,7 +449,7 @@ def writeSummaryToCSV(hitters, pitchers):
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
     for pos in positions:
         sheet = wb.create_sheet(pos)
-        appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
+        appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
             appendRow = []
@@ -469,7 +469,9 @@ def writeSummaryToCSV(hitters, pitchers):
                 appendRow.append(0)
                 appendRow.append(0)
                 appendRow.append(0)
+                appendRow.append(0)
             else:
+                appendRow.append(hitter.matchupStats['AB'])
                 appendRow.append(hitter.matchupStats['wOBA'])
                 appendRow.append(hitter.oppMatchupStats['wOBA'])
                 appendRow.append(hitter.matchupStats['ISO'])
@@ -480,8 +482,9 @@ def writeSummaryToCSV(hitters, pitchers):
             appendRow.append(hitter.parkFactors['hr'])
 
             sheet.append(appendRow)
+        sheet.freeze_panes = "A2"
 
-    appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "Park HR Factor"]
+    appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "Park HR Factor"]
     pitcherSheet.append(appendRow)
     for pitcher in pitchers:
         appendRow = []
@@ -492,6 +495,7 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow.append(pitcher.oppTeamName)
         appendRow.append(round(pitcher.overall, 2))
         appendRow.append(round((hitter.overall / (float(pitcher.salary) / 1000)), 2))
+        appendRow.append(pitcher.stats['vsL']['IP'] + pitcher.stats['vsR']['IP'])
         appendRow.append(pitcher.kRate['vsL'])
         appendRow.append(pitcher.kRate['vsR'])
         appendRow.append(pitcher.kRate['opp'])
@@ -504,5 +508,7 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow.append(pitcher.parkFactors['hr'])
         
         pitcherSheet.append(appendRow)
+
+    pitcherSheet.freeze_panes = "A2"
 
     wb.save("Summary.xlsx")
