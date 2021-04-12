@@ -112,6 +112,12 @@ def getGamesProbablePitchers(game, pitchers):
     awayRoster = getTeamRoster(game["away_id"])["roster"]
     pitcherHome = game["home_probable_pitcher"]
     pitcherAway = game["away_probable_pitcher"]
+
+    if pitcherHome == None or pitcherHome == "":
+        pitcherHome = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
+    if pitcherAway == None or pitcherAway == "":
+        pitcherAway = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
+
     try:
         parkFactorsForVenue = parkFactors[game['venue_name']]
     except Exception as e:
@@ -484,7 +490,7 @@ def writeSummaryToCSV(hitters, pitchers):
             sheet.append(appendRow)
         sheet.freeze_panes = "A2"
 
-    appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "Park HR Factor"]
+    appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "xFIP", "Park HR Factor"]
     pitcherSheet.append(appendRow)
     for pitcher in pitchers:
         appendRow = []
@@ -505,6 +511,7 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow.append(pitcher.oppMatchupStats['ISO'])
         appendRow.append(round((pitcher.stats['vsL']['BABIP'] + pitcher.stats['vsR']['BABIP']) / 2, 2))
         appendRow.append(pitcher.oppMatchupStats['BABIP'])
+        appendRow.append(round((pitcher.stats['vsL']['xFIP'] + pitcher.stats['vsR']['xFIP']) / 2, 2))
         appendRow.append(pitcher.parkFactors['hr'])
         
         pitcherSheet.append(appendRow)
