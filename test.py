@@ -42,6 +42,6 @@ def run(manualFill, slateStart, date, compare):
     sw.cleanUp()
 
 manualFill = True
-ss = datetime.datetime(2021, 4, 11, 13, 0, 0)
-date = "04/11/2021"
+ss = datetime.datetime(2021, 4, 20, 19, 0, 0)
+date = "04/20/2021"
 run(manualFill, ss, date, "after")

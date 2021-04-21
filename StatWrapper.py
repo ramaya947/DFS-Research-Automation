@@ -2,6 +2,8 @@ import csv, statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamA
 from pybaseball import playerid_reverse_lookup
 from dateutil import tz
 from openpyxl import Workbook
+from openpyxl.styles import PatternFill
+from Colors import Colors
 
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 teamAvg = TeamAverages.TeamAverages()
@@ -301,6 +303,9 @@ def getMostRecentStats(pid, pos):
             continue
         #TODO: REMOVE WHEN 2021 SAMPLE SIZE IS LARGE ENOUGH
 
+        #FOR GETTING CAREER STATS ONLY
+        #adjustedYear = 0
+
         url = PLAYER_STATS_URL.format(pid, pos, adjustedYear)
         data = requests.get(url)
         data = json.loads(data.text)
@@ -444,7 +449,28 @@ def writeSummary(players, pitchers, hrList):
     summaryFile.write(output)
     summaryFile.close()
 
+def getCellColor(value, standard, over):
+    num = value / standard
+
+    maxColor = Colors['Blue'] if over else Colors['Red']
+    highColor = Colors['Green'] if over else Colors['Yellow']
+    midColor = Colors['White']
+    lowColor = Colors['Yellow'] if over else Colors['Green']
+    minColor = Colors['Red'] if over else Colors['Blue']
+
+    if num >= 1.15:
+        return maxColor
+    elif num >= 1.075:
+        return highColor
+    elif num > .85 and num < 1.075:
+        return midColor
+    elif num <= .6:
+        return minColor
+    elif num <= .85:
+        return lowColor
+
 def writeSummaryToCSV(hitters, pitchers):
+    avgs = leagueAvg.averages
     wb = Workbook()
     #Create Hitters Sheet
     #hitterSheet = wb.create_sheet("Hitters")
@@ -455,7 +481,7 @@ def writeSummaryToCSV(hitters, pitchers):
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
     for pos in positions:
         sheet = wb.create_sheet(pos)
-        appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "HR Rating", "Park HR Factor"]
+        appendRow = ["Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "SB%", "HR Rating", "Park HR Factor"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
             appendRow = []
@@ -469,26 +495,51 @@ def writeSummaryToCSV(hitters, pitchers):
             appendRow.append(round((hitter.overall / (float(hitter.salary) / 1000)), 2))
 
             if hitter.matchupStats == None:
-                appendRow.append(0)
-                appendRow.append(0)
-                appendRow.append(0)
-                appendRow.append(0)
-                appendRow.append(0)
-                appendRow.append(0)
-                appendRow.append(0)
+                appendRow.append(0) #AB
+                appendRow.append(0) #wOBA
+                appendRow.append(0) #Opp wOBA
+                appendRow.append(0) #ISO
+                appendRow.append(0) #Opp ISO
+                appendRow.append(0) #BABIP
+                appendRow.append(0) #Opp BABIP
             else:
-                appendRow.append(hitter.matchupStats['AB'])
-                appendRow.append(hitter.matchupStats['wOBA'])
-                appendRow.append(hitter.oppMatchupStats['wOBA'])
-                appendRow.append(hitter.matchupStats['ISO'])
-                appendRow.append(hitter.oppMatchupStats['ISO'])
-                appendRow.append(hitter.matchupStats['BABIP'])
-                appendRow.append(hitter.oppMatchupStats['BABIP'])
-            appendRow.append(hitter.hrRating)
+                appendRow.append(round(hitter.matchupStats['AB'], 3))
+                appendRow.append(round(hitter.matchupStats['wOBA'], 3))
+                appendRow.append(round(hitter.oppMatchupStats['wOBA'], 3))
+                appendRow.append(round(hitter.matchupStats['ISO'], 3))
+                appendRow.append(round(hitter.oppMatchupStats['ISO'], 3))
+                appendRow.append(round(hitter.matchupStats['BABIP'], 3))
+                appendRow.append(round(hitter.oppMatchupStats['BABIP'], 3))
+        
+            try:
+                appendRow.append(round(hitter.matchupStats['SB'] / (hitter.matchupStats['1B'] + hitter.matchupStats['HBP'] + hitter.matchupStats['BB']), 2))
+            except:
+                appendRow.append(0)
+            
+            appendRow.append(round((hitter.hrRating * 1000), 2))
             appendRow.append(hitter.parkFactors['hr'])
 
             sheet.append(appendRow)
         sheet.freeze_panes = "A2"
+
+        #Apply Colors to wOBA Diff - J, K
+        for i in range(sheet.min_row + 1, sheet.max_row):
+            cell = sheet["J{}".format(i)]
+            c = getCellColor(cell.value, avgs['wOBA'], True)
+            cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+        for i in range(sheet.min_row + 1, sheet.max_row):
+            cell = sheet["K{}".format(i)]
+            c = getCellColor(cell.value, avgs['wOBA'], True)
+            cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+        #Apply Colors to BABIP Diff - N, O
+        for i in range(sheet.min_row + 1, sheet.max_row):
+            cell = sheet["N{}".format(i)]
+            c = getCellColor(cell.value, avgs['BABIP'], False)
+            cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+        for i in range(sheet.min_row + 1, sheet.max_row):
+            cell = sheet["O{}".format(i)]
+            c = getCellColor(cell.value, avgs['BABIP'], False)
+            cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
 
     appendRow = ["Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "xFIP", "Park HR Factor"]
     pitcherSheet.append(appendRow)
@@ -502,20 +553,55 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow.append(round(pitcher.overall, 2))
         appendRow.append(round((hitter.overall / (float(pitcher.salary) / 1000)), 2))
         appendRow.append(pitcher.stats['vsL']['IP'] + pitcher.stats['vsR']['IP'])
-        appendRow.append(pitcher.kRate['vsL'])
-        appendRow.append(pitcher.kRate['vsR'])
-        appendRow.append(pitcher.kRate['opp'])
-        appendRow.append(round((pitcher.stats['vsL']['wOBA'] + pitcher.stats['vsR']['wOBA']) / 2, 2))
-        appendRow.append(pitcher.oppMatchupStats['wOBA'])
-        appendRow.append(round((pitcher.stats['vsL']['ISO'] + pitcher.stats['vsR']['ISO']) / 2, 2))
-        appendRow.append(pitcher.oppMatchupStats['ISO'])
-        appendRow.append(round((pitcher.stats['vsL']['BABIP'] + pitcher.stats['vsR']['BABIP']) / 2, 2))
-        appendRow.append(pitcher.oppMatchupStats['BABIP'])
-        appendRow.append(round((pitcher.stats['vsL']['xFIP'] + pitcher.stats['vsR']['xFIP']) / 2, 2))
+        appendRow.append(round(pitcher.kRate['vsL'], 2))
+        appendRow.append(round(pitcher.kRate['vsR'], 2))
+        appendRow.append(round(pitcher.kRate['opp'], 2))
+        try:
+            appendRow.append(round((pitcher.stats['vsL']['wOBA'] + pitcher.stats['vsR']['wOBA']) / 2, 3))
+        except:
+            print("{} Missing wOBA".format(pitcher.name))
+            appendRow.append(0)
+        appendRow.append(round(pitcher.oppMatchupStats['wOBA'], 3))
+        try:
+            appendRow.append(round((pitcher.stats['vsL']['ISO'] + pitcher.stats['vsR']['ISO']) / 2, 3))
+        except:
+            print("{} Missing ISO".format(pitcher.name))
+            appendRow.append(0)
+        appendRow.append(round(pitcher.oppMatchupStats['ISO'], 3))
+        try:
+            appendRow.append(round((pitcher.stats['vsL']['BABIP'] + pitcher.stats['vsR']['BABIP']) / 2, 3))
+        except:
+            print("{} Missing BABIP".format(pitcher.name))
+            appendRow.append(0)
+        appendRow.append(round(pitcher.oppMatchupStats['BABIP'], 3))
+        try:
+            appendRow.append(round((pitcher.stats['vsL']['xFIP'] + pitcher.stats['vsR']['xFIP']) / 2, 2))
+        except:
+            print("{} Missing xFIP".format(pitcher.name))
+            appendRow.append(0)
         appendRow.append(pitcher.parkFactors['hr'])
         
         pitcherSheet.append(appendRow)
 
     pitcherSheet.freeze_panes = "A2"
+
+    #Apply Colors to wOBA Diff - L, M
+    for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
+        cell = pitcherSheet["L{}".format(i)]
+        c = getCellColor(cell.value, avgs['wOBA'], True)
+        cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+    for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
+        cell = pitcherSheet["M{}".format(i)]
+        c = getCellColor(cell.value, avgs['wOBA'], True)
+        cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+    #Apply Colors to BABIP Diff - P, Q
+    for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
+        cell = pitcherSheet["P{}".format(i)]
+        c = getCellColor(cell.value, avgs['BABIP'], False)
+        cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+    for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
+        cell = pitcherSheet["Q{}".format(i)]
+        c = getCellColor(cell.value, avgs['BABIP'], False)
+        cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
 
     wb.save("Summary.xlsx")
