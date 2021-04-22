@@ -3,5 +3,6 @@ Colors = {
     "Red": "fc0b03",
     "White": "ffffff",
     "Blue": "08daff",
-    "Yellow": "f7ff08"
+    "Yellow": "f7ff08",
+    "Orange": "ff8c00"
 }

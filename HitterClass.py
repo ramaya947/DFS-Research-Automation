@@ -17,6 +17,7 @@ class HitterClass:
     leagueAvgs = None
     matchupStats = None
     oppMatchupStats = None
+    gameCard = None
 
     def __init__(self, data, leagueAvgs, pitcher):
         self.pid = data['person']['id']
@@ -35,11 +36,12 @@ class HitterClass:
         else:
             return pos
 
-    def setOtherInformation(self, data):
+    def setOtherInformation(self, data, rgl):
         self.teamId = data['teamId']
         self.teamName = data['teamName']
         self.stadiumId = data['stadiumId']
         self.stadiumName = data['stadiumName']
+        self.gameCard = rgl.getGameCard(self.teamName)
 
     def assessSelf(self, avgPA):
         ps = self.oppPitcher.stats['vsL'] if self.handedness == "L" else self.oppPitcher.stats['vsR']

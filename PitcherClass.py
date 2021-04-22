@@ -24,6 +24,7 @@ class PitcherClass:
     pitchers = None
     gameInfo = None
     homeOrAway = None
+    gameCard = None
 
     def __init__(self, data, teamAvgs, leagueAvgs, oppRoster, gameInfo, parkFactors):
         self.pid = data['person']['id']
@@ -45,7 +46,7 @@ class PitcherClass:
         self.gameInfo = gameInfo
         self.parkFactors = parkFactors
 
-    def setOtherInformation(self, data):
+    def setOtherInformation(self, data, rgl):
         self.oppTeamId = data['oppTeamId']
         self.oppTeamName = data['oppTeamName']
         self.teamId = data['teamId']
@@ -53,6 +54,7 @@ class PitcherClass:
         self.stadiumId = data['stadiumId']
         self.stadiumName = data['stadiumName']
         self.home = data['homeOrAway']
+        self.gameCard = rgl.getGameCard(self.teamName)
 
     def assessSelf(self, avgIP):
         pitcherStats = {}
