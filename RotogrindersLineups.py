@@ -129,14 +129,12 @@ class RotogrindersLineups:
             battingOrderSoup = card.find("div", {"class": "blk away-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
             for player in battingOrderSoup:
                 name = player.find("a", {"class": "player-popup"}).text
-                print("Found {} for the away team".format(name))
                 awayBattingOrder.append(name)
             
             homeBattingOrder = []
             battingOrderSoup = card.find("div", {"class": "blk home-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
             for player in battingOrderSoup:
                 name = player.find("a", {"class": "player-popup"}).text
-                print("Found {} for the home team".format(name))
                 homeBattingOrder.append(name)
 
             gameData = {
@@ -158,6 +156,10 @@ class RotogrindersLineups:
 
     def getGameCard(self, teamName):
         key = self.nameToAbbrev[teamName]
+
+        if key == "WSN":
+            key = "WAS"
+
         for card in self.gameCards:
             if card.awayTeamKey == key or card.homeTeamKey == key:
                 return card

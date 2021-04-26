@@ -16,7 +16,9 @@ class HitterClass:
     overall = None
     leagueAvgs = None
     matchupStats = None
+    careerMatchupStats = None
     oppMatchupStats = None
+    careerOppMatchupStats = None
     gameCard = None
 
     def __init__(self, data, leagueAvgs, pitcher):
@@ -43,16 +45,91 @@ class HitterClass:
         self.stadiumName = data['stadiumName']
         self.gameCard = rgl.getGameCard(self.teamName)
 
-    def assessSelf(self, avgPA):
+    def assessSelfV2(self, avgPA):
         ps = self.oppPitcher.stats['vsL'] if self.handedness == "L" else self.oppPitcher.stats['vsR']
         ps['ISO'] = ps['SLG'] - ps['AVG']
         hs = self.stats['vsL'] if self.oppPitcher.handedness == "L" else self.stats['vsR']
+
+        careerPs = self.oppPitcher.stats['careerVsL'] if self.handedness == "L" else self.oppPitcher.stats['careerVsR']
+        careerPs['ISO'] = ps['SLG'] - ps['AVG']
+        careerHs = self.stats['careerVsL'] if self.oppPitcher.handedness == "L" else self.stats['careerVsR']
 
         if hs == None:
             return
 
         self.matchupStats = hs
         self.oppMatchupStats = ps
+        self.careerMatchupStats = careerHs
+        self.careerOppMatchupStats = careerPs
+
+        #All Times 10
+        #TODO: Add games OU
+        self.overall = 0
+        self.overall += (self.gameCard.getTeamOU(self.teamName))
+        #TODO: Add Recent Avg. wOBA minus league average
+        try:
+            self.overall += (((hs['wOBA'] + ps['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 10
+        except:
+            self.overall += 0
+        #TODO: Add Career Avg. wOBA minus league average
+        try:
+            self.overall += (((careerHs['wOBA'] + careerPs['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 15
+        except:
+            self.overall += 0
+        #TODO: Add Recent Avg. ISO minus league average
+        try:
+            self.overall += (((hs['ISO'] + ps['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 10
+        except:
+            self.overall += 0
+        #TODO: Add Career Avg. ISO minus league average
+        try:
+            self.overall += (((careerHs['ISO'] + careerPs['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 15
+        except:
+            self.overall += 0
+        #TODO: Minus BABIP ninus Career BABIP
+        try:
+            self.overall -= (hs['BABIP'] - careerHs['BABIP'])
+        except:
+            self.overall -= 0
+        #TODO: Add Recent Avg. FB% minus league average
+        try:
+            self.overall += (((hs['FB%'] + ps['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 10
+        except:
+            self.overall += 0
+        #TODO: Add Career Avg. FB% minus league average
+        try:
+            self.overall += (((careerHs['FB%'] + careerPs['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 15
+        except:
+            self.overall += 0
+        #TODO: Add Recent Avg. HR/FB minus league average
+        try:
+            self.overall += (((hs['HR/FB'] + ps['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 10
+        except:
+            self.overall += 0
+        #TODO: Add Career Avg. HR/FB minus league average
+        try:
+            self.overall += (((careerHs['HR/FB'] + careerPs['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 15
+        except:
+            self.overall += 0
+
+        self.calcHRRatingV2(hs, ps, careerHs, careerPs)
+
+    def assessSelf(self, avgPA):
+        ps = self.oppPitcher.stats['vsL'] if self.handedness == "L" else self.oppPitcher.stats['vsR']
+        ps['ISO'] = ps['SLG'] - ps['AVG']
+        hs = self.stats['vsL'] if self.oppPitcher.handedness == "L" else self.stats['vsR']
+
+        careerPs = self.oppPitcher.stats['careerVsL'] if self.handedness == "L" else self.oppPitcher.stats['careerVsR']
+        careerPs['ISO'] = ps['SLG'] - ps['AVG']
+        careerHs = self.stats['careerVsL'] if self.oppPitcher.handedness == "L" else self.stats['careerVsR']
+
+        if hs == None:
+            return
+
+        self.matchupStats = hs
+        self.oppMatchupStats = ps
+        self.careerMatchupStats = careerHs
+        self.careerOppMatchupStats = careerPs
 
         #First compare to league Average
         hittingStatsToUse = ["BB%", "K%", "ISO", "BABIP", "wOBA"]
@@ -112,6 +189,42 @@ class HitterClass:
     def applyAtBat(self, hpa, avgPA): #CHANGE TO AT BAT WEIGHT
         factor = (hpa / avgPA)
         self.overall = self.overall * factor
+
+    def calcHRRatingV2(self, hs, ps, careerHs, careerPs):
+        wISO = 0
+        try:
+            wISO = (((hs['ISO'] + ps['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 10
+        except:
+            pass
+        wCarISO = 0
+        try:
+            wCarISO = (((careerHs['ISO'] + careerPs['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 15
+        except:
+            pass
+        wHRFB = 0
+        try:
+            wHRFB = (((hs['HR/FB'] + ps['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 10
+        except:
+            pass
+        wCarHRFB = 0
+        try:
+            wCarHRFB = (((careerHs['HR/FB'] + careerPs['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 15
+        except:
+            pass
+        wFB = 0
+        try:
+            wFB = (((hs['FB%'] + ps['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 10
+        except:
+            pass
+        wCarFB = 0
+        try:
+            wCarFB = (((careerHs['FB%'] + careerPs['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 15
+        except:
+            pass
+
+        parkFactor = self.parkFactors['hr'] if self.parkFactors['hr'] != 0 else 1
+        
+        self.hrRating = (wISO + wCarISO + wHRFB + wCarHRFB + wFB + wCarFB) * parkFactor
 
     def calcHRRating(self, hs, ps):
         try:

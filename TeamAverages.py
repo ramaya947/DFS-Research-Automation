@@ -80,7 +80,7 @@ class TeamAverages:
     teamNameList = []
     
     def __init__(self):
-        lastYear = datetime.now().year - 1
+        lastYear = datetime.now().year
         url = self.URL.format(lastYear, self.SPLIT_KEY['vsL'], lastYear)
         page = requests.get(url)
         dfs = pd.read_html(page.text)
