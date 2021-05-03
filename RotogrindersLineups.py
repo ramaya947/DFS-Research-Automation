@@ -95,9 +95,13 @@ class RotogrindersLineups:
                 awayOU = 0
                 homeOU = 0
 
-            weatherSoup = card.find("div", {"class": "weather-status"})
-            weatherIcon = self.weatherIcons[weatherSoup.find("span")['class'][0]]
-            gameTime = weatherSoup.find("time").text
+            try:
+                weatherSoup = card.find("div", {"class": "weather-status"})
+                weatherIcon = self.weatherIcons[weatherSoup.find("span")['class'][0]]
+                gameTime = weatherSoup.find("time").text
+            except:
+                weatherIcon = "Dome"
+                
 
             #WIND IS RELATIVE TO STADIUM ORIENTATION
             windDirection = None

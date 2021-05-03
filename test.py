@@ -4,7 +4,6 @@ from dateutil import tz
 import LeagueAverages
 
 def run(manualFill, slateStart, date, compare):
-    print("\n\n\nYou are still defaulting to year 2020 for stats due to limited sample size, adjust when ready\n\n\n")
     cache.enable()
     games = sw.getDaysGames(manualFill, slateStart, compare, False, date)
     pitchers = []
@@ -42,6 +41,6 @@ def run(manualFill, slateStart, date, compare):
     sw.cleanUp()
 
 manualFill = True
-ss = datetime.datetime(2021, 4, 25, 14, 25, 0)
-date = "04/25/2021"
+ss = datetime.datetime(2021, 5, 2, 14, 40, 0)
+date = "05/02/2021"
 run(manualFill, ss, date, "before")

@@ -65,7 +65,7 @@ class HitterClass:
         #All Times 10
         #TODO: Add games OU
         self.overall = 0
-        self.overall += (self.gameCard.getTeamOU(self.teamName))
+        self.overall += float(self.gameCard.getTeamOU(self.teamName))
         #TODO: Add Recent Avg. wOBA minus league average
         try:
             self.overall += (((hs['wOBA'] + ps['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 10
@@ -113,6 +113,7 @@ class HitterClass:
             self.overall += 0
 
         self.calcHRRatingV2(hs, ps, careerHs, careerPs)
+        self.applyAtBat(hs['PA'], avgPA)
 
     def assessSelf(self, avgPA):
         ps = self.oppPitcher.stats['vsL'] if self.handedness == "L" else self.oppPitcher.stats['vsR']
@@ -183,12 +184,13 @@ class HitterClass:
             except ZeroDivisionError as e:
                 print(e)
 
-        self.applyAtBat(hs['PA'], avgPA)
         self.calcHRRating(hs, ps)
+        self.applyAtBat(hs['PA'], avgPA)
 
     def applyAtBat(self, hpa, avgPA): #CHANGE TO AT BAT WEIGHT
         factor = (hpa / avgPA)
         self.overall = self.overall * factor
+        self.hrRating = self.hrRating * factor
 
     def calcHRRatingV2(self, hs, ps, careerHs, careerPs):
         wISO = 0
@@ -224,7 +226,18 @@ class HitterClass:
 
         parkFactor = self.parkFactors['hr'] if self.parkFactors['hr'] != 0 else 1
         
-        self.hrRating = (wISO + wCarISO + wHRFB + wCarHRFB + wFB + wCarFB) * parkFactor
+        if self.gameCard.weatherIcon != "Dome":
+            wind = 0
+            if self.gameCard.windDirection == "North":
+                wind = float(self.gameCard.windSpeed) / 10
+            elif self.gameCard.windDirection == "South":
+                wind = float(self.gameCard.windSpeed) / -10
+            humidity = float(self.gameCard.humidity) / 100
+            temperature = float(self.gameCard.temperature) / 100
+
+            self.hrRating = (wISO + wCarISO + wHRFB + wCarHRFB + wFB + wCarFB + wind + humidity + temperature) * parkFactor
+        else:
+            self.hrRating = (wISO + wCarISO + wHRFB + wCarHRFB + wFB + wCarFB) * parkFactor
 
     def calcHRRating(self, hs, ps):
         try:

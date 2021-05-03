@@ -115,6 +115,8 @@ def getGamesProbablePitchers(game, pitchers):
     awayRoster = getTeamRoster(game["away_id"])["roster"]
     pitcherHome = game["home_probable_pitcher"]
     pitcherAway = game["away_probable_pitcher"]
+    homePitcherFound = False
+    awayPitcherFound = False
 
     if pitcherHome == None or pitcherHome == "":
         pitcherHome = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
@@ -134,6 +136,7 @@ def getGamesProbablePitchers(game, pitchers):
         for p in homeRoster:
             if pitcherHome in p["person"]["fullName"]:
                 print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
+                homePitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher, manualFill)
                 if pitcher.fid == None:
@@ -152,10 +155,40 @@ def getGamesProbablePitchers(game, pitchers):
                     if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
                         #pitcher.assessSelf()
                         pitchers.append(pitcher)
+        if not homePitcherFound:
+            player = statsapi.lookup_player(pitcherHome)[0]
+            if player != None or player['id'] != None:
+                data = {
+                    'person': {
+                        'id': player['id'],
+                        'fullName': pitcherHome
+                    },
+                    'position': {
+                        'abbreviation': player['primaryPosition']['abbreviation']
+                    }
+                }
+                pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
+                pitcher.fid = getFangraphsId(pitcher, manualFill)
+                if pitcher.fid != None:
+                    pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                    pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
+                    pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
+                    if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                        #pitcher.assessSelf()
+                        pitchers.append(pitcher)
+                    else:
+                        pitcher.fid = askUserForFID(pitcher.name)
+                        if pitcher.fid == None:
+                            pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                            if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                                #pitcher.assessSelf()
+                                pitchers.append(pitcher)
+            
     if pitcherAway != '':
         for p in awayRoster:
             if pitcherAway in p["person"]["fullName"]:
                 print("Found {} with pid: {}".format(pitcherAway, p["person"]["id"]))
+                awayPitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, homeRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher)
                 if pitcher.fid == None:
@@ -174,6 +207,34 @@ def getGamesProbablePitchers(game, pitchers):
                     if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
                         #pitcher.assessSelf()
                         pitchers.append(pitcher)
+        if not awayPitcherFound:
+            player = statsapi.lookup_player(pitcherAway)[0]
+            if player != None or player['id'] != None:
+                data = {
+                    'person': {
+                        'id': player['id'],
+                        'fullName': pitcherAway
+                    },
+                    'position': {
+                        'abbreviation': player['primaryPosition']['abbreviation']
+                    }
+                }
+                pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
+                pitcher.fid = getFangraphsId(pitcher, manualFill)
+                if pitcher.fid != None:
+                    pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                    pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
+                    pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
+                    if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                        #pitcher.assessSelf()
+                        pitchers.append(pitcher)
+                    else:
+                        pitcher.fid = askUserForFID(pitcher.name)
+                        if pitcher.fid == None:
+                            pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                            if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                                #pitcher.assessSelf()
+                                pitchers.append(pitcher)
 
 def assessPitchers(pitchers):
     totalInnings = 0
@@ -493,6 +554,7 @@ def writeSummaryToCSV(hitters, pitchers):
     #hitterSheet = wb.create_sheet("Hitters")
     #Create Pitchers Sheet
     pitcherSheet = wb.create_sheet("Pitchers")
+    hrHitters = []
 
     #Append Hitters
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
@@ -501,6 +563,7 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Order"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
+            hrHitters.append(hitter)
             teamOU = hitter.gameCard.getTeamOU(hitter.teamName)
 
             appendRow = []
@@ -687,5 +750,28 @@ def writeSummaryToCSV(hitters, pitchers):
     #    cell = pitcherSheet["S{}".format(i)]
     #    c = getCellColor(cell.value, avgs['BABIP'], False)
     #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+
+    #Add sheet for HR list
+    sheet = wb.create_sheet("HR")
+    hrHitters.sort(key=lambda x: x.hrRating, reverse=True)
+
+    header = ['Weather', 'Name', 'Pos', 'HR Rating']
+    sheet.append(header)
+    dataRow = []
+
+    count = 0
+    for hrHitter in hrHitters:
+        if count >= 15:
+            break
+        dataRow = []
+        dataRow.append(hrHitter.gameCard.weatherIcon)
+        dataRow.append(hrHitter.name)
+        dataRow.append(hrHitter.position)
+        dataRow.append(hrHitter.hrRating)
+
+        sheet.append(dataRow)
+
+        count += 1
+    sheet.freeze_panes = "A2"
 
     wb.save("Summary.xlsx")
