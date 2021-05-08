@@ -18,8 +18,21 @@ def analyze():
         namesToCheck = excelData['Name'].tolist()
         overalls = excelData['Overall'].tolist()
         overUnders = excelData['OU'].tolist()
+        recwOBADiff = excelData['Recent wOBA Diff'].tolist()
+        carwOBADiff = excelData['Career wOBA Diff'].tolist()
+        recISODiff = excelData['Recent ISO Diff'].tolist()
+        carISODiff = excelData['Career ISO Diff'].tolist()
+        BABIP = excelData['BABIP'].tolist()
+        carBABIP = excelData['Overall'].tolist()
+        oppBABIP = excelData['Opp BABIP'].tolist()
+        oppCarBABIP = excelData['Opp Career BABIP'].tolist()
+        recFBDiff = excelData['Recent FB% Diff'].tolist()
+        carFBDiff = excelData['Career FB% Diff'].tolist()
+        recHRFBDiff = excelData['Recent HR/FB Diff'].tolist()
+        carHRFBDiff = excelData['Career HR/FB Diff'].tolist()
+        hrRating = excelData['HR Rating'].tolist()
 
-        header = ["OU", "Name", "Overall", "Points"]
+        header = ["OU", "Name", "Overall", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "HR Rating", "Points"]
         sheet.append(header)
 
         count = 0
@@ -36,10 +49,26 @@ def analyze():
             dataRow.append(overUnders[count])
             dataRow.append(name)
             dataRow.append(overalls[count])
+            dataRow.append(recwOBADiff[count])
+            dataRow.append(carwOBADiff[count])
+            dataRow.append(recISODiff[count])
+            dataRow.append(carISODiff[count])
+            dataRow.append(BABIP[count])
+            dataRow.append(carBABIP[count])
+            dataRow.append(oppBABIP[count])
+            dataRow.append(oppCarBABIP[count])
+            dataRow.append(recFBDiff[count])
+            dataRow.append(carFBDiff[count])
+            dataRow.append(recHRFBDiff[count])
+            dataRow.append(carHRFBDiff[count])
+            dataRow.append(hrRating[count])
             dataRow.append(score)
+            
             sheet.append(dataRow)
 
             count += 1
+        
+        sheet.freeze_panes = "A2"
     
     wb.save("SummaryAnalyzed.xlsx")
 

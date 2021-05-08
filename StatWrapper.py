@@ -121,7 +121,7 @@ def getGamesProbablePitchers(game, pitchers):
     if pitcherHome == None or pitcherHome == "":
         pitcherHome = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
     if pitcherAway == None or pitcherAway == "":
-        pitcherAway = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
+        pitcherAway = input("Please input the name of today's pitcher for {}".format(game["away_name"]))
 
     try:
         parkFactorsForVenue = parkFactors[game['venue_name']]
@@ -138,7 +138,7 @@ def getGamesProbablePitchers(game, pitchers):
                 print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
                 homePitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
-                pitcher.fid = getFangraphsId(pitcher, manualFill)
+                pitcher.fid = getFangraphsId(pitcher)
                 if pitcher.fid == None:
                     continue
                 pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
