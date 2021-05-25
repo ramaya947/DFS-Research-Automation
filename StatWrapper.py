@@ -12,6 +12,16 @@ rgl = RotogrindersLineups.RotogrindersLineups()
 file = open("MissingPlayerIds.csv", "a+")
 manualFill = True
 parkFactors = json.loads(open("ParkFactors.json", "r").read())
+socket = None
+askQuestion = None
+
+def setSocket(so):
+    if so != None:
+        socket = so
+
+def setAskQuestionCallback(cb):
+    global askQuestion
+    askQuestion = cb
 
 def cleanUp():
     file.close()
@@ -111,6 +121,7 @@ def createHitters(pitcher, hitters):
         hitters.append(hitter)
 
 def getGamesProbablePitchers(game, pitchers):
+    global askQuestion
     homeRoster = getTeamRoster(game["home_id"])["roster"]
     awayRoster = getTeamRoster(game["away_id"])["roster"]
     pitcherHome = game["home_probable_pitcher"]
@@ -119,9 +130,11 @@ def getGamesProbablePitchers(game, pitchers):
     awayPitcherFound = False
 
     if pitcherHome == None or pitcherHome == "":
-        pitcherHome = input("Please input the name of today's pitcher for {}".format(game["home_name"]))
+        pitcherHome = input("Please input the name of today's pitcher for the {}".format(game["home_name"]))
+        #pitcherHome = askQuestion("Please input the name of today's pitcher for the {}".format(game["home_name"]))
     if pitcherAway == None or pitcherAway == "":
-        pitcherAway = input("Please input the name of today's pitcher for {}".format(game["away_name"]))
+        pitcherAway = input("Please input the name of today's pitcher for the {}".format(game["away_name"]))
+        #pitcherAway = askQuestion("Please input the name of today's pitcher for the {}".format(game["away_name"]))
 
     try:
         parkFactorsForVenue = parkFactors[game['venue_name']]
@@ -156,33 +169,36 @@ def getGamesProbablePitchers(game, pitchers):
                         #pitcher.assessSelf()
                         pitchers.append(pitcher)
         if not homePitcherFound:
-            player = statsapi.lookup_player(pitcherHome)[0]
-            if player != None or player['id'] != None:
-                data = {
-                    'person': {
-                        'id': player['id'],
-                        'fullName': pitcherHome
-                    },
-                    'position': {
-                        'abbreviation': player['primaryPosition']['abbreviation']
+            try:
+                player = statsapi.lookup_player(pitcherHome)[0]
+                if player != None or player['id'] != None:
+                    data = {
+                        'person': {
+                            'id': player['id'],
+                            'fullName': pitcherHome
+                        },
+                        'position': {
+                            'abbreviation': player['primaryPosition']['abbreviation']
+                        }
                     }
-                }
-                pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
-                pitcher.fid = getFangraphsId(pitcher, manualFill)
-                if pitcher.fid != None:
-                    pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
-                    pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
-                    pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
-                    if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
-                        #pitcher.assessSelf()
-                        pitchers.append(pitcher)
-                    else:
-                        pitcher.fid = askUserForFID(pitcher.name)
-                        if pitcher.fid == None:
-                            pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
-                            if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
-                                #pitcher.assessSelf()
-                                pitchers.append(pitcher)
+                    pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
+                    pitcher.fid = getFangraphsId(pitcher, manualFill)
+                    if pitcher.fid != None:
+                        pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                        pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
+                        pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
+                        if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                            #pitcher.assessSelf()
+                            pitchers.append(pitcher)
+                        else:
+                            pitcher.fid = askUserForFID(pitcher.name)
+                            if pitcher.fid == None:
+                                pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                                if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                                    #pitcher.assessSelf()
+                                    pitchers.append(pitcher)
+            except:
+                print("\n\Couldn't find home pitcher {}".format(pitcherHome))
             
     if pitcherAway != '':
         for p in awayRoster:
@@ -208,33 +224,36 @@ def getGamesProbablePitchers(game, pitchers):
                         #pitcher.assessSelf()
                         pitchers.append(pitcher)
         if not awayPitcherFound:
-            player = statsapi.lookup_player(pitcherAway)[0]
-            if player != None or player['id'] != None:
-                data = {
-                    'person': {
-                        'id': player['id'],
-                        'fullName': pitcherAway
-                    },
-                    'position': {
-                        'abbreviation': player['primaryPosition']['abbreviation']
+            try:
+                player = statsapi.lookup_player(pitcherAway)[0]
+                if player != None or player['id'] != None:
+                    data = {
+                        'person': {
+                            'id': player['id'],
+                            'fullName': pitcherAway
+                        },
+                        'position': {
+                            'abbreviation': player['primaryPosition']['abbreviation']
+                        }
                     }
-                }
-                pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
-                pitcher.fid = getFangraphsId(pitcher, manualFill)
-                if pitcher.fid != None:
-                    pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
-                    pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
-                    pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
-                    if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
-                        #pitcher.assessSelf()
-                        pitchers.append(pitcher)
-                    else:
-                        pitcher.fid = askUserForFID(pitcher.name)
-                        if pitcher.fid == None:
-                            pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
-                            if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
-                                #pitcher.assessSelf()
-                                pitchers.append(pitcher)
+                    pitcher = PitcherClass.PitcherClass(data, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
+                    pitcher.fid = getFangraphsId(pitcher, manualFill)
+                    if pitcher.fid != None:
+                        pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                        pitcher.setOtherInformation(setOtherInfo(game, "home"), rgl)
+                        pitcher.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(pitcher.pid)}))
+                        if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                            #pitcher.assessSelf()
+                            pitchers.append(pitcher)
+                        else:
+                            pitcher.fid = askUserForFID(pitcher.name)
+                            if pitcher.fid == None:
+                                pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
+                                if pitcher.stats['vsL'] != None and pitcher.stats['vsR'] != None:
+                                    #pitcher.assessSelf()
+                                    pitchers.append(pitcher)
+            except:
+                print("\nCould not find away Pitcher {}\n".format(pitcherAway))
 
 def assessPitchers(pitchers):
     totalInnings = 0
@@ -345,6 +364,7 @@ def askUserForFID(name):
         return None
 
     fid = input("Please provide {}'s confirmed Fangraphs ID:\n".format(name))
+    #fid = askQuestion("Please provide {}'s confirmed Fangraphs ID:\n".format(name))
 
     if fid == None or fid == "":
         print("Returning None")
