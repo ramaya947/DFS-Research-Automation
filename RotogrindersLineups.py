@@ -5,7 +5,7 @@ import datetime
 import re
 
 class RotogrindersLineups:
-    URL = "https://rotogrinders.com/lineups/mlb?date={}&site=fanduel"
+    URL = "https://rotogrinders.com/lineups/mlb?site=fanduel"
     weatherIcons = {
         "icn-dome": "Dome",
         "icn-sunny": "Sunny",
@@ -67,7 +67,8 @@ class RotogrindersLineups:
             
             date = "{}-{}-{}".format(year, month, day)
         
-        cards = self.makeRequest(self.URL.format(date))
+        #cards = self.makeRequest(self.URL.format(date))
+        cards = self.makeRequest(self.URL)
 
         self.readData(cards)
         #for card in self.gameCards:
