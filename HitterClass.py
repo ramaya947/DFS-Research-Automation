@@ -4,6 +4,7 @@ class HitterClass:
     name = None
     position = None
     salary = None
+    FDPos = None
     handedness = None
     oppPitcher = None
     teamId = None
@@ -65,22 +66,22 @@ class HitterClass:
         #All Times 10
         #TODO: Add games OU
         self.overall = 0
-        self.overall += float(self.gameCard.getTeamOU(self.teamName))
+        self.overall += float(self.gameCard.getTeamOU(self.teamName)) / 4.0
         #TODO: Add Recent Avg. wOBA minus league average
-        try:
-            self.overall += (((hs['wOBA'] + ps['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 10
-        except:
-            self.overall += 0
+        #try:
+        #    self.overall += (((hs['wOBA'] + ps['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 10
+        #except:
+        #    self.overall += 0
         #TODO: Add Career Avg. wOBA minus league average
         try:
             self.overall += (((careerHs['wOBA'] + careerPs['wOBA']) / 2) - self.leagueAvgs.averages['wOBA']) * 15
         except:
             self.overall += 0
         #TODO: Add Recent Avg. ISO minus league average
-        try:
-            self.overall += (((hs['ISO'] + ps['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 10
-        except:
-            self.overall += 0
+        #try:
+        #    self.overall += (((hs['ISO'] + ps['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 10
+        #except:
+        #    self.overall += 0
         #TODO: Add Career Avg. ISO minus league average
         try:
             self.overall += (((careerHs['ISO'] + careerPs['ISO']) / 2) - self.leagueAvgs.averages['ISO']) * 15
@@ -88,27 +89,27 @@ class HitterClass:
             self.overall += 0
         #TODO: Minus BABIP ninus Career BABIP
         try:
-            self.overall -= (hs['BABIP'] - careerHs['BABIP'])
+            self.overall -= (hs['BABIP'] - careerHs['BABIP']) * 10
         except:
             self.overall -= 0
         #TODO: Add Recent Avg. FB% minus league average
-        try:
-            self.overall += (((hs['FB%'] + ps['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 10
-        except:
-            self.overall += 0
+        #try:
+        #    self.overall += (((hs['FB%'] + ps['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 10
+        #except:
+        #    self.overall += 0
         #TODO: Add Career Avg. FB% minus league average
-        try:
-            self.overall += (((careerHs['FB%'] + careerPs['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 15
-        except:
-            self.overall += 0
+        #try:
+        #    self.overall += (((careerHs['FB%'] + careerPs['FB%']) / 2) - self.leagueAvgs.averages['FB']) * 15
+        #except:
+        #    self.overall += 0
         #TODO: Add Recent Avg. HR/FB minus league average
-        try:
-            self.overall += (((hs['HR/FB'] + ps['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 10
-        except:
-            self.overall += 0
+        #try:
+        #    self.overall += (((hs['HR/FB'] + ps['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 10
+        #except:
+        #    self.overall += 0
         #TODO: Add Career Avg. HR/FB minus league average
         try:
-            self.overall += (((careerHs['HR/FB'] + careerPs['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 15
+            self.overall += (((careerHs['HR/FB'] + careerPs['HR/FB']) / 2) - self.leagueAvgs.averages['HR/FB']) * 5
         except:
             self.overall += 0
 

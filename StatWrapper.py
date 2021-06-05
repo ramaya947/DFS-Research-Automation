@@ -466,6 +466,7 @@ def getPlayerSalaries(players):
                     csvName = "{} {}".format(row[2], row[4])
                     if name == csvName and teamKey == row[9]:
                         player.salary = row[7]
+                        player.FDPos = row[1]
                         result.append(player)
                 except:
                     player.salary = -1000
@@ -580,7 +581,7 @@ def writeSummaryToCSV(hitters, pitchers):
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
     for pos in positions:
         sheet = wb.create_sheet(pos)
-        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Order"]
+        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Order", "FD Pos", "Opp IP", "Opp Career IP"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
             hrHitters.append(hitter)
@@ -640,6 +641,15 @@ def writeSummaryToCSV(hitters, pitchers):
 
             battingOrder = hitter.gameCard.getPlayerBattingOrder(hitter.name)
             appendRow.append(battingOrder)
+
+            appendRow.append(hitter.FDPos)
+
+            if hitter.matchupStats == None:
+                appendRow.append(0) #Opp IP
+                appendRow.append(0) #Opp Career IP
+            else:
+                appendRow.append(hitter.oppMatchupStats['IP'])
+                appendRow.append(hitter.careerOppMatchupStats['IP'])
 
             sheet.append(appendRow)
         sheet.freeze_panes = "A2"

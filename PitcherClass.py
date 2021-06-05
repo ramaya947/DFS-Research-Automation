@@ -4,6 +4,7 @@ class PitcherClass:
     name = None
     position = None
     salary = None
+    FDPos = None
     handedness = None
     oppTeamId = None
     oppTeamName = None

@@ -1,292 +1,1079 @@
 Pitchers to use:
-	Julio Urias $11500 [Los Angeles Dodgers] vs San Francisco Giants - Overall: -2.94 K% Average: 0.3 K% vs L: 0.33 K% vs R: 0.28
-	Ian Anderson $9000 [Atlanta Braves] vs New York Mets - Overall: -7.92 K% Average: 0.26 K% vs L: 0.28 K% vs R: 0.24
+	Julio Urias $10300 [Los Angeles Dodgers] vs Atlanta Braves - Overall: -3.92 K% Average: 0.29 K% vs L: 0.32 K% vs R: 0.27
+	Jon Gray $6500 [Colorado Rockies] vs Oakland Athletics - Overall: -4.25 K% Average: 0.21 K% vs L: 0.14 K% vs R: 0.27
+	Nathan Eovaldi $7300 [Boston Red Sox] vs New York Yankees - Overall: -4.54 K% Average: 0.23 K% vs L: 0.22 K% vs R: 0.23
+	Shohei Ohtani $9500 [Los Angeles Angels] vs Seattle Mariners - Overall: -6.87 K% Average: 0.33 K% vs L: 0.26 K% vs R: 0.41
+	Freddy Peralta $8700 [Milwaukee Brewers] vs Arizona Diamondbacks - Overall: -7.61 K% Average: 0.37 K% vs L: 0.29 K% vs R: 0.45
+	Josh Fleming $6700 [Tampa Bay Rays] vs Texas Rangers - Overall: -9.24 K% Average: 0.18 K% vs L: 0.22 K% vs R: 0.14
+	Zack Wheeler $11500 [Philadelphia Phillies] vs Washington Nationals - Overall: -9.62 K% Average: 0.32 K% vs L: 0.33 K% vs R: 0.3
+	Max Scherzer $11200 [Washington Nationals] vs Philadelphia Phillies - Overall: -13.74 K% Average: 0.37 K% vs L: 0.36 K% vs R: 0.37
 
 Pitchers to target:
-	Taijuan Walker $8000 [New York Mets] vs Atlanta Braves - Overall: 0.49 K% Average: 0.24 K% vs L: 0.22 K% vs R: 0.25
-	Seth Frankoff $5600 [Arizona Diamondbacks] vs St. Louis Cardinals - Overall: 0.12 K% Average: 0.15 K% vs L: 0.19 K% vs R: 0.12
-	Adam Wainwright $9000 [St. Louis Cardinals] vs Arizona Diamondbacks - Overall: -0.27 K% Average: 0.22 K% vs L: 0.23 K% vs R: 0.22
-	Justin Dunn $6700 [Seattle Mariners] vs Texas Rangers - Overall: -1.58 K% Average: 0.22 K% vs L: 0.21 K% vs R: 0.22
-	Mike Foltynewicz $7100 [Texas Rangers] vs Seattle Mariners - Overall: -2.3 K% Average: 0.17 K% vs L: 0.14 K% vs R: 0.21
+	Brad Keller $7200 [Kansas City Royals] vs Minnesota Twins - Overall: 14.0 K% Average: 0.19 K% vs L: 0.22 K% vs R: 0.15
+	Zack Greinke $8200 [Houston Astros] vs Toronto Blue Jays - Overall: 13.2 K% Average: 0.19 K% vs L: 0.2 K% vs R: 0.19
+	Ian Anderson $8300 [Atlanta Braves] vs Los Angeles Dodgers - Overall: 8.3 K% Average: 0.26 K% vs L: 0.28 K% vs R: 0.24
+	Jake Arrieta $6800 [Chicago Cubs] vs San Francisco Giants - Overall: 7.65 K% Average: 0.18 K% vs L: 0.19 K% vs R: 0.17
+	Luis Castillo $6600 [Cincinnati Reds] vs St. Louis Cardinals - Overall: 3.93 K% Average: 0.19 K% vs L: 0.21 K% vs R: 0.17
+	Robert Dugger $5500 [Seattle Mariners] vs Los Angeles Angels - Overall: 3.81 K% Average: 0.22 K% vs L: 0.2 K% vs R: 0.23
+	Spencer Turnbull $8000 [Detroit Tigers] vs Chicago White Sox - Overall: 3.3 K% Average: 0.21 K% vs L: 0.21 K% vs R: 0.22
+	Dallas Keuchel $6700 [Chicago White Sox] vs Detroit Tigers - Overall: 3.0 K% Average: 0.14 K% vs L: 0.16 K% vs R: 0.11
+	Mitch Keller $6600 [Pittsburgh Pirates] vs Miami Marlins - Overall: 2.74 K% Average: 0.23 K% vs L: 0.18 K% vs R: 0.28
+	Michael King $5500 [New York Yankees] vs Boston Red Sox - Overall: 1.99 K% Average: 0.22 K% vs L: 0.25 K% vs R: 0.18
+	Hyun Jin Ryu $9200 [Toronto Blue Jays] vs Houston Astros - Overall: 1.59 K% Average: 0.28 K% vs L: 0.33 K% vs R: 0.23
+	Kyle Gibson $8100 [Texas Rangers] vs Tampa Bay Rays - Overall: 1.4 K% Average: 0.19 K% vs L: 0.14 K% vs R: 0.24
+	Scott Kazmir $5500 [San Francisco Giants] vs Chicago Cubs - Overall: 1.06 K% Average: 0.19 K% vs L: 0.14 K% vs R: 0.23
+	Joey Lucchesi $6000 [New York Mets] vs San Diego Padres - Overall: 0.79 K% Average: 0.24 K% vs L: 0.2 K% vs R: 0.29
+	Frankie Montas $7000 [Oakland Athletics] vs Colorado Rockies - Overall: 0.59 K% Average: 0.24 K% vs L: 0.32 K% vs R: 0.16
+	Keegan Akin $5600 [Baltimore Orioles] vs Cleveland Indians - Overall: 0.47 K% Average: 0.25 K% vs L: 0.33 K% vs R: 0.16
+	Kwang Hyun Kim $6300 [St. Louis Cardinals] vs Cincinnati Reds - Overall: -0.01 K% Average: 0.2 K% vs L: 0.21 K% vs R: 0.2
+	Blake Snell $7900 [San Diego Padres] vs New York Mets - Overall: -0.12 K% Average: 0.36 K% vs L: 0.42 K% vs R: 0.29
+	Matt Shoemaker $6200 [Minnesota Twins] vs Kansas City Royals - Overall: -1.13 K% Average: 0.15 K% vs L: 0.14 K% vs R: 0.15
+	Cody Poteet $6900 [Miami Marlins] vs Pittsburgh Pirates - Overall: -1.47 K% Average: 0.23 K% vs L: 0.22 K% vs R: 0.24
+	Matt Peacock $6400 [Arizona Diamondbacks] vs Milwaukee Brewers - Overall: -3.46 K% Average: 0.17 K% vs L: 0.08 K% vs R: 0.26
 
 Catchers to use:
-	Carson Kelly $3200 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 6.29 HR Rating: 1.23 Value Rating: 1.97
-	Stephen Vogt $2000 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 5.75 HR Rating: 1.8 Value Rating: 2.87
-	Tom Murphy $2100 [Seattle Mariners] vs Mike Foltynewicz - Overall: 3.73 HR Rating: 1.39 Value Rating: 1.78
-	Buster Posey $3300 [San Francisco Giants] vs Julio Urias - Overall: 2.82 HR Rating: 2.29 Value Rating: 0.85
-	William Contreras $2700 [Atlanta Braves] vs Taijuan Walker - Overall: 2.79 HR Rating: 0.08 Value Rating: 1.04
-	Yadier Molina $2700 [St. Louis Cardinals] vs Seth Frankoff - Overall: 2.12 HR Rating: -4.48 Value Rating: 0.79
-	Jonah Heim $2000 [Texas Rangers] vs Justin Dunn - Overall: 1.08 HR Rating: -0.63 Value Rating: 0.54
-	Jose Godoy $2000 [Seattle Mariners] vs Mike Foltynewicz - Overall: 0.68 HR Rating: -0.03 Value Rating: 0.34
-	Patrick Mazeika $2000 [New York Mets] vs Ian Anderson - Overall: 0.58 HR Rating: 0.09 Value Rating: 0.29
-	Jacob Nottingham $2000 [Seattle Mariners] vs Mike Foltynewicz - Overall: 0.52 HR Rating: -0.08 Value Rating: 0.26
-	Jose Trevino $2100 [Texas Rangers] vs Justin Dunn - Overall: 0.32 HR Rating: -2.59 Value Rating: 0.15
-	Buster Posey $3300 [San Francisco Giants] vs Logan Webb - Overall: 0.21 HR Rating: -1.6 Value Rating: 0.06
-	Curt Casali $2000 [San Francisco Giants] vs Julio Urias - Overall: 0.11 HR Rating: 0.14 Value Rating: 0.06
-	Kevan Smith $2200 [Atlanta Braves] vs Taijuan Walker - Overall: -0.22 HR Rating: -0.46 Value Rating: -0.1
-	Tomas Nido $2100 [New York Mets] vs Ian Anderson - Overall: -0.46 HR Rating: -2.11 Value Rating: -0.22
-	Andrew Knizner $2000 [St. Louis Cardinals] vs Seth Frankoff - Overall: -0.78 HR Rating: -3.34 Value Rating: -0.39
-	Curt Casali $2000 [San Francisco Giants] vs Logan Webb - Overall: -1.02 HR Rating: -1.24 Value Rating: -0.51
-	James McCann $2000 [New York Mets] vs Ian Anderson - Overall: -5.1 HR Rating: -9.95 Value Rating: -2.55
+	Yasmani Grandal $2700 [Chicago White Sox] vs Spencer Turnbull - Overall: 3.23 HR Rating: 0.42 Value Rating: 1.19
+	Will Smith $2400 [Los Angeles Dodgers] vs Ian Anderson - Overall: 2.7 HR Rating: 3.0 Value Rating: 1.13
+	Dom Nunez $3000 [Colorado Rockies] vs Frankie Montas - Overall: 2.35 HR Rating: 5.21 Value Rating: 0.78
+	Mike Zunino $2400 [Tampa Bay Rays] vs Kyle Gibson - Overall: 1.99 HR Rating: 1.0 Value Rating: 0.83
+	Gary Sanchez $2600 [New York Yankees] vs Nathan Eovaldi - Overall: 1.87 HR Rating: 2.16 Value Rating: 0.72
+	Salvador Perez $3000 [Kansas City Royals] vs Matt Shoemaker - Overall: 1.79 HR Rating: 4.83 Value Rating: 0.6
+	Sean Murphy $3000 [Oakland Athletics] vs Jon Gray - Overall: 1.76 HR Rating: 0.02 Value Rating: 0.59
+	Buster Posey $3300 [San Francisco Giants] vs Jake Arrieta - Overall: 1.58 HR Rating: 4.38 Value Rating: 0.48
+	Aramis Garcia $2500 [Oakland Athletics] vs Jon Gray - Overall: 1.46 HR Rating: 0.54 Value Rating: 0.58
+	Sandy Leon $2000 [Miami Marlins] vs Mitch Keller - Overall: 1.33 HR Rating: 0.83 Value Rating: 0.67
+	Stephen Vogt $2100 [Arizona Diamondbacks] vs Freddy Peralta - Overall: 1.02 HR Rating: 2.01 Value Rating: 0.49
+	Yadier Molina $2500 [St. Louis Cardinals] vs Luis Castillo - Overall: 1.01 HR Rating: 0.05 Value Rating: 0.4
+	Tom Murphy $2200 [Seattle Mariners] vs Shohei Ohtani - Overall: 0.95 HR Rating: 1.11 Value Rating: 0.43
+	Kurt Suzuki $2000 [Los Angeles Angels] vs Robert Dugger - Overall: 0.94 HR Rating: 1.14 Value Rating: 0.47
+	James McCann $2700 [New York Mets] vs Blake Snell - Overall: 0.88 HR Rating: 2.35 Value Rating: 0.33
+	Elias Diaz $2500 [Colorado Rockies] vs Frankie Montas - Overall: 0.78 HR Rating: -0.96 Value Rating: 0.31
+	Danny Jansen $2100 [Toronto Blue Jays] vs Zack Greinke - Overall: 0.75 HR Rating: 1.73 Value Rating: 0.36
+	Kyle Higashioka $2200 [New York Yankees] vs Nathan Eovaldi - Overall: 0.75 HR Rating: 1.43 Value Rating: 0.34
+	Jorge Alfaro $2200 [Miami Marlins] vs Mitch Keller - Overall: 0.75 HR Rating: -0.18 Value Rating: 0.34
+	Ryan Jeffers $2100 [Minnesota Twins] vs Brad Keller - Overall: 0.71 HR Rating: 0.76 Value Rating: 0.34
+	Eric Haase $2900 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.68 HR Rating: 1.91 Value Rating: 0.23
+	Willson Contreras $2900 [Chicago Cubs] vs Scott Kazmir - Overall: 0.66 HR Rating: 3.8 Value Rating: 0.23
+	J.T. Realmuto $2900 [Philadelphia Phillies] vs Max Scherzer - Overall: 0.58 HR Rating: 6.4 Value Rating: 0.2
+	William Contreras $2500 [Atlanta Braves] vs Julio Urias - Overall: 0.57 HR Rating: 1.48 Value Rating: 0.23
+	Michael Perez $2100 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.56 HR Rating: 1.88 Value Rating: 0.27
+	Tomas Nido $2000 [New York Mets] vs Blake Snell - Overall: 0.56 HR Rating: 0.94 Value Rating: 0.28
+	Andrew Knapp $2000 [Philadelphia Phillies] vs Max Scherzer - Overall: 0.54 HR Rating: 2.52 Value Rating: 0.27
+	Francisco Mejia $2100 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.52 HR Rating: -1.16 Value Rating: 0.25
+	Reese McGuire $2000 [Toronto Blue Jays] vs Zack Greinke - Overall: 0.49 HR Rating: -0.12 Value Rating: 0.24
+	Jake Rogers $2000 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.47 HR Rating: 0.5 Value Rating: 0.24
+	Austin Hedges $2300 [Cleveland Indians] vs Keegan Akin - Overall: 0.42 HR Rating: 0.95 Value Rating: 0.18
+	Cam Gallagher $2000 [Kansas City Royals] vs Matt Shoemaker - Overall: 0.4 HR Rating: 0.02 Value Rating: 0.2
+	Christian Vazquez $2200 [Boston Red Sox] vs Michael King - Overall: 0.4 HR Rating: -2.07 Value Rating: 0.18
+	Manny Pina $2100 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.33 HR Rating: -1.61 Value Rating: 0.16
+	Tyler Stephenson $2500 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.28 HR Rating: 0.55 Value Rating: 0.11
+	Jacob Stallings $2400 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.28 HR Rating: 0.72 Value Rating: 0.12
+	Martin Maldonado $2000 [Houston Astros] vs Hyun Jin Ryu - Overall: 0.22 HR Rating: 0.37 Value Rating: 0.11
+	Jose Trevino $2000 [Texas Rangers] vs Josh Fleming - Overall: 0.21 HR Rating: -2.05 Value Rating: 0.1
+	Max Stassi $2100 [Los Angeles Angels] vs Robert Dugger - Overall: 0.2 HR Rating: 0.99 Value Rating: 0.09
+	Ben Rortvedt $2000 [Minnesota Twins] vs Brad Keller - Overall: 0.17 HR Rating: 0.76 Value Rating: 0.08
+	Andrew Knizner $2000 [St. Louis Cardinals] vs Luis Castillo - Overall: 0.15 HR Rating: -1.12 Value Rating: 0.07
+	Kevin Plawecki $2000 [Boston Red Sox] vs Michael King - Overall: 0.11 HR Rating: -0.32 Value Rating: 0.05
+	Kevan Smith $2000 [Atlanta Braves] vs Julio Urias - Overall: 0.1 HR Rating: -0.34 Value Rating: 0.05
+	Austin Wynns $2000 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: 0.07 HR Rating: -0.51 Value Rating: 0.03
+	Alex Avila $2000 [Washington Nationals] vs Zack Wheeler - Overall: 0.06 HR Rating: -0.83 Value Rating: 0.03
+	Jonah Heim $2000 [Texas Rangers] vs Josh Fleming - Overall: 0.05 HR Rating: -0.17 Value Rating: 0.03
+	Garrett Stubbs $2000 [Houston Astros] vs Hyun Jin Ryu - Overall: 0.03 HR Rating: -0.19 Value Rating: 0.01
+	P.J. Higgins $2000 [Chicago Cubs] vs Scott Kazmir - Overall: 0.02 HR Rating: -0.07 Value Rating: 0.01
+	Chadwick Tromp $2000 [San Francisco Giants] vs Jake Arrieta - Overall: 0.01 HR Rating: 0.02 Value Rating: 0.01
+	Tucker Barnhart $2700 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.01 HR Rating: -0.1 Value Rating: -0.01
+	Jacob Nottingham $2100 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.1 HR Rating: -0.3 Value Rating: -0.05
+	Zack Collins $2000 [Chicago White Sox] vs Spencer Turnbull - Overall: -0.17 HR Rating: -1.63 Value Rating: -0.09
+	Victor Caratini $2100 [San Diego Padres] vs Joey Lucchesi - Overall: -0.25 HR Rating: 0.03 Value Rating: -0.12
+	Rene Rivera $2000 [Cleveland Indians] vs Keegan Akin - Overall: -0.25 HR Rating: 0.39 Value Rating: -0.13
+	Austin Barnes $2000 [Los Angeles Dodgers] vs Ian Anderson - Overall: -0.3 HR Rating: -1.59 Value Rating: -0.15
+	Yan Gomes $2300 [Washington Nationals] vs Zack Wheeler - Overall: -0.34 HR Rating: -0.54 Value Rating: -0.15
+	Jose Godoy $2100 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.38 HR Rating: -0.73 Value Rating: -0.18
+	Omar Narvaez $2200 [Milwaukee Brewers] vs Matt Peacock - Overall: -0.44 HR Rating: -5.53 Value Rating: -0.2
+	Carson Kelly $2500 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.72 HR Rating: 0.55 Value Rating: -0.29
+	Pedro Severino $2100 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -2.12 HR Rating: -4.69 Value Rating: -1.01
 
 First Basemen to use:
-	Nate Lowe $2900 [Texas Rangers] vs Justin Dunn - Overall: 9.47 HR Rating: 3.42 Value Rating: 3.26
-	Paul Goldschmidt $3100 [St. Louis Cardinals] vs Seth Frankoff - Overall: 7.3 HR Rating: -3.62 Value Rating: 2.36
-	Freddie Freeman $3700 [Atlanta Braves] vs Taijuan Walker - Overall: 7.04 HR Rating: -1.56 Value Rating: 1.9
-	Pablo Sandoval $2000 [Atlanta Braves] vs Taijuan Walker - Overall: 2.05 HR Rating: -0.21 Value Rating: 1.03
-	Johan Camargo $2000 [Atlanta Braves] vs Taijuan Walker - Overall: -0.24 HR Rating: -0.7 Value Rating: -0.12
+	Jared Walsh $3600 [Los Angeles Angels] vs Robert Dugger - Overall: 5.32 HR Rating: 12.72 Value Rating: 1.48
+	Paul Goldschmidt $3300 [St. Louis Cardinals] vs Luis Castillo - Overall: 5.16 HR Rating: 3.88 Value Rating: 1.56
+	Carlos Santana $3200 [Kansas City Royals] vs Matt Shoemaker - Overall: 4.45 HR Rating: 6.35 Value Rating: 1.39
+	Matt Olson $4100 [Oakland Athletics] vs Jon Gray - Overall: 4.22 HR Rating: 4.63 Value Rating: 1.03
+	Jesus Aguilar $2900 [Miami Marlins] vs Mitch Keller - Overall: 3.92 HR Rating: 5.45 Value Rating: 1.35
+	Anthony Rizzo $3200 [Chicago Cubs] vs Scott Kazmir - Overall: 3.82 HR Rating: 11.11 Value Rating: 1.19
+	Miguel Sano $2500 [Minnesota Twins] vs Brad Keller - Overall: 3.81 HR Rating: 5.39 Value Rating: 1.52
+	Vladimir Guerrero Jr. $4500 [Toronto Blue Jays] vs Zack Greinke - Overall: 3.16 HR Rating: 7.19 Value Rating: 0.7
+	Albert Pujols $2500 [Los Angeles Dodgers] vs Ian Anderson - Overall: 2.98 HR Rating: 0.45 Value Rating: 1.19
+	Rhys Hoskins $3200 [Philadelphia Phillies] vs Max Scherzer - Overall: 2.91 HR Rating: 14.8 Value Rating: 0.91
+	Max Muncy $3700 [Los Angeles Dodgers] vs Ian Anderson - Overall: 2.44 HR Rating: 2.94 Value Rating: 0.66
+	Jose Abreu $3600 [Chicago White Sox] vs Spencer Turnbull - Overall: 2.18 HR Rating: -3.4 Value Rating: 0.61
+	Mitch Moreland $3300 [Oakland Athletics] vs Jon Gray - Overall: 2.12 HR Rating: 1.1 Value Rating: 0.64
+	C.J. Cron $3400 [Colorado Rockies] vs Frankie Montas - Overall: 1.8 HR Rating: 2.94 Value Rating: 0.53
+	Keston Hiura $2200 [Milwaukee Brewers] vs Matt Peacock - Overall: 1.76 HR Rating: -2.87 Value Rating: 0.8
+	Pete Alonso $3400 [New York Mets] vs Blake Snell - Overall: 1.71 HR Rating: 4.3 Value Rating: 0.5
+	Rowdy Tellez $2300 [Toronto Blue Jays] vs Zack Greinke - Overall: 1.65 HR Rating: 0.27 Value Rating: 0.72
+	Freddie Freeman $3200 [Atlanta Braves] vs Julio Urias - Overall: 1.49 HR Rating: 0.27 Value Rating: 0.47
+	Bobby Dalbec $2100 [Boston Red Sox] vs Michael King - Overall: 1.29 HR Rating: 1.68 Value Rating: 0.62
+	Christian Walker $2300 [Arizona Diamondbacks] vs Freddy Peralta - Overall: 1.29 HR Rating: 0.4 Value Rating: 0.56
+	Miguel Cabrera $2600 [Detroit Tigers] vs Dallas Keuchel - Overall: 1.13 HR Rating: 0.17 Value Rating: 0.43
+	Willians Astudillo $2000 [Minnesota Twins] vs Brad Keller - Overall: 1.02 HR Rating: 0.92 Value Rating: 0.51
+	Yuli Gurriel $2500 [Houston Astros] vs Hyun Jin Ryu - Overall: 0.93 HR Rating: 1.98 Value Rating: 0.37
+	Matt Adams $2500 [Colorado Rockies] vs Frankie Montas - Overall: 0.81 HR Rating: 0.66 Value Rating: 0.33
+	Daniel Vogelbach $2200 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.67 HR Rating: -3.85 Value Rating: 0.31
+	Yandy Diaz $2200 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.56 HR Rating: -6.93 Value Rating: 0.26
+	Jonathan Schoop $2800 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.45 HR Rating: 0.23 Value Rating: 0.16
+	Josh Bell $2500 [Washington Nationals] vs Zack Wheeler - Overall: 0.42 HR Rating: 1.1 Value Rating: 0.17
+	Nate Lowe $3100 [Texas Rangers] vs Josh Fleming - Overall: 0.38 HR Rating: -3.78 Value Rating: 0.12
+	Will Craig $2100 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.05 HR Rating: 0.37 Value Rating: 0.03
+	Ryan Zimmerman $2400 [Washington Nationals] vs Zack Wheeler - Overall: -0.02 HR Rating: 1.64 Value Rating: -0.01
+	Alex Blandino $2000 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.03 HR Rating: -0.62 Value Rating: -0.02
+	Webster Rivas $2300 [San Diego Padres] vs Joey Lucchesi - Overall: -0.05 HR Rating: -0.12 Value Rating: -0.02
+	Pablo Sandoval $2000 [Atlanta Braves] vs Julio Urias - Overall: -0.06 HR Rating: -0.16 Value Rating: -0.03
+	Yermin Mercedes $2600 [Chicago White Sox] vs Spencer Turnbull - Overall: -0.2 HR Rating: -4.4 Value Rating: -0.08
+	Taylor Jones $2100 [Houston Astros] vs Hyun Jin Ryu - Overall: -0.31 HR Rating: -0.86 Value Rating: -0.15
+	Jake Bauers $2000 [Cleveland Indians] vs Keegan Akin - Overall: -0.56 HR Rating: -0.71 Value Rating: -0.28
+	Yu Chang $2000 [Cleveland Indians] vs Keegan Akin - Overall: -0.63 HR Rating: 0.33 Value Rating: -0.31
+	Eric Hosmer $3000 [San Diego Padres] vs Joey Lucchesi - Overall: -0.66 HR Rating: -2.72 Value Rating: -0.22
+	Trey Mancini $3800 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -1.19 HR Rating: -5.53 Value Rating: -0.31
+	Ryan Mountcastle $2700 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -1.57 HR Rating: -5.42 Value Rating: -0.58
 
 Second Basemen to use:
-	Eduardo Escobar $2700 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 12.19 HR Rating: 2.99 Value Rating: 4.51
-	Nick Solak $2800 [Texas Rangers] vs Justin Dunn - Overall: 6.23 HR Rating: -0.13 Value Rating: 2.23
-	Ty France $2500 [Seattle Mariners] vs Mike Foltynewicz - Overall: 4.73 HR Rating: -2.03 Value Rating: 1.89
-	Andrew Young $2000 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 3.99 HR Rating: 2.14 Value Rating: 2.0
-	Ozzie Albies $3100 [Atlanta Braves] vs Taijuan Walker - Overall: 3.57 HR Rating: -3.66 Value Rating: 1.15
-	Matt Carpenter $2000 [St. Louis Cardinals] vs Seth Frankoff - Overall: 3.42 HR Rating: -1.67 Value Rating: 1.71
-	Domingo Leyba $2000 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 0.12 HR Rating: -0.4 Value Rating: 0.06
-	Max Moroff $2000 [St. Louis Cardinals] vs Seth Frankoff - Overall: 0.11 HR Rating: -0.38 Value Rating: 0.05
-	Tommy Edman $2700 [St. Louis Cardinals] vs Seth Frankoff - Overall: -0.15 HR Rating: -10.57 Value Rating: -0.05
-	Jack Mayfield $2000 [Seattle Mariners] vs Mike Foltynewicz - Overall: -0.23 HR Rating: -0.44 Value Rating: -0.12
-	Donovan Solano $2200 [San Francisco Giants] vs Julio Urias - Overall: -0.28 HR Rating: -0.41 Value Rating: -0.13
-	Donovan Walton $2000 [Seattle Mariners] vs Mike Foltynewicz - Overall: -0.47 HR Rating: -1.47 Value Rating: -0.23
-	Jose Peraza $2200 [New York Mets] vs Ian Anderson - Overall: -0.8 HR Rating: -2.43 Value Rating: -0.37
-	Donovan Solano $2200 [San Francisco Giants] vs Logan Webb - Overall: -2.05 HR Rating: -2.62 Value Rating: -0.93
+	Ryan McMahon $3800 [Colorado Rockies] vs Frankie Montas - Overall: 4.27 HR Rating: 6.33 Value Rating: 1.12
+	Whit Merrifield $3300 [Kansas City Royals] vs Matt Shoemaker - Overall: 3.26 HR Rating: 1.2 Value Rating: 0.99
+	Brandon Lowe $2900 [Tampa Bay Rays] vs Kyle Gibson - Overall: 3.08 HR Rating: -0.55 Value Rating: 1.06
+	Matt Carpenter $2100 [St. Louis Cardinals] vs Luis Castillo - Overall: 2.85 HR Rating: 2.07 Value Rating: 1.36
+	Jorge Polanco $3100 [Minnesota Twins] vs Brad Keller - Overall: 2.5 HR Rating: 0.57 Value Rating: 0.81
+	Jed Lowrie $3600 [Oakland Athletics] vs Jon Gray - Overall: 2.19 HR Rating: -0.69 Value Rating: 0.61
+	Marwin Gonzalez $2100 [Boston Red Sox] vs Michael King - Overall: 1.99 HR Rating: -1.35 Value Rating: 0.95
+	David Fletcher $2700 [Los Angeles Angels] vs Robert Dugger - Overall: 1.98 HR Rating: -0.75 Value Rating: 0.74
+	Tommy Edman $3000 [St. Louis Cardinals] vs Luis Castillo - Overall: 1.89 HR Rating: -2.65 Value Rating: 0.63
+	Cesar Hernandez $2600 [Cleveland Indians] vs Keegan Akin - Overall: 1.51 HR Rating: 1.5 Value Rating: 0.58
+	Rougned Odor $2400 [New York Yankees] vs Nathan Eovaldi - Overall: 1.47 HR Rating: 1.22 Value Rating: 0.61
+	Ozzie Albies $3300 [Atlanta Braves] vs Julio Urias - Overall: 1.47 HR Rating: 1.7 Value Rating: 0.45
+	Eduardo Escobar $3200 [Arizona Diamondbacks] vs Freddy Peralta - Overall: 1.27 HR Rating: 3.03 Value Rating: 0.4
+	Wilmer Flores $2200 [San Francisco Giants] vs Jake Arrieta - Overall: 1.18 HR Rating: 3.96 Value Rating: 0.54
+	DJ LeMahieu $3000 [New York Yankees] vs Nathan Eovaldi - Overall: 1.18 HR Rating: -9.13 Value Rating: 0.39
+	Gavin Lux $2700 [Los Angeles Dodgers] vs Ian Anderson - Overall: 1.06 HR Rating: -0.45 Value Rating: 0.39
+	Adam Frazier $3000 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.97 HR Rating: 1.19 Value Rating: 0.32
+	Mike Brosseau $2500 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.92 HR Rating: -1.06 Value Rating: 0.37
+	Isan Diaz $2000 [Miami Marlins] vs Mitch Keller - Overall: 0.89 HR Rating: 1.43 Value Rating: 0.44
+	Jose Altuve $4000 [Houston Astros] vs Hyun Jin Ryu - Overall: 0.87 HR Rating: -0.95 Value Rating: 0.22
+	Jazz Chisholm Jr. $3200 [Miami Marlins] vs Mitch Keller - Overall: 0.76 HR Rating: 2.79 Value Rating: 0.24
+	Nick Solak $2700 [Texas Rangers] vs Josh Fleming - Overall: 0.64 HR Rating: -1.59 Value Rating: 0.24
+	Jose Peraza $2200 [New York Mets] vs Blake Snell - Overall: 0.57 HR Rating: 0.67 Value Rating: 0.26
+	Willi Castro $2800 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.55 HR Rating: -0.7 Value Rating: 0.2
+	Donovan Solano $2600 [San Francisco Giants] vs Jake Arrieta - Overall: 0.32 HR Rating: 0.48 Value Rating: 0.12
+	Christian Arroyo $2100 [Boston Red Sox] vs Michael King - Overall: 0.23 HR Rating: -0.23 Value Rating: 0.11
+	Marcus Semien $3700 [Toronto Blue Jays] vs Zack Greinke - Overall: 0.22 HR Rating: 5.53 Value Rating: 0.06
+	Jake Cronenworth $3300 [San Diego Padres] vs Joey Lucchesi - Overall: 0.15 HR Rating: 0.05 Value Rating: 0.04
+	Tony Kemp $3000 [Oakland Athletics] vs Jon Gray - Overall: 0.12 HR Rating: -1.33 Value Rating: 0.04
+	Alan Trejo $2500 [Colorado Rockies] vs Frankie Montas - Overall: 0.11 HR Rating: -0.91 Value Rating: 0.04
+	Eric Sogard $2000 [Chicago Cubs] vs Scott Kazmir - Overall: 0.08 HR Rating: -0.04 Value Rating: 0.04
+	Mike Freeman $2000 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.05 HR Rating: -0.04 Value Rating: 0.03
+	Robel Garcia $2000 [Houston Astros] vs Hyun Jin Ryu - Overall: 0.03 HR Rating: -0.12 Value Rating: 0.02
+	Brendan Rodgers $2500 [Colorado Rockies] vs Frankie Montas - Overall: 0.01 HR Rating: -1.22 Value Rating: 0.01
+	Travis Blankenhorn $2000 [New York Mets] vs Blake Snell - Overall: -0.03 HR Rating: -0.07 Value Rating: -0.01
+	Ty France $2700 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.06 HR Rating: -3.88 Value Rating: -0.02
+	Kean Wong $2500 [Los Angeles Angels] vs Robert Dugger - Overall: -0.11 HR Rating: 0.17 Value Rating: -0.05
+	Aledmys Diaz $2400 [Houston Astros] vs Hyun Jin Ryu - Overall: -0.13 HR Rating: -0.38 Value Rating: -0.06
+	Harold Castro $2000 [Detroit Tigers] vs Dallas Keuchel - Overall: -0.17 HR Rating: -0.51 Value Rating: -0.08
+	Jean Segura $3100 [Philadelphia Phillies] vs Max Scherzer - Overall: -0.17 HR Rating: 1.51 Value Rating: -0.05
+	Jack Mayfield $2000 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.18 HR Rating: -0.62 Value Rating: -0.09
+	Jordy Mercer $2000 [Washington Nationals] vs Zack Wheeler - Overall: -0.29 HR Rating: -0.89 Value Rating: -0.15
+	Nick Maton $2000 [Philadelphia Phillies] vs Max Scherzer - Overall: -0.4 HR Rating: 1.18 Value Rating: -0.2
+	Owen Miller $2000 [Cleveland Indians] vs Keegan Akin - Overall: -0.45 HR Rating: -1.12 Value Rating: -0.22
+	Ramon Urias $2000 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -0.47 HR Rating: -1.75 Value Rating: -0.23
+	Jonathan India $2300 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.48 HR Rating: -1.45 Value Rating: -0.21
+	Stevie Wilkerson $2000 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -0.59 HR Rating: -2.94 Value Rating: -0.3
+	Nick Madrigal $2600 [Chicago White Sox] vs Spencer Turnbull - Overall: -0.68 HR Rating: -13.18 Value Rating: -0.26
+	Donovan Walton $2000 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.85 HR Rating: -1.41 Value Rating: -0.43
+	Josh Harrison $2600 [Washington Nationals] vs Zack Wheeler - Overall: -1.85 HR Rating: -2.86 Value Rating: -0.71
 
 Third Basemen to use:
-	Kyle Seager $2800 [Seattle Mariners] vs Mike Foltynewicz - Overall: 11.47 HR Rating: 3.49 Value Rating: 4.1
-	Nolan Arenado $3600 [St. Louis Cardinals] vs Seth Frankoff - Overall: 9.34 HR Rating: -2.11 Value Rating: 2.59
-	Austin Riley $3400 [Atlanta Braves] vs Taijuan Walker - Overall: 5.28 HR Rating: -1.88 Value Rating: 1.55
-	Evan Longoria $2800 [San Francisco Giants] vs Julio Urias - Overall: 3.59 HR Rating: 3.07 Value Rating: 1.28
-	Charlie Culberson $2000 [Texas Rangers] vs Justin Dunn - Overall: 1.43 HR Rating: -0.63 Value Rating: 0.72
-	Brock Holt $2500 [Texas Rangers] vs Justin Dunn - Overall: 1.37 HR Rating: -1.34 Value Rating: 0.55
-	Jason Vosler $2000 [San Francisco Giants] vs Julio Urias - Overall: 1.01 HR Rating: 0.82 Value Rating: 0.51
-	Evan Longoria $2800 [San Francisco Giants] vs Logan Webb - Overall: 0.17 HR Rating: -1.03 Value Rating: 0.06
-	Eric Campbell $2000 [Seattle Mariners] vs Mike Foltynewicz - Overall: 0.01 HR Rating: -0.31 Value Rating: 0.01
-	Brandon Drury $2200 [New York Mets] vs Ian Anderson - Overall: -0.29 HR Rating: -0.75 Value Rating: -0.13
-	Jason Vosler $2000 [San Francisco Giants] vs Logan Webb - Overall: -1.06 HR Rating: -0.68 Value Rating: -0.53
-	Jonathan Villar $2700 [New York Mets] vs Ian Anderson - Overall: -1.28 HR Rating: -6.27 Value Rating: -0.48
+	Nolan Arenado $3600 [St. Louis Cardinals] vs Luis Castillo - Overall: 4.62 HR Rating: 5.39 Value Rating: 1.28
+	Hunter Dozier $2500 [Kansas City Royals] vs Matt Shoemaker - Overall: 3.8 HR Rating: 4.2 Value Rating: 1.52
+	Josh Donaldson $3000 [Minnesota Twins] vs Brad Keller - Overall: 3.78 HR Rating: 2.43 Value Rating: 1.26
+	Rafael Devers $3500 [Boston Red Sox] vs Michael King - Overall: 3.66 HR Rating: 11.66 Value Rating: 1.05
+	Matt Chapman $3700 [Oakland Athletics] vs Jon Gray - Overall: 3.59 HR Rating: 0.43 Value Rating: 0.97
+	Anthony Rendon $3200 [Los Angeles Angels] vs Robert Dugger - Overall: 2.43 HR Rating: 5.19 Value Rating: 0.76
+	Joshua Fuentes $3000 [Colorado Rockies] vs Frankie Montas - Overall: 2.21 HR Rating: 1.06 Value Rating: 0.74
+	Manny Machado $3800 [San Diego Padres] vs Joey Lucchesi - Overall: 2.19 HR Rating: 2.57 Value Rating: 0.58
+	Alec Bohm $2400 [Philadelphia Phillies] vs Max Scherzer - Overall: 2.08 HR Rating: 1.88 Value Rating: 0.87
+	Alex Bregman $3500 [Houston Astros] vs Hyun Jin Ryu - Overall: 2.06 HR Rating: 2.23 Value Rating: 0.59
+	Evan Longoria $3200 [San Francisco Giants] vs Jake Arrieta - Overall: 2.01 HR Rating: 6.46 Value Rating: 0.63
+	Jose Ramirez $3900 [Cleveland Indians] vs Keegan Akin - Overall: 1.65 HR Rating: 2.88 Value Rating: 0.42
+	Jon Berti $2000 [Miami Marlins] vs Mitch Keller - Overall: 1.65 HR Rating: -1.15 Value Rating: 0.83
+	Justin Turner $3000 [Los Angeles Dodgers] vs Ian Anderson - Overall: 1.5 HR Rating: -0.78 Value Rating: 0.5
+	Travis Shaw $2300 [Milwaukee Brewers] vs Matt Peacock - Overall: 1.42 HR Rating: -3.74 Value Rating: 0.62
+	Gio Urshela $2500 [New York Yankees] vs Nathan Eovaldi - Overall: 1.18 HR Rating: -0.52 Value Rating: 0.47
+	Kyle Seager $2800 [Seattle Mariners] vs Shohei Ohtani - Overall: 1.14 HR Rating: 3.14 Value Rating: 0.41
+	Yoan Moncada $3400 [Chicago White Sox] vs Spencer Turnbull - Overall: 1.06 HR Rating: -3.38 Value Rating: 0.31
+	Austin Riley $3000 [Atlanta Braves] vs Julio Urias - Overall: 0.82 HR Rating: 2.02 Value Rating: 0.27
+	Erik Gonzalez $2100 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.8 HR Rating: -2.07 Value Rating: 0.38
+	Jose Rojas $2100 [Los Angeles Angels] vs Robert Dugger - Overall: 0.59 HR Rating: 3.47 Value Rating: 0.28
+	Jonathan Villar $2900 [New York Mets] vs Blake Snell - Overall: 0.58 HR Rating: 0.88 Value Rating: 0.2
+	Ke'Bryan Hayes $3000 [Pittsburgh Pirates] vs Cody Poteet - Overall: 0.58 HR Rating: 0.83 Value Rating: 0.19
+	Phil Gosselin $2000 [Los Angeles Angels] vs Robert Dugger - Overall: 0.46 HR Rating: 0.1 Value Rating: 0.23
+	Joey Wendle $3100 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.45 HR Rating: -3.45 Value Rating: 0.14
+	Joe Panik $2100 [Toronto Blue Jays] vs Zack Greinke - Overall: 0.3 HR Rating: -0.45 Value Rating: 0.14
+	Patrick Wisdom $2900 [Chicago Cubs] vs Scott Kazmir - Overall: 0.24 HR Rating: 1.94 Value Rating: 0.08
+	Jeimer Candelario $2700 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.14 HR Rating: -1.3 Value Rating: 0.05
+	Brandon Drury $2100 [New York Mets] vs Blake Snell - Overall: 0.11 HR Rating: 0.57 Value Rating: 0.05
+	Brock Holt $2200 [Texas Rangers] vs Josh Fleming - Overall: -0.01 HR Rating: -0.89 Value Rating: -0.0
+	Santiago Espinal $2000 [Toronto Blue Jays] vs Zack Greinke - Overall: -0.07 HR Rating: 0.01 Value Rating: -0.03
+	Ildemaro Vargas $2000 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.07 HR Rating: -1.29 Value Rating: -0.03
+	Hanser Alberto $2000 [Kansas City Royals] vs Matt Shoemaker - Overall: -0.09 HR Rating: 0.18 Value Rating: -0.04
+	Kelvin Gutierrez $2200 [Kansas City Royals] vs Matt Shoemaker - Overall: -0.1 HR Rating: -1.09 Value Rating: -0.04
+	Pablo Reyes $2000 [Milwaukee Brewers] vs Matt Peacock - Overall: -0.26 HR Rating: -0.88 Value Rating: -0.13
+	Jason Vosler $2000 [San Francisco Giants] vs Jake Arrieta - Overall: -0.34 HR Rating: 0.55 Value Rating: -0.17
+	Charlie Culberson $2000 [Texas Rangers] vs Josh Fleming - Overall: -0.44 HR Rating: -1.27 Value Rating: -0.22
+	Starlin Castro $2100 [Washington Nationals] vs Zack Wheeler - Overall: -0.94 HR Rating: -4.9 Value Rating: -0.45
+	Maikel Franco $2600 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -1.41 HR Rating: -7.15 Value Rating: -0.54
 
 Shortstops to use:
-	Nick Ahmed $2200 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 3.95 HR Rating: -1.61 Value Rating: 1.8
-	J.P. Crawford $2300 [Seattle Mariners] vs Mike Foltynewicz - Overall: 3.59 HR Rating: -2.7 Value Rating: 1.56
-	Isiah Kiner-Falefa $2600 [Texas Rangers] vs Justin Dunn - Overall: 2.09 HR Rating: -4.36 Value Rating: 0.8
-	Dansby Swanson $2500 [Atlanta Braves] vs Taijuan Walker - Overall: 1.6 HR Rating: -5.92 Value Rating: 0.64
-	Brandon Crawford $2500 [San Francisco Giants] vs Logan Webb - Overall: 1.37 HR Rating: -0.22 Value Rating: 0.55
-	Brandon Crawford $2500 [San Francisco Giants] vs Julio Urias - Overall: 0.77 HR Rating: 0.9 Value Rating: 0.31
-	Mauricio Dubon $2100 [San Francisco Giants] vs Julio Urias - Overall: 0.29 HR Rating: 0.26 Value Rating: 0.14
-	Edmundo Sosa $2200 [St. Louis Cardinals] vs Seth Frankoff - Overall: -0.38 HR Rating: -3.58 Value Rating: -0.17
-	Wilfredo Tovar $2000 [New York Mets] vs Ian Anderson - Overall: -0.89 HR Rating: -1.35 Value Rating: -0.45
-	Francisco Lindor $2800 [New York Mets] vs Ian Anderson - Overall: -1.89 HR Rating: -8.17 Value Rating: -0.68
-	Mauricio Dubon $2100 [San Francisco Giants] vs Logan Webb - Overall: -2.11 HR Rating: -2.69 Value Rating: -1.01
+	Bo Bichette $3800 [Toronto Blue Jays] vs Zack Greinke - Overall: 3.84 HR Rating: 4.7 Value Rating: 1.01
+	Fernando Tatis Jr. $4600 [San Diego Padres] vs Joey Lucchesi - Overall: 1.6 HR Rating: 3.19 Value Rating: 0.35
+	Francisco Lindor $3000 [New York Mets] vs Blake Snell - Overall: 1.59 HR Rating: 2.39 Value Rating: 0.53
+	Eugenio Suarez $3200 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 1.57 HR Rating: 0.63 Value Rating: 0.49
+	Gleyber Torres $2900 [New York Yankees] vs Nathan Eovaldi - Overall: 1.56 HR Rating: -0.61 Value Rating: 0.54
+	Javier Baez $3600 [Chicago Cubs] vs Scott Kazmir - Overall: 1.53 HR Rating: 3.1 Value Rating: 0.42
+	Xander Bogaerts $3300 [Boston Red Sox] vs Michael King - Overall: 1.43 HR Rating: 3.08 Value Rating: 0.43
+	Kevin Newman $2500 [Pittsburgh Pirates] vs Cody Poteet - Overall: 1.18 HR Rating: -0.57 Value Rating: 0.47
+	Carlos Correa $3200 [Houston Astros] vs Hyun Jin Ryu - Overall: 1.12 HR Rating: -1.15 Value Rating: 0.35
+	Amed Rosario $2400 [Cleveland Indians] vs Keegan Akin - Overall: 1.11 HR Rating: 1.32 Value Rating: 0.46
+	Brandon Crawford $2700 [San Francisco Giants] vs Jake Arrieta - Overall: 0.78 HR Rating: 6.97 Value Rating: 0.29
+	Mauricio Dubon $2100 [San Francisco Giants] vs Jake Arrieta - Overall: 0.59 HR Rating: 2.94 Value Rating: 0.28
+	Niko Goodrum $2500 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.52 HR Rating: -1.51 Value Rating: 0.21
+	Willy Adames $2400 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.49 HR Rating: -6.53 Value Rating: 0.2
+	Kyle Farmer $2100 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.46 HR Rating: -0.09 Value Rating: 0.22
+	Andrelton Simmons $2000 [Minnesota Twins] vs Brad Keller - Overall: 0.45 HR Rating: -2.04 Value Rating: 0.23
+	Ha-Seong Kim $2200 [San Diego Padres] vs Joey Lucchesi - Overall: 0.41 HR Rating: 0.53 Value Rating: 0.19
+	Elvis Andrus $3000 [Oakland Athletics] vs Jon Gray - Overall: 0.36 HR Rating: -6.5 Value Rating: 0.12
+	Edmundo Sosa $2000 [St. Louis Cardinals] vs Luis Castillo - Overall: 0.35 HR Rating: -2.64 Value Rating: 0.18
+	Nicky Lopez $2100 [Kansas City Royals] vs Matt Shoemaker - Overall: 0.35 HR Rating: -1.73 Value Rating: 0.17
+	Dansby Swanson $2900 [Atlanta Braves] vs Julio Urias - Overall: 0.34 HR Rating: 1.15 Value Rating: 0.12
+	Daniel Robertson $2000 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.25 HR Rating: -2.49 Value Rating: 0.13
+	Isiah Kiner-Falefa $2600 [Texas Rangers] vs Josh Fleming - Overall: 0.24 HR Rating: -3.38 Value Rating: 0.09
+	Sergio Alcantara $2300 [Chicago Cubs] vs Scott Kazmir - Overall: 0.23 HR Rating: 0.32 Value Rating: 0.1
+	Tyler Wade $2000 [New York Yankees] vs Nathan Eovaldi - Overall: 0.2 HR Rating: -0.8 Value Rating: 0.1
+	Ronald Torreyes $2000 [Philadelphia Phillies] vs Max Scherzer - Overall: 0.16 HR Rating: 0.83 Value Rating: 0.08
+	Danny Mendick $2000 [Chicago White Sox] vs Spencer Turnbull - Overall: 0.14 HR Rating: -1.23 Value Rating: 0.07
+	Zack Short $2300 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.08 HR Rating: -0.76 Value Rating: 0.04
+	Jose Rondon $2000 [St. Louis Cardinals] vs Luis Castillo - Overall: 0.06 HR Rating: -0.11 Value Rating: 0.03
+	Tucupita Marcano $2000 [San Diego Padres] vs Joey Lucchesi - Overall: -0.0 HR Rating: -0.41 Value Rating: -0.0
+	Cole Tucker $2000 [Pittsburgh Pirates] vs Cody Poteet - Overall: -0.02 HR Rating: -0.14 Value Rating: -0.01
+	Nick Gordon $2000 [Minnesota Twins] vs Brad Keller - Overall: -0.04 HR Rating: -0.53 Value Rating: -0.02
+	J.P. Crawford $2200 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.09 HR Rating: -3.97 Value Rating: -0.04
+	Adalberto Mondesi $3500 [Kansas City Royals] vs Matt Shoemaker - Overall: -0.14 HR Rating: 0.69 Value Rating: -0.04
+	Trea Turner $3600 [Washington Nationals] vs Zack Wheeler - Overall: -0.16 HR Rating: -0.23 Value Rating: -0.04
+	Jose Devers $2000 [Miami Marlins] vs Mitch Keller - Overall: -0.18 HR Rating: -0.94 Value Rating: -0.09
+	Taylor Walls $2000 [Tampa Bay Rays] vs Kyle Gibson - Overall: -0.3 HR Rating: -0.63 Value Rating: -0.15
+	Tim Anderson $3300 [Chicago White Sox] vs Spencer Turnbull - Overall: -0.44 HR Rating: -5.7 Value Rating: -0.13
+	Nick Ahmed $2300 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.89 HR Rating: -2.81 Value Rating: -0.39
+	Luis Urias $2300 [Milwaukee Brewers] vs Matt Peacock - Overall: -1.35 HR Rating: -6.64 Value Rating: -0.59
+	Freddy Galvis $2700 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -2.3 HR Rating: -4.99 Value Rating: -0.85
 
 OutFielders to use:
-	Dylan Carlson $2200 [St. Louis Cardinals] vs Seth Frankoff - Overall: 27.4 HR Rating: 10.3 Value Rating: 12.45
-	Mitch Haniger $3700 [Seattle Mariners] vs Mike Foltynewicz - Overall: 13.5 HR Rating: 4.25 Value Rating: 3.65
-	Adolis Garcia $4300 [Texas Rangers] vs Justin Dunn - Overall: 12.39 HR Rating: 7.1 Value Rating: 2.88
-	Joey Gallo $3200 [Texas Rangers] vs Justin Dunn - Overall: 10.68 HR Rating: 5.56 Value Rating: 3.34
-	Mike Yastrzemski $2900 [San Francisco Giants] vs Logan Webb - Overall: 10.17 HR Rating: 7.69 Value Rating: 3.51
-	Ronald Acuna Jr. $4500 [Atlanta Braves] vs Taijuan Walker - Overall: 10.02 HR Rating: 2.29 Value Rating: 2.23
-	Kyle Lewis $2500 [Seattle Mariners] vs Mike Foltynewicz - Overall: 7.55 HR Rating: 1.85 Value Rating: 3.02
-	Tyler O'Neill $3000 [St. Louis Cardinals] vs Seth Frankoff - Overall: 7.48 HR Rating: 1.36 Value Rating: 2.49
-	Willie Calhoun $3000 [Texas Rangers] vs Justin Dunn - Overall: 6.93 HR Rating: 1.97 Value Rating: 2.31
-	Josh Rojas $2300 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 6.81 HR Rating: -0.87 Value Rating: 2.96
-	Alex Dickerson $2100 [San Francisco Giants] vs Logan Webb - Overall: 5.14 HR Rating: 3.38 Value Rating: 2.45
-	Jarred Kelenic $2400 [Seattle Mariners] vs Mike Foltynewicz - Overall: 4.74 HR Rating: 2.53 Value Rating: 1.97
-	David Peralta $2500 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 3.75 HR Rating: -5.72 Value Rating: 1.5
-	Ketel Marte $3300 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 2.88 HR Rating: -0.18 Value Rating: 0.87
-	Austin Slater $2400 [San Francisco Giants] vs Julio Urias - Overall: 2.61 HR Rating: 2.08 Value Rating: 1.09
-	Mike Tauchman $2300 [San Francisco Giants] vs Logan Webb - Overall: 2.27 HR Rating: 0.9 Value Rating: 0.99
-	Pavin Smith $2600 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 2.25 HR Rating: -5.99 Value Rating: 0.86
-	Josh Reddick $2000 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 1.43 HR Rating: 0.1 Value Rating: 0.72
-	Tim Locastro $2000 [Arizona Diamondbacks] vs Adam Wainwright - Overall: 1.33 HR Rating: -2.14 Value Rating: 0.67
-	Khris Davis $2000 [Texas Rangers] vs Justin Dunn - Overall: 1.3 HR Rating: 0.33 Value Rating: 0.65
-	Ehire Adrianza $2100 [Atlanta Braves] vs Taijuan Walker - Overall: 1.02 HR Rating: -1.6 Value Rating: 0.49
-	Mike Yastrzemski $2900 [San Francisco Giants] vs Julio Urias - Overall: 0.79 HR Rating: 0.96 Value Rating: 0.27
-	Billy McKinney $2000 [New York Mets] vs Ian Anderson - Overall: 0.77 HR Rating: -2.14 Value Rating: 0.39
-	Guillermo Heredia $2200 [Atlanta Braves] vs Taijuan Walker - Overall: 0.25 HR Rating: -3.36 Value Rating: 0.11
-	Dominic Smith $2500 [New York Mets] vs Ian Anderson - Overall: 0.22 HR Rating: -4.54 Value Rating: 0.09
-	Steven Duggar $2300 [San Francisco Giants] vs Logan Webb - Overall: 0.18 HR Rating: -0.38 Value Rating: 0.08
-	Lane Thomas $2000 [St. Louis Cardinals] vs Seth Frankoff - Overall: -0.01 HR Rating: -1.06 Value Rating: -0.0
-	Alex Dickerson $2100 [San Francisco Giants] vs Julio Urias - Overall: -0.02 HR Rating: -0.06 Value Rating: -0.01
-	Jason Martin $2000 [Texas Rangers] vs Justin Dunn - Overall: -0.08 HR Rating: -0.17 Value Rating: -0.04
-	Mike Tauchman $2300 [San Francisco Giants] vs Julio Urias - Overall: -0.21 HR Rating: -0.25 Value Rating: -0.09
-	Steven Duggar $2300 [San Francisco Giants] vs Julio Urias - Overall: -0.24 HR Rating: -0.3 Value Rating: -0.1
-	Justin Williams $2000 [St. Louis Cardinals] vs Seth Frankoff - Overall: -0.51 HR Rating: -5.08 Value Rating: -0.26
-	Ender Inciarte $2000 [Atlanta Braves] vs Taijuan Walker - Overall: -0.7 HR Rating: -2.71 Value Rating: -0.35
-	Cameron Maybin $2100 [New York Mets] vs Ian Anderson - Overall: -1.15 HR Rating: -2.14 Value Rating: -0.55
-	Khalil Lee $2000 [New York Mets] vs Ian Anderson - Overall: -1.16 HR Rating: -1.46 Value Rating: -0.58
-	Austin Slater $2400 [San Francisco Giants] vs Logan Webb - Overall: -1.86 HR Rating: -2.43 Value Rating: -0.77
+	Aaron Judge $3500 [New York Yankees] vs Nathan Eovaldi - Overall: 5.23 HR Rating: 8.08 Value Rating: 1.49
+	Charlie Blackmon $3500 [Colorado Rockies] vs Frankie Montas - Overall: 4.72 HR Rating: 3.31 Value Rating: 1.35
+	Justin Upton $2900 [Los Angeles Angels] vs Robert Dugger - Overall: 4.41 HR Rating: 8.43 Value Rating: 1.52
+	Austin Meadows $4300 [Tampa Bay Rays] vs Kyle Gibson - Overall: 4.23 HR Rating: 2.7 Value Rating: 0.98
+	Jorge Soler $2000 [Kansas City Royals] vs Matt Shoemaker - Overall: 4.1 HR Rating: 5.27 Value Rating: 2.05
+	Andrew McCutchen $3000 [Philadelphia Phillies] vs Max Scherzer - Overall: 4.04 HR Rating: 7.02 Value Rating: 1.35
+	David Peralta $2600 [Arizona Diamondbacks] vs Freddy Peralta - Overall: 3.9 HR Rating: 1.32 Value Rating: 1.5
+	Corey Dickerson $2500 [Miami Marlins] vs Mitch Keller - Overall: 3.62 HR Rating: 2.47 Value Rating: 1.45
+	Raimel Tapia $3300 [Colorado Rockies] vs Frankie Montas - Overall: 3.58 HR Rating: -0.6 Value Rating: 1.08
+	Seth Brown $3000 [Oakland Athletics] vs Jon Gray - Overall: 3.55 HR Rating: 3.39 Value Rating: 1.18
+	Bryan Reynolds $3000 [Pittsburgh Pirates] vs Cody Poteet - Overall: 3.49 HR Rating: 4.28 Value Rating: 1.16
+	Randal Grichuk $2800 [Toronto Blue Jays] vs Zack Greinke - Overall: 3.2 HR Rating: 5.3 Value Rating: 1.14
+	Adam Duvall $2700 [Miami Marlins] vs Mitch Keller - Overall: 3.19 HR Rating: 5.71 Value Rating: 1.18
+	Alex Dickerson $2200 [San Francisco Giants] vs Jake Arrieta - Overall: 3.14 HR Rating: 6.24 Value Rating: 1.43
+	Mookie Betts $3900 [Los Angeles Dodgers] vs Ian Anderson - Overall: 2.87 HR Rating: -0.01 Value Rating: 0.73
+	Mark Canha $4000 [Oakland Athletics] vs Jon Gray - Overall: 2.82 HR Rating: 0.1 Value Rating: 0.71
+	Garrett Hampson $3000 [Colorado Rockies] vs Frankie Montas - Overall: 2.59 HR Rating: 1.32 Value Rating: 0.86
+	Garrett Cooper $2300 [Miami Marlins] vs Mitch Keller - Overall: 2.57 HR Rating: 0.47 Value Rating: 1.12
+	Clint Frazier $2300 [New York Yankees] vs Nathan Eovaldi - Overall: 2.55 HR Rating: 2.09 Value Rating: 1.11
+	Dylan Carlson $2800 [St. Louis Cardinals] vs Luis Castillo - Overall: 2.34 HR Rating: 2.89 Value Rating: 0.83
+	J.D. Martinez $4000 [Boston Red Sox] vs Michael King - Overall: 2.28 HR Rating: 8.68 Value Rating: 0.57
+	Andrew Benintendi $2900 [Kansas City Royals] vs Matt Shoemaker - Overall: 2.24 HR Rating: 3.7 Value Rating: 0.77
+	Lourdes Gurriel Jr. $2500 [Toronto Blue Jays] vs Zack Greinke - Overall: 2.23 HR Rating: 1.55 Value Rating: 0.89
+	Tyler O'Neill $3400 [St. Louis Cardinals] vs Luis Castillo - Overall: 2.18 HR Rating: 6.34 Value Rating: 0.64
+	Joc Pederson $2700 [Chicago Cubs] vs Scott Kazmir - Overall: 2.04 HR Rating: 6.27 Value Rating: 0.76
+	Teoscar Hernandez $3100 [Toronto Blue Jays] vs Zack Greinke - Overall: 2.04 HR Rating: 3.65 Value Rating: 0.66
+	Tommy Pham $3000 [San Diego Padres] vs Joey Lucchesi - Overall: 2.0 HR Rating: 2.55 Value Rating: 0.67
+	Alex Verdugo $2900 [Boston Red Sox] vs Michael King - Overall: 1.93 HR Rating: 3.43 Value Rating: 0.66
+	Pavin Smith $2700 [Arizona Diamondbacks] vs Freddy Peralta - Overall: 1.85 HR Rating: 0.85 Value Rating: 0.69
+	Hunter Renfroe $2800 [Boston Red Sox] vs Michael King - Overall: 1.79 HR Rating: 5.78 Value Rating: 0.64
+	Wil Myers $2900 [San Diego Padres] vs Joey Lucchesi - Overall: 1.75 HR Rating: 2.24 Value Rating: 0.6
+	Mike Tauchman $2300 [San Francisco Giants] vs Jake Arrieta - Overall: 1.73 HR Rating: 3.34 Value Rating: 0.75
+	Adam Eaton $2500 [Chicago White Sox] vs Spencer Turnbull - Overall: 1.6 HR Rating: -4.46 Value Rating: 0.64
+	Juan Soto $3600 [Washington Nationals] vs Zack Wheeler - Overall: 1.52 HR Rating: 0.59 Value Rating: 0.42
+	Kyle Tucker $3300 [Houston Astros] vs Hyun Jin Ryu - Overall: 1.51 HR Rating: 2.06 Value Rating: 0.46
+	Taylor Trammell $2200 [Seattle Mariners] vs Shohei Ohtani - Overall: 1.49 HR Rating: 6.61 Value Rating: 0.68
+	Matt Joyce $2100 [Philadelphia Phillies] vs Max Scherzer - Overall: 1.49 HR Rating: 2.9 Value Rating: 0.71
+	Chris Taylor $3300 [Los Angeles Dodgers] vs Ian Anderson - Overall: 1.48 HR Rating: -2.07 Value Rating: 0.45
+	Stephen Piscotty $3000 [Oakland Athletics] vs Jon Gray - Overall: 1.39 HR Rating: -0.65 Value Rating: 0.46
+	Taylor Ward $2800 [Los Angeles Angels] vs Robert Dugger - Overall: 1.33 HR Rating: 3.34 Value Rating: 0.47
+	Starling Marte $3700 [Miami Marlins] vs Mitch Keller - Overall: 1.31 HR Rating: 0.92 Value Rating: 0.35
+	Jackie Bradley Jr. $2100 [Milwaukee Brewers] vs Matt Peacock - Overall: 1.28 HR Rating: -6.83 Value Rating: 0.61
+	Randy Arozarena $3500 [Tampa Bay Rays] vs Kyle Gibson - Overall: 1.25 HR Rating: -3.79 Value Rating: 0.36
+	Joey Gallo $3000 [Texas Rangers] vs Josh Fleming - Overall: 1.21 HR Rating: 2.39 Value Rating: 0.4
+	Mitch Haniger $3200 [Seattle Mariners] vs Shohei Ohtani - Overall: 1.2 HR Rating: 3.38 Value Rating: 0.37
+	Ronald Acuna Jr. $4400 [Atlanta Braves] vs Julio Urias - Overall: 1.19 HR Rating: 2.18 Value Rating: 0.27
+	Odubel Herrera $2700 [Philadelphia Phillies] vs Max Scherzer - Overall: 1.19 HR Rating: 4.16 Value Rating: 0.44
+	Michael A. Taylor $2400 [Kansas City Royals] vs Matt Shoemaker - Overall: 1.16 HR Rating: 2.39 Value Rating: 0.48
+	Brett Gardner $2200 [New York Yankees] vs Nathan Eovaldi - Overall: 1.03 HR Rating: -1.73 Value Rating: 0.47
+	Kyle Schwarber $2400 [Washington Nationals] vs Zack Wheeler - Overall: 0.98 HR Rating: 5.47 Value Rating: 0.41
+	Alex Kirilloff $2700 [Minnesota Twins] vs Brad Keller - Overall: 0.96 HR Rating: 0.92 Value Rating: 0.35
+	Eddie Rosario $3300 [Cleveland Indians] vs Keegan Akin - Overall: 0.93 HR Rating: 0.9 Value Rating: 0.28
+	Kris Bryant $4000 [Chicago Cubs] vs Scott Kazmir - Overall: 0.92 HR Rating: 4.89 Value Rating: 0.23
+	Danny Santana $2500 [Boston Red Sox] vs Michael King - Overall: 0.88 HR Rating: 1.11 Value Rating: 0.35
+	Zach McKinstry $2600 [Los Angeles Dodgers] vs Ian Anderson - Overall: 0.83 HR Rating: 1.15 Value Rating: 0.32
+	Kevin Kiermaier $2300 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.81 HR Rating: -2.97 Value Rating: 0.35
+	Jurickson Profar $2600 [San Diego Padres] vs Joey Lucchesi - Overall: 0.79 HR Rating: 0.21 Value Rating: 0.3
+	Austin Slater $2500 [San Francisco Giants] vs Jake Arrieta - Overall: 0.75 HR Rating: 2.13 Value Rating: 0.3
+	AJ Pollock $2000 [Los Angeles Dodgers] vs Ian Anderson - Overall: 0.74 HR Rating: 0.07 Value Rating: 0.37
+	Trevor Larnach $2400 [Minnesota Twins] vs Brad Keller - Overall: 0.71 HR Rating: 0.14 Value Rating: 0.29
+	Matt Beaty $2100 [Los Angeles Dodgers] vs Ian Anderson - Overall: 0.68 HR Rating: -1.07 Value Rating: 0.32
+	Avisail Garcia $3000 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.64 HR Rating: -5.54 Value Rating: 0.21
+	Christian Yelich $3600 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.64 HR Rating: -3.08 Value Rating: 0.18
+	Lane Thomas $2000 [St. Louis Cardinals] vs Luis Castillo - Overall: 0.63 HR Rating: -0.1 Value Rating: 0.32
+	Adolis Garcia $3900 [Texas Rangers] vs Josh Fleming - Overall: 0.61 HR Rating: 1.07 Value Rating: 0.16
+	Jake Lamb $2400 [Chicago White Sox] vs Spencer Turnbull - Overall: 0.55 HR Rating: 0.14 Value Rating: 0.23
+	Miguel Andujar $2500 [New York Yankees] vs Nathan Eovaldi - Overall: 0.54 HR Rating: 0.04 Value Rating: 0.22
+	Justin Williams $2000 [St. Louis Cardinals] vs Luis Castillo - Overall: 0.53 HR Rating: 0.36 Value Rating: 0.27
+	Cody Bellinger $4200 [Los Angeles Dodgers] vs Ian Anderson - Overall: 0.52 HR Rating: 0.86 Value Rating: 0.12
+	Tyrone Taylor $2100 [Milwaukee Brewers] vs Matt Peacock - Overall: 0.47 HR Rating: -2.29 Value Rating: 0.22
+	Harold Ramirez $2500 [Cleveland Indians] vs Keegan Akin - Overall: 0.4 HR Rating: 0.4 Value Rating: 0.16
+	Brad Miller $2500 [Philadelphia Phillies] vs Max Scherzer - Overall: 0.37 HR Rating: 4.78 Value Rating: 0.15
+	Kevin Pillar $2300 [New York Mets] vs Blake Snell - Overall: 0.37 HR Rating: 0.75 Value Rating: 0.16
+	Juan Lagares $2000 [Los Angeles Angels] vs Robert Dugger - Overall: 0.36 HR Rating: 0.29 Value Rating: 0.18
+	Manuel Margot $2600 [Tampa Bay Rays] vs Kyle Gibson - Overall: 0.35 HR Rating: -3.07 Value Rating: 0.13
+	Jarrod Dyson $2000 [Kansas City Royals] vs Matt Shoemaker - Overall: 0.34 HR Rating: -0.4 Value Rating: 0.17
+	Nick Castellanos $4100 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.29 HR Rating: 1.08 Value Rating: 0.07
+	Khris Davis $2300 [Texas Rangers] vs Josh Fleming - Overall: 0.27 HR Rating: -0.45 Value Rating: 0.12
+	Scott Heineman $2000 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.14 HR Rating: 0.28 Value Rating: 0.07
+	Willie Calhoun $2800 [Texas Rangers] vs Josh Fleming - Overall: 0.12 HR Rating: -0.6 Value Rating: 0.04
+	Mason Williams $2000 [New York Mets] vs Blake Snell - Overall: 0.12 HR Rating: 0.09 Value Rating: 0.06
+	Yonathan Daza $2500 [Colorado Rockies] vs Frankie Montas - Overall: 0.11 HR Rating: -3.04 Value Rating: 0.04
+	Nomar Mazara $2200 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.1 HR Rating: -0.65 Value Rating: 0.05
+	Tyler Naquin $3400 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: 0.07 HR Rating: 0.16 Value Rating: 0.02
+	Kyle Garlick $2500 [Minnesota Twins] vs Brad Keller - Overall: 0.06 HR Rating: 0.15 Value Rating: 0.02
+	Rafael Ortega $2000 [Chicago Cubs] vs Scott Kazmir - Overall: 0.05 HR Rating: -0.18 Value Rating: 0.02
+	Ian Happ $2500 [Chicago Cubs] vs Scott Kazmir - Overall: 0.04 HR Rating: 0.96 Value Rating: 0.02
+	Chad Pinder $3200 [Oakland Athletics] vs Jon Gray - Overall: 0.04 HR Rating: -0.3 Value Rating: 0.01
+	Jason Martin $2000 [Texas Rangers] vs Josh Fleming - Overall: 0.04 HR Rating: -0.13 Value Rating: 0.02
+	Jake Fraley $2400 [Seattle Mariners] vs Shohei Ohtani - Overall: 0.03 HR Rating: 1.0 Value Rating: 0.01
+	Abraham Almonte $2000 [Atlanta Braves] vs Julio Urias - Overall: 0.02 HR Rating: 0.0 Value Rating: 0.01
+	Skye Bolt $2500 [Oakland Athletics] vs Jon Gray - Overall: 0.01 HR Rating: -0.0 Value Rating: 0.01
+	Derek Hill $2000 [Detroit Tigers] vs Dallas Keuchel - Overall: 0.0 HR Rating: 0.0 Value Rating: 0.0
+	Nick Martini $2000 [Chicago Cubs] vs Scott Kazmir - Overall: 0.0 HR Rating: 0.0 Value Rating: 0.0
+	Ender Inciarte $2000 [Atlanta Braves] vs Julio Urias - Overall: -0.0 HR Rating: -0.18 Value Rating: -0.0
+	Jorge Mateo $2000 [San Diego Padres] vs Joey Lucchesi - Overall: -0.02 HR Rating: -0.43 Value Rating: -0.01
+	Guillermo Heredia $2100 [Atlanta Braves] vs Julio Urias - Overall: -0.03 HR Rating: 0.08 Value Rating: -0.01
+	Mark Payton $2000 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.03 HR Rating: -0.19 Value Rating: -0.02
+	Travis Jankowski $2000 [Philadelphia Phillies] vs Max Scherzer - Overall: -0.03 HR Rating: 0.03 Value Rating: -0.02
+	Shogo Akiyama $2000 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.05 HR Rating: -0.14 Value Rating: -0.03
+	Lewis Brinson $2000 [Miami Marlins] vs Mitch Keller - Overall: -0.07 HR Rating: 0.11 Value Rating: -0.04
+	Gilberto Celestino $2000 [Minnesota Twins] vs Brad Keller - Overall: -0.08 HR Rating: -0.21 Value Rating: -0.04
+	Robbie Grossman $2900 [Detroit Tigers] vs Dallas Keuchel - Overall: -0.09 HR Rating: -0.78 Value Rating: -0.03
+	Jonathan Davis $2000 [Toronto Blue Jays] vs Zack Greinke - Overall: -0.1 HR Rating: -0.5 Value Rating: -0.05
+	Ehire Adrianza $2000 [Atlanta Braves] vs Julio Urias - Overall: -0.1 HR Rating: -1.1 Value Rating: -0.05
+	Jarred Kelenic $2300 [Seattle Mariners] vs Shohei Ohtani - Overall: -0.11 HR Rating: 2.43 Value Rating: -0.05
+	Magneuris Sierra $2100 [Miami Marlins] vs Mitch Keller - Overall: -0.11 HR Rating: -1.92 Value Rating: -0.05
+	Steven Duggar $2400 [San Francisco Giants] vs Jake Arrieta - Overall: -0.13 HR Rating: 2.97 Value Rating: -0.05
+	Chas McCormick $2200 [Houston Astros] vs Hyun Jin Ryu - Overall: -0.16 HR Rating: 0.12 Value Rating: -0.07
+	Ka'ai Tom $2200 [Pittsburgh Pirates] vs Cody Poteet - Overall: -0.17 HR Rating: 0.4 Value Rating: -0.08
+	Bradley Zimmer $2200 [Cleveland Indians] vs Keegan Akin - Overall: -0.24 HR Rating: -0.13 Value Rating: -0.11
+	Wilmer Difo $2000 [Pittsburgh Pirates] vs Cody Poteet - Overall: -0.28 HR Rating: 0.05 Value Rating: -0.14
+	Ryan McKenna $2000 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -0.29 HR Rating: -1.43 Value Rating: -0.14
+	Tim Locastro $2000 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.29 HR Rating: -2.8 Value Rating: -0.14
+	Josh Reddick $2500 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.29 HR Rating: -0.02 Value Rating: -0.12
+	Billy Hamilton $2200 [Chicago White Sox] vs Spencer Turnbull - Overall: -0.3 HR Rating: -2.81 Value Rating: -0.14
+	Brett Phillips $2100 [Tampa Bay Rays] vs Kyle Gibson - Overall: -0.35 HR Rating: -1.21 Value Rating: -0.17
+	Ketel Marte $3600 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -0.36 HR Rating: -1.02 Value Rating: -0.1
+	Yoshi Tsutsugo $2000 [Los Angeles Dodgers] vs Ian Anderson - Overall: -0.37 HR Rating: -1.91 Value Rating: -0.19
+	Billy McKinney $2100 [New York Mets] vs Blake Snell - Overall: -0.41 HR Rating: 0.37 Value Rating: -0.2
+	Dominic Smith $2700 [New York Mets] vs Blake Snell - Overall: -0.42 HR Rating: -0.75 Value Rating: -0.15
+	Josh Naylor $2100 [Cleveland Indians] vs Keegan Akin - Overall: -0.42 HR Rating: -3.73 Value Rating: -0.2
+	Akil Baddoo $2300 [Detroit Tigers] vs Dallas Keuchel - Overall: -0.46 HR Rating: -1.09 Value Rating: -0.2
+	Jesse Winker $3900 [Cincinnati Reds] vs Kwang Hyun Kim - Overall: -0.5 HR Rating: -1.11 Value Rating: -0.13
+	Ben Gamel $2000 [Pittsburgh Pirates] vs Cody Poteet - Overall: -0.5 HR Rating: -0.18 Value Rating: -0.25
+	Yadiel Hernandez $2000 [Washington Nationals] vs Zack Wheeler - Overall: -0.56 HR Rating: -1.95 Value Rating: -0.28
+	DJ Stewart $2200 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -0.71 HR Rating: -0.51 Value Rating: -0.32
+	Andrew Stevenson $2000 [Washington Nationals] vs Zack Wheeler - Overall: -0.72 HR Rating: -2.9 Value Rating: -0.36
+	Gregory Polanco $2600 [Pittsburgh Pirates] vs Cody Poteet - Overall: -0.92 HR Rating: 3.23 Value Rating: -0.35
+	Anthony Santander $2900 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -1.02 HR Rating: -2.62 Value Rating: -0.35
+	Leury Garcia $2100 [Chicago White Sox] vs Spencer Turnbull - Overall: -1.17 HR Rating: -8.31 Value Rating: -0.56
+	Josh Rojas $2200 [Arizona Diamondbacks] vs Freddy Peralta - Overall: -1.22 HR Rating: -2.12 Value Rating: -0.55
+	Myles Straw $2100 [Houston Astros] vs Hyun Jin Ryu - Overall: -1.26 HR Rating: -2.76 Value Rating: -0.6
+	Victor Robles $2100 [Washington Nationals] vs Zack Wheeler - Overall: -1.36 HR Rating: -2.13 Value Rating: -0.65
+	Cedric Mullins $3100 [Baltimore Orioles] vs Jean Carlos Mejia - Overall: -5.73 HR Rating: 3.31 Value Rating: -1.85
 
 HR Ratings, Ranked
-	Dylan Carlson - HR Rating: 10.301815957429517 Overall: 27.400471769441168
-	Mike Yastrzemski - HR Rating: 7.687727493103112 Overall: 10.166902121212123
-	Adolis Garcia - HR Rating: 7.100349016374973 Overall: 12.394406307083827
-	Joey Gallo - HR Rating: 5.55889176251476 Overall: 10.68098671782763
-	Mitch Haniger - HR Rating: 4.250674097610392 Overall: 13.502381125855967
-	Kyle Seager - HR Rating: 3.491306210210156 Overall: 11.472890322865018
-	Nate Lowe - HR Rating: 3.416017914293275 Overall: 9.465909696340027
-	Alex Dickerson - HR Rating: 3.3785313765997658 Overall: 5.142332682408504
-	Evan Longoria - HR Rating: 3.0674440280663133 Overall: 3.586648703384494
-	Eduardo Escobar - HR Rating: 2.9930880188458087 Overall: 12.189824270051162
-	Jarred Kelenic - HR Rating: 2.5342135766776863 Overall: 4.738580914600551
-	Buster Posey - HR Rating: 2.2891889334155846 Overall: 2.8191449829988198
-	Ronald Acuna Jr. - HR Rating: 2.289013671945693 Overall: 10.020321914049587
-	Andrew Young - HR Rating: 2.1352664864188906 Overall: 3.9927789298701297
-	Austin Slater - HR Rating: 2.0818636103403194 Overall: 2.606976239492327
-	Willie Calhoun - HR Rating: 1.9673794931220783 Overall: 6.931965396379381
-	Kyle Lewis - HR Rating: 1.8461045093412063 Overall: 7.545993669264072
-	Stephen Vogt - HR Rating: 1.7999723297851242 Overall: 5.748408096418734
-	Tom Murphy - HR Rating: 1.394304565289257 Overall: 3.7344414280991747
-	Tyler O'Neill - HR Rating: 1.3631353238961046 Overall: 7.480298601731602
-	Carson Kelly - HR Rating: 1.2302944698049585 Overall: 6.289441275167257
-	Mike Yastrzemski - HR Rating: 0.9613251383805591 Overall: 0.7899626997245184
-	Mike Tauchman - HR Rating: 0.9015572132988996 Overall: 2.2732360035419132
-	Brandon Crawford - HR Rating: 0.8983489239252272 Overall: 0.7713253211727676
-	Jason Vosler - HR Rating: 0.8242142988255611 Overall: 1.0129221686540733
-	Khris Davis - HR Rating: 0.32685134708146474 Overall: 1.2991596917355381
-	Mauricio Dubon - HR Rating: 0.262676234031681 Overall: 0.2879784335694612
-	Curt Casali - HR Rating: 0.1373835169287685 Overall: 0.11121209885871736
-	Josh Reddick - HR Rating: 0.0954858443093272 Overall: 1.4321290244982292
-	Patrick Mazeika - HR Rating: 0.09140767421829983 Overall: 0.5803173483274301
-	William Contreras - HR Rating: 0.07539962136363676 Overall: 2.7945794978354974
-	Jose Godoy - HR Rating: -0.027710180181817912 Overall: 0.6803136818181822
-	Alex Dickerson - HR Rating: -0.06071745074380159 Overall: -0.022087828020464242
-	Jacob Nottingham - HR Rating: -0.08087032594569066 Overall: 0.5179723942148763
-	Nick Solak - HR Rating: -0.1274217782025932 Overall: 6.230848447146795
-	Jason Martin - HR Rating: -0.1676726094580873 Overall: -0.08160897412436043
-	Ketel Marte - HR Rating: -0.176172513734592 Overall: 2.8796990667650535
-	Pablo Sandoval - HR Rating: -0.21204891848051874 Overall: 2.0536167352223544
-	Brandon Crawford - HR Rating: -0.21953040140062777 Overall: 1.3661435887445912
-	Mike Tauchman - HR Rating: -0.2503505923504525 Overall: -0.21240636068476956
-	Steven Duggar - HR Rating: -0.29660266058441564 Overall: -0.24052707615112157
-	Eric Campbell - HR Rating: -0.3088706712821723 Overall: 0.014430588429752108
-	Max Moroff - HR Rating: -0.3796236425029517 Overall: 0.10926105497835487
-	Steven Duggar - HR Rating: -0.3825105328955133 Overall: 0.1798527984651713
-	Domingo Leyba - HR Rating: -0.3964072814337662 Overall: 0.1230245796143252
-	Donovan Solano - HR Rating: -0.4050014207954544 Overall: -0.28300938911845697
-	Jack Mayfield - HR Rating: -0.44182217143636354 Overall: -0.2327345608618653
-	Kevan Smith - HR Rating: -0.4633579287966941 Overall: -0.21693766706021253
-	Jonah Heim - HR Rating: -0.6297625890318768 Overall: 1.0770549439197175
-	Charlie Culberson - HR Rating: -0.6303455781478151 Overall: 1.4329853405745778
-	Jason Vosler - HR Rating: -0.6799244523022431 Overall: -1.0566820818575366
-	Johan Camargo - HR Rating: -0.699285171642857 Overall: -0.2439162896103896
-	Brandon Drury - HR Rating: -0.7474765892684769 Overall: -0.2866042970484061
-	Josh Rojas - HR Rating: -0.8715848783801629 Overall: 6.807093322314053
-	Evan Longoria - HR Rating: -1.0318695768595034 Overall: 0.16963131050767422
-	Lane Thomas - HR Rating: -1.0642767602125145 Overall: -0.007259014954741826
-	Curt Casali - HR Rating: -1.2373269962219589 Overall: -1.0214803187721369
-	Brock Holt - HR Rating: -1.3448635302432104 Overall: 1.3664265773317603
-	Wilfredo Tovar - HR Rating: -1.351911647249705 Overall: -0.8900295692640694
-	Khalil Lee - HR Rating: -1.4638268619943915 Overall: -1.1569668221172766
-	Donovan Walton - HR Rating: -1.470525780920897 Overall: -0.4692520153482877
-	Freddie Freeman - HR Rating: -1.563556828064934 Overall: 7.040416568044076
-	Buster Posey - HR Rating: -1.595656715072805 Overall: 0.2126008933490773
-	Ehire Adrianza - HR Rating: -1.5958120621942735 Overall: 1.0247362678276275
-	Nick Ahmed - HR Rating: -1.6142416280330567 Overall: 3.9530519763872514
-	Matt Carpenter - HR Rating: -1.665190939239669 Overall: 3.4208336165289253
-	Austin Riley - HR Rating: -1.8826465338181793 Overall: 5.276712223061789
-	Ty France - HR Rating: -2.0267598280689483 Overall: 4.732981000865804
-	Nolan Arenado - HR Rating: -2.1093495307012984 Overall: 9.335623726918538
-	Tomas Nido - HR Rating: -2.1117264816819357 Overall: -0.45939453656040913
-	Cameron Maybin - HR Rating: -2.1359221280051943 Overall: -1.153408225974026
-	Tim Locastro - HR Rating: -2.1383418624623376 Overall: 1.3334559323888249
-	Billy McKinney - HR Rating: -2.1413003043612733 Overall: 0.7748312249114554
-	Jose Peraza - HR Rating: -2.4320404689272723 Overall: -0.8038741160960251
-	Austin Slater - HR Rating: -2.4322033400708376 Overall: -1.857127274616293
-	Jose Trevino - HR Rating: -2.5852491372467536 Overall: 0.322625378354979
-	Donovan Solano - HR Rating: -2.620437862040535 Overall: -2.0529054405352216
-	Mauricio Dubon - HR Rating: -2.6881895016332145 Overall: -2.114459797481307
-	J.P. Crawford - HR Rating: -2.701580415442737 Overall: 3.591910748917751
-	Ender Inciarte - HR Rating: -2.7136581376423843 Overall: -0.7039276779614326
-	Andrew Knizner - HR Rating: -3.3373802050512387 Overall: -0.7813514613931517
-	Guillermo Heredia - HR Rating: -3.3642536745896097 Overall: 0.24555935324675296
-	Edmundo Sosa - HR Rating: -3.5832602151641084 Overall: -0.3834634446280988
-	Paul Goldschmidt - HR Rating: -3.623390967442739 Overall: 7.302635563793784
-	Ozzie Albies - HR Rating: -3.663256213463694 Overall: 3.571282736816213
-	Isiah Kiner-Falefa - HR Rating: -4.361492856230223 Overall: 2.092246292857147
-	Yadier Molina - HR Rating: -4.475216678510508 Overall: 2.1213625552538375
-	Dominic Smith - HR Rating: -4.543135977371426 Overall: 0.220704476190479
-	Justin Williams - HR Rating: -5.083831981680284 Overall: -0.5149915263675712
-	David Peralta - HR Rating: -5.715794672625264 Overall: 3.750918400472258
-	Dansby Swanson - HR Rating: -5.916024801792207 Overall: 1.5973937231798487
-	Pavin Smith - HR Rating: -5.992015600094449 Overall: 2.248618459268006
-	Jonathan Villar - HR Rating: -6.2718310557752055 Overall: -1.282527966942148
-	Francisco Lindor - HR Rating: -8.171206053437187 Overall: -1.8910768044077144
-	James McCann - HR Rating: -9.952517775942914 Overall: -5.104047097225501
-	Tommy Edman - HR Rating: -10.569147240425028 Overall: -0.14505059110586394
+	Rhys Hoskins - HR Rating: 14.79925207802366 Overall: 2.9110472227777935
+	Jared Walsh - HR Rating: 12.722401451191521 Overall: 5.321919260836023
+	Rafael Devers - HR Rating: 11.65549575530944 Overall: 3.663585725877882
+	Anthony Rizzo - HR Rating: 11.114836713532043 Overall: 3.8185909865996166
+	J.D. Martinez - HR Rating: 8.678726205973387 Overall: 2.2824891199748567
+	Justin Upton - HR Rating: 8.426220525657879 Overall: 4.413320157361639
+	Aaron Judge - HR Rating: 8.075478982910441 Overall: 5.2260723028515095
+	Vladimir Guerrero Jr. - HR Rating: 7.188215685591021 Overall: 3.1609107777365075
+	Andrew McCutchen - HR Rating: 7.017907268083431 Overall: 4.035275169576275
+	Brandon Crawford - HR Rating: 6.966801845990168 Overall: 0.7783357208134521
+	Giancarlo Stanton - HR Rating: 6.671264234842068 Overall: 2.6810812048201376
+	Taylor Trammell - HR Rating: 6.613375078885684 Overall: 1.489305239578274
+	Evan Longoria - HR Rating: 6.456923834030116 Overall: 2.006462639503986
+	J.T. Realmuto - HR Rating: 6.401548688488102 Overall: 0.5788998179948001
+	Carlos Santana - HR Rating: 6.346232608681677 Overall: 4.452038373096375
+	Tyler O'Neill - HR Rating: 6.338486587091777 Overall: 2.17558069294837
+	Ryan McMahon - HR Rating: 6.328629876709481 Overall: 4.269848397168491
+	Joc Pederson - HR Rating: 6.267936761420469 Overall: 2.0394041406897334
+	Alex Dickerson - HR Rating: 6.237445053537317 Overall: 3.142103852895798
+	Hunter Renfroe - HR Rating: 5.77547614554916 Overall: 1.7897114096117042
+	Adam Duvall - HR Rating: 5.712272900007144 Overall: 3.192266420612017
+	Marcus Semien - HR Rating: 5.531361682605217 Overall: 0.22332014747564308
+	Kyle Schwarber - HR Rating: 5.46800767240064 Overall: 0.9770646311323189
+	Jesus Aguilar - HR Rating: 5.44851830700463 Overall: 3.9170346212748948
+	Nolan Arenado - HR Rating: 5.390140664843998 Overall: 4.624848273522101
+	Miguel Sano - HR Rating: 5.387248216859624 Overall: 3.8099561865910463
+	Randal Grichuk - HR Rating: 5.302016810594591 Overall: 3.2020235011857494
+	Jorge Soler - HR Rating: 5.270040800894312 Overall: 4.098192843224091
+	Dom Nunez - HR Rating: 5.209763444960143 Overall: 2.351666696477042
+	Anthony Rendon - HR Rating: 5.187267619343868 Overall: 2.4343115072573513
+	Kris Bryant - HR Rating: 4.89260484436204 Overall: 0.9211321118603393
+	Salvador Perez - HR Rating: 4.829090722020631 Overall: 1.7937408497385636
+	Brad Miller - HR Rating: 4.776219505130434 Overall: 0.37313055487299673
+	Bo Bichette - HR Rating: 4.704090249278552 Overall: 3.8443429277693655
+	Matt Olson - HR Rating: 4.631546823587245 Overall: 4.219045730163719
+	Buster Posey - HR Rating: 4.384827457614003 Overall: 1.5808432274493565
+	Pete Alonso - HR Rating: 4.303628789097547 Overall: 1.7074477592216921
+	Bryan Reynolds - HR Rating: 4.279610835241295 Overall: 3.491421087088203
+	Hunter Dozier - HR Rating: 4.198564451709335 Overall: 3.8046793876253617
+	Nelson Cruz - HR Rating: 4.194404256369611 Overall: 3.810171356838767
+	Odubel Herrera - HR Rating: 4.161614519412585 Overall: 1.1878091994056976
+	Wilmer Flores - HR Rating: 3.9606386795006303 Overall: 1.1817578840109724
+	Paul Goldschmidt - HR Rating: 3.883217001214677 Overall: 5.162974424054973
+	Willson Contreras - HR Rating: 3.7964312967250207 Overall: 0.6589488637103919
+	Andrew Benintendi - HR Rating: 3.704967942734934 Overall: 2.2418999030829445
+	Teoscar Hernandez - HR Rating: 3.654178465899026 Overall: 2.0386631371182036
+	Jose Rojas - HR Rating: 3.474637664449844 Overall: 0.5855138239663997
+	Alex Verdugo - HR Rating: 3.4275548697191365 Overall: 1.9278357410211728
+	Seth Brown - HR Rating: 3.3917153078476536 Overall: 3.5537324552130065
+	Mitch Haniger - HR Rating: 3.3789092848452813 Overall: 1.1992215649732856
+	Taylor Ward - HR Rating: 3.3377960176005046 Overall: 1.327002624360697
+	Mike Tauchman - HR Rating: 3.3354811052811515 Overall: 1.7328439118260526
+	Cedric Mullins - HR Rating: 3.3132629204548714 Overall: -5.727055681162319
+	Charlie Blackmon - HR Rating: 3.306617391514617 Overall: 4.72476434326695
+	Gregory Polanco - HR Rating: 3.2268543012916817 Overall: -0.9162145598088511
+	Fernando Tatis Jr. - HR Rating: 3.1926465944533278 Overall: 1.5971738420383441
+	Kyle Seager - HR Rating: 3.142489429796283 Overall: 1.1442323083516666
+	Javier Baez - HR Rating: 3.1032187086107754 Overall: 1.5255180366296182
+	Xander Bogaerts - HR Rating: 3.0794148874074994 Overall: 1.4341295501300033
+	Eduardo Escobar - HR Rating: 3.0296898984021277 Overall: 1.2666018866253326
+	Will Smith - HR Rating: 2.9966867664618984 Overall: 2.704661340038287
+	Steven Duggar - HR Rating: 2.9704225517909664 Overall: -0.12841792028343618
+	Max Muncy - HR Rating: 2.9435413454688004 Overall: 2.4394544561987486
+	C.J. Cron - HR Rating: 2.9425447666076194 Overall: 1.7963971531329475
+	Mauricio Dubon - HR Rating: 2.9355535830312656 Overall: 0.5914425336081027
+	Matt Joyce - HR Rating: 2.9048361417489357 Overall: 1.4879047540644021
+	Dylan Carlson - HR Rating: 2.8887032397582812 Overall: 2.3360477862224625
+	Jose Ramirez - HR Rating: 2.8842642272493513 Overall: 1.6544571897054208
+	Jazz Chisholm Jr. - HR Rating: 2.787862443688678 Overall: 0.7552652190062574
+	Austin Meadows - HR Rating: 2.7009068889031576 Overall: 4.228004523129233
+	Manny Machado - HR Rating: 2.570478125760166 Overall: 2.1865861128889397
+	Tommy Pham - HR Rating: 2.5454692370838887 Overall: 1.9977006411611766
+	Andrew Knapp - HR Rating: 2.5158346709466 Overall: 0.5409438700391437
+	Corey Dickerson - HR Rating: 2.469766559276037 Overall: 3.621734802637219
+	Jarred Kelenic - HR Rating: 2.4292013567130506 Overall: -0.1072994456984487
+	Josh Donaldson - HR Rating: 2.426485812890083 Overall: 3.783888605503015
+	Francisco Lindor - HR Rating: 2.3877007199505704 Overall: 1.5854700211434607
+	Joey Gallo - HR Rating: 2.386453890146361 Overall: 1.2112804165119007
+	Michael A. Taylor - HR Rating: 2.3850447234349557 Overall: 1.1585625927883654
+	James McCann - HR Rating: 2.354203741164034 Overall: 0.8794525372153488
+	Wil Myers - HR Rating: 2.2399277593797833 Overall: 1.7525836156175894
+	Alex Bregman - HR Rating: 2.2284749057115927 Overall: 2.0570568250521437
+	Ronald Acuna Jr. - HR Rating: 2.1801614402518648 Overall: 1.1924235642446928
+	Gary Sanchez - HR Rating: 2.1595517138465388 Overall: 1.8656963416097603
+	Austin Slater - HR Rating: 2.1307081699387846 Overall: 0.7540313437526791
+	Clint Frazier - HR Rating: 2.087943763664105 Overall: 2.549025573302094
+	Matt Carpenter - HR Rating: 2.0684128917486926 Overall: 2.8502212273922116
+	Kyle Tucker - HR Rating: 2.060729617989086 Overall: 1.506663659533129
+	Austin Riley - HR Rating: 2.0178074276637905 Overall: 0.8248086066601907
+	Stephen Vogt - HR Rating: 2.0112492844508703 Overall: 1.02352793165519
+	Yuli Gurriel - HR Rating: 1.9797854402982946 Overall: 0.9256139411126026
+	Patrick Wisdom - HR Rating: 1.9411543865503014 Overall: 0.2396385664161833
+	Eric Haase - HR Rating: 1.9139903704071553 Overall: 0.6762437772507789
+	Alec Bohm - HR Rating: 1.8842268642316649 Overall: 2.0784777898797113
+	Michael Perez - HR Rating: 1.8753938318548107 Overall: 0.5649444954212979
+	Yordan Alvarez - HR Rating: 1.7568810526015037 Overall: 2.3069036315323297
+	Danny Jansen - HR Rating: 1.7296494522557788 Overall: 0.7515004843424096
+	Ozzie Albies - HR Rating: 1.697520809801566 Overall: 1.468685403240093
+	Bobby Dalbec - HR Rating: 1.6772316780285872 Overall: 1.2943682934512422
+	Ryan Zimmerman - HR Rating: 1.637575138775108 Overall: -0.02373524414983284
+	Lourdes Gurriel Jr. - HR Rating: 1.5512756489613984 Overall: 2.226100321266323
+	Jean Segura - HR Rating: 1.5104016023077946 Overall: -0.16847975885739597
+	Cesar Hernandez - HR Rating: 1.504307291708335 Overall: 1.5131474937855374
+	William Contreras - HR Rating: 1.476561314369125 Overall: 0.567781499528558
+	Isan Diaz - HR Rating: 1.4284037284406985 Overall: 0.8871267218777685
+	Kyle Higashioka - HR Rating: 1.4251565452059356 Overall: 0.7485642375496442
+	David Peralta - HR Rating: 1.3240105684573846 Overall: 3.901857001628619
+	Amed Rosario - HR Rating: 1.3217399979999436 Overall: 1.1130169604845854
+	Garrett Hampson - HR Rating: 1.3160863989725426 Overall: 2.588704118174806
+	Rougned Odor - HR Rating: 1.2224080981196612 Overall: 1.4727301025029285
+	Whit Merrifield - HR Rating: 1.1982950098842842 Overall: 3.26410955987314
+	Adam Frazier - HR Rating: 1.1925758010879168 Overall: 0.9659404877996511
+	Nick Maton - HR Rating: 1.1842926867074066 Overall: -0.40361943483385243
+	Dansby Swanson - HR Rating: 1.1498855546009892 Overall: 0.34427358358810217
+	Zach McKinstry - HR Rating: 1.1498239442626932 Overall: 0.8337064531843766
+	Kurt Suzuki - HR Rating: 1.138413426773109 Overall: 0.9359515578730823
+	Tom Murphy - HR Rating: 1.11443025222435 Overall: 0.9510252521500617
+	Danny Santana - HR Rating: 1.1069131590152579 Overall: 0.8756316580473728
+	Mitch Moreland - HR Rating: 1.1037650903454395 Overall: 2.1186679053687243
+	Josh Bell - HR Rating: 1.1029846692296932 Overall: 0.41657337859653176
+	Nick Castellanos - HR Rating: 1.0790106053444386 Overall: 0.28586949769993414
+	Adolis Garcia - HR Rating: 1.0727688850305737 Overall: 0.6148140946169893
+	Joshua Fuentes - HR Rating: 1.0582324489672295 Overall: 2.2056862156061605
+	Mike Zunino - HR Rating: 1.0034123612328072 Overall: 1.9885436490328297
+	Jake Fraley - HR Rating: 0.9981983555250152 Overall: 0.03192898675676445
+	Max Stassi - HR Rating: 0.9905450969204839 Overall: 0.1975542404068688
+	Ian Happ - HR Rating: 0.9620545069670277 Overall: 0.04465850355724459
+	Austin Hedges - HR Rating: 0.9469404784422416 Overall: 0.4159064075402155
+	Tomas Nido - HR Rating: 0.9407860259167407 Overall: 0.5589007565930455
+	Alex Kirilloff - HR Rating: 0.924972739392555 Overall: 0.9570763290379729
+	Willians Astudillo - HR Rating: 0.9198421060155294 Overall: 1.0191905129789416
+	Starling Marte - HR Rating: 0.9190898144199839 Overall: 1.3063277406497336
+	Eddie Rosario - HR Rating: 0.9032229743706961 Overall: 0.9317343969827706
+	Jonathan Villar - HR Rating: 0.8808071255378731 Overall: 0.5774917797651359
+	Cody Bellinger - HR Rating: 0.863555673106732 Overall: 0.5169830779450841
+	Pavin Smith - HR Rating: 0.8501894047258498 Overall: 1.8498652132918076
+	Sandy Leon - HR Rating: 0.8336002862962376 Overall: 1.3316325504442987
+	Ronald Torreyes - HR Rating: 0.8308889438821111 Overall: 0.1561389101117175
+	Ke'Bryan Hayes - HR Rating: 0.829376725822881 Overall: 0.5753739187548217
+	Ryan Jeffers - HR Rating: 0.7623927738226809 Overall: 0.7052959425126429
+	Ben Rortvedt - HR Rating: 0.7605579676116461 Overall: 0.16908878600817173
+	Kevin Pillar - HR Rating: 0.7536865472190494 Overall: 0.3725915453727247
+	Jacob Stallings - HR Rating: 0.7164728627604235 Overall: 0.28136405097288564
+	Adalberto Mondesi - HR Rating: 0.6902047132146634 Overall: -0.13874805323009248
+	Jose Peraza - HR Rating: 0.6704793406509902 Overall: 0.5651726165890453
+	Matt Adams - HR Rating: 0.6625067238175376 Overall: 0.8138715904740136
+	Eugenio Suarez - HR Rating: 0.6309445370617737 Overall: 1.5735740962598934
+	Juan Soto - HR Rating: 0.588867944810824 Overall: 1.5237485121717762
+	Jorge Polanco - HR Rating: 0.5726440200017143 Overall: 2.5041437849652843
+	Brandon Drury - HR Rating: 0.5696963398812825 Overall: 0.1092224466413326
+	Carson Kelly - HR Rating: 0.5525693150931176 Overall: -0.7235557380210866
+	Jason Vosler - HR Rating: 0.551849753135804 Overall: -0.34030979113688964
+	Tyler Stephenson - HR Rating: 0.5470327575448589 Overall: 0.281474241121175
+	Aramis Garcia - HR Rating: 0.5429520009278127 Overall: 1.4556424937855366
+	Ha-Seong Kim - HR Rating: 0.527226098238807 Overall: 0.4079526557901653
+	Jake Rogers - HR Rating: 0.4989474349569989 Overall: 0.47487064523272104
+	Donovan Solano - HR Rating: 0.477916379877211 Overall: 0.3216282996799907
+	Garrett Cooper - HR Rating: 0.47191562422235067 Overall: 2.567230533443812
+	Albert Pujols - HR Rating: 0.44737624350338556 Overall: 2.984307638432527
+	Matt Chapman - HR Rating: 0.43378135838529686 Overall: 3.5930998069944846
+	Yasmani Grandal - HR Rating: 0.41595713181268124 Overall: 3.2261829270550595
+	Christian Walker - HR Rating: 0.39951620886082534 Overall: 1.2922222886368184
+	Harold Ramirez - HR Rating: 0.3985645770593449 Overall: 0.4019263041086889
+	Ka'ai Tom - HR Rating: 0.39581462210920354 Overall: -0.16741236401040016
+	Rene Rivera - HR Rating: 0.3933082843795539 Overall: -0.25322162490356886
+	Billy McKinney - HR Rating: 0.37234383511558933 Overall: -0.4133848604960142
+	Martin Maldonado - HR Rating: 0.37200045658447367 Overall: 0.2181082276636473
+	Will Craig - HR Rating: 0.37126200053073005 Overall: 0.05451194618417667
+	Justin Williams - HR Rating: 0.3559187111360324 Overall: 0.533134335409583
+	Yu Chang - HR Rating: 0.3304693179805142 Overall: -0.6261734056687336
+	Sergio Alcantara - HR Rating: 0.32490729944289837 Overall: 0.23408985908168806
+	Juan Lagares - HR Rating: 0.2924324928092805 Overall: 0.3641333252092915
+	Scott Heineman - HR Rating: 0.27851682764364694 Overall: 0.14229210548872834
+	Freddie Freeman - HR Rating: 0.2658965131492334 Overall: 1.4916031096317037
+	Rowdy Tellez - HR Rating: 0.26530619277693795 Overall: 1.6549335938169656
+	Jonathan Schoop - HR Rating: 0.23359181559137457 Overall: 0.4536263662533221
+	Jurickson Profar - HR Rating: 0.2113768781625766 Overall: 0.78829961594617
+	Hanser Alberto - HR Rating: 0.17998273644989898 Overall: -0.08875573167804826
+	Miguel Cabrera - HR Rating: 0.17221871411468945 Overall: 1.1297982999514276
+	Kean Wong - HR Rating: 0.1674725599502845 Overall: -0.11312773072087776
+	Tyler Naquin - HR Rating: 0.1583553261128891 Overall: 0.0657526186462471
+	Kyle Garlick - HR Rating: 0.15477728509614572 Overall: 0.05913313231806613
+	Trevor Larnach - HR Rating: 0.14257027291236896 Overall: 0.7057129160261725
+	Jake Lamb - HR Rating: 0.1365504480970749 Overall: 0.5482023956255894
+	Chas McCormick - HR Rating: 0.11868814608988837 Overall: -0.15512855284436675
+	Lewis Brinson - HR Rating: 0.10913406160754635 Overall: -0.07023963409668849
+	Mark Canha - HR Rating: 0.10409145192648336 Overall: 2.824371434826708
+	Phil Gosselin - HR Rating: 0.09668419046944188 Overall: 0.4552920819451982
+	Mason Williams - HR Rating: 0.08798854636546762 Overall: 0.11762864581845196
+	Guillermo Heredia - HR Rating: 0.08391050191541209 Overall: -0.025051006743049865
+	AJ Pollock - HR Rating: 0.06904045297187057 Overall: 0.7430526100745732
+	Jake Cronenworth - HR Rating: 0.049738461046887644 Overall: 0.14763838943969884
+	Yadier Molina - HR Rating: 0.04846784442805559 Overall: 1.0123879938712537
+	Wilmer Difo - HR Rating: 0.045586395100631956 Overall: -0.28120683258093115
+	Miguel Andujar - HR Rating: 0.041690161008457245 Overall: 0.5424938463241805
+	Victor Caratini - HR Rating: 0.03197016053795855 Overall: -0.2529297985656732
+	Travis Jankowski - HR Rating: 0.03162481345109863 Overall: -0.03165793701248607
+	Chadwick Tromp - HR Rating: 0.020316726931912343 Overall: 0.013797788822537788
+	Cam Gallagher - HR Rating: 0.020256978430812374 Overall: 0.40433903904397267
+	Sean Murphy - HR Rating: 0.019899529751993564 Overall: 1.7598026020743458
+	Santiago Espinal - HR Rating: 0.00524031272322086 Overall: -0.06681148289951121
+	Abraham Almonte - HR Rating: 0.0028821687779293685 Overall: 0.023555767771936343
+	Derek Hill - HR Rating: 0.0 Overall: 0.0
+	Nick Martini - HR Rating: 0.0 Overall: 0.0
+	Skye Bolt - HR Rating: -0.003664099840566869 Overall: 0.013934787136775342
+	Mookie Betts - HR Rating: -0.008163845618732568 Overall: 2.8659112391782613
+	Josh Reddick - HR Rating: -0.018731404763792783 Overall: -0.2904647554930143
+	Mike Freeman - HR Rating: -0.03905172975120717 Overall: 0.0531590083288094
+	Eric Sogard - HR Rating: -0.040308307938441264 Overall: 0.08045802130060864
+	Travis Blankenhorn - HR Rating: -0.06580895485685304 Overall: -0.02856039601131461
+	P.J. Higgins - HR Rating: -0.06842485195847023 Overall: 0.018551001728620835
+	Kyle Farmer - HR Rating: -0.08878872247064183 Overall: 0.45861256321609206
+	Lane Thomas - HR Rating: -0.10278392868367667 Overall: 0.6310606223034946
+	Tucker Barnhart - HR Rating: -0.10493433817569776 Overall: -0.014643875846452704
+	Jose Rondon - HR Rating: -0.10651795281258036 Overall: 0.05845815273293527
+	Robel Garcia - HR Rating: -0.11501585666733334 Overall: 0.03161503228663676
+	Reese McGuire - HR Rating: -0.1170041289751131 Overall: 0.4882553296522758
+	Webster Rivas - HR Rating: -0.11801718425275005 Overall: -0.04610840238292523
+	Bradley Zimmer - HR Rating: -0.13174196855624445 Overall: -0.23701548437098208
+	Jason Martin - HR Rating: -0.1335284284289551 Overall: 0.036136167461927486
+	Cole Tucker - HR Rating: -0.13803816462686075 Overall: -0.021415921733478106
+	Shogo Akiyama - HR Rating: -0.1445552359778494 Overall: -0.05089138358953114
+	Pablo Sandoval - HR Rating: -0.16113250866971196 Overall: -0.05972519368410526
+	Jonah Heim - HR Rating: -0.16572155692727641 Overall: 0.051625380360867425
+	Ben Gamel - HR Rating: -0.1788006492939789 Overall: -0.5043741766907627
+	Ender Inciarte - HR Rating: -0.18025755576787908 Overall: -0.0036794075259293344
+	Jorge Alfaro - HR Rating: -0.18091358593359777 Overall: 0.746571778122232
+	Rafael Ortega - HR Rating: -0.18148112383816692 Overall: 0.04550659138832538
+	Mark Payton - HR Rating: -0.18646726253107232 Overall: -0.03090640204005828
+	Garrett Stubbs - HR Rating: -0.19200265244006975 Overall: 0.027731028315094736
+	Gilberto Celestino - HR Rating: -0.21210468253378675 Overall: -0.08381137411068888
+	Trea Turner - HR Rating: -0.22807640584873834 Overall: -0.15875201727192342
+	Christian Arroyo - HR Rating: -0.23294085011786042 Overall: 0.22849572944941324
+	Jacob Nottingham - HR Rating: -0.29695109162890376 Overall: -0.10257995235578159
+	Chad Pinder - HR Rating: -0.2999125782728072 Overall: 0.0388526010743165
+	Kevin Plawecki - HR Rating: -0.3170546591375464 Overall: 0.10909005945884158
+	Kevan Smith - HR Rating: -0.3381988873173519 Overall: 0.10152283185233865
+	Aledmys Diaz - HR Rating: -0.37878108341666855 Overall: -0.1330238843824106
+	Jarrod Dyson - HR Rating: -0.3965806740639018 Overall: 0.34374883414526114
+	Tucupita Marcano - HR Rating: -0.4052688621904483 Overall: -0.0032389490414011972
+	Jorge Mateo - HR Rating: -0.42652811379553685 Overall: -0.02420589759707418
+	Gavin Lux - HR Rating: -0.4460508518600529 Overall: 1.0629967283350947
+	Joe Panik - HR Rating: -0.44699454647275627 Overall: 0.2980513869539137
+	Khris Davis - HR Rating: -0.44757117753442943 Overall: 0.2681699864996141
+	Jonathan Davis - HR Rating: -0.5048566441755479 Overall: -0.09821548435669587
+	Harold Castro - HR Rating: -0.5055286951620046 Overall: -0.1666473613531815
+	Austin Wynns - HR Rating: -0.5055784770993457 Overall: 0.0688042338352525
+	DJ Stewart - HR Rating: -0.514737456784478 Overall: -0.7078843827680786
+	Gio Urshela - HR Rating: -0.5242611043256945 Overall: 1.1792965466870478
+	Nick Gordon - HR Rating: -0.5321929589771137 Overall: -0.04167555713020373
+	Yan Gomes - HR Rating: -0.5430638448558527 Overall: -0.3446083729535139
+	Brandon Lowe - HR Rating: -0.545888372449041 Overall: 3.0815122037058202
+	Kevin Newman - HR Rating: -0.5749932313500379 Overall: 1.1759374273122092
+	Raimel Tapia - HR Rating: -0.5951888136614242 Overall: 3.5753772003842967
+	Willie Calhoun - HR Rating: -0.6016590778963682 Overall: 0.11785904340124022
+	Gleyber Torres - HR Rating: -0.6095287278505093 Overall: 1.5558119637703938
+	Jack Mayfield - HR Rating: -0.6179599645825882 Overall: -0.17881228747249928
+	Alex Blandino - HR Rating: -0.6200356617646218 Overall: -0.03145761778907951
+	Taylor Walls - HR Rating: -0.6333156214354408 Overall: -0.30164455041572635
+	Stephen Piscotty - HR Rating: -0.6474613421279891 Overall: 1.3945347953512968
+	Nomar Mazara - HR Rating: -0.6546791164401125 Overall: 0.09945914368981966
+	Jed Lowrie - HR Rating: -0.688168335078829 Overall: 2.1945277643932695
+	Willi Castro - HR Rating: -0.6967006667270849 Overall: 0.551348833173805
+	Jake Bauers - HR Rating: -0.713127345567016 Overall: -0.5554915136861053
+	Jose Godoy - HR Rating: -0.7267835048029945 Overall: -0.37666782293779844
+	David Fletcher - HR Rating: -0.7479068783391499 Overall: 1.9846445555301582
+	Dominic Smith - HR Rating: -0.7482116708191091 Overall: -0.416386998771394
+	Zack Short - HR Rating: -0.7558466041712623 Overall: 0.08061429626560764
+	Robbie Grossman - HR Rating: -0.7821561964358479 Overall: -0.08511649134975287
+	Justin Turner - HR Rating: -0.783687375275365 Overall: 1.4982444219834852
+	Tyler Wade - HR Rating: -0.803226521972699 Overall: 0.20347234179547982
+	Alex Avila - HR Rating: -0.8284875494688425 Overall: 0.057335024143546805
+	Taylor Jones - HR Rating: -0.8570667646218464 Overall: -0.30553441105460166
+	Pablo Reyes - HR Rating: -0.8788373870540299 Overall: -0.26493455145861317
+	Brock Holt - HR Rating: -0.8879122063129803 Overall: -0.008343583188091015
+	Jordy Mercer - HR Rating: -0.8945851419758852 Overall: -0.29394004888711106
+	Alan Trejo - HR Rating: -0.9083206205989813 Overall: 0.10661088977542203
+	Jose Devers - HR Rating: -0.9406142890319723 Overall: -0.18082908254521554
+	Jose Altuve - HR Rating: -0.9464789412554646 Overall: 0.8701722105631594
+	Elias Diaz - HR Rating: -0.9578754340779451 Overall: 0.778464962356067
+	Ketel Marte - HR Rating: -1.0176169449778563 Overall: -0.3632694641275463
+	Mike Brosseau - HR Rating: -1.0612586249504985 Overall: 0.9238227549358553
+	Matt Beaty - HR Rating: -1.0656358364481837 Overall: 0.6771850841452621
+	Kelvin Gutierrez - HR Rating: -1.0853893556144463 Overall: -0.09868362553215815
+	Akil Baddoo - HR Rating: -1.0873528338668248 Overall: -0.45871546565616167
+	Ehire Adrianza - HR Rating: -1.1024779658617028 Overall: -0.09847909533843822
+	Jesse Winker - HR Rating: -1.1135001730381577 Overall: -0.49725853788679697
+	Owen Miller - HR Rating: -1.115805502657219 Overall: -0.44688074957141644
+	Andrew Knizner - HR Rating: -1.1200480248516391 Overall: 0.1470121182462355
+	Carlos Correa - HR Rating: -1.1492063626675042 Overall: 1.1159077160776012
+	Jon Berti - HR Rating: -1.149500871189433 Overall: 1.6534779231263748
+	Francisco Mejia - HR Rating: -1.1596774840520014 Overall: 0.51543803080088
+	Brett Phillips - HR Rating: -1.2138126915343146 Overall: -0.3493323714248977
+	Brendan Rodgers - HR Rating: -1.215436825116032 Overall: 0.014871292094059909
+	Danny Mendick - HR Rating: -1.2297915325233293 Overall: 0.14082243709820313
+	Charlie Culberson - HR Rating: -1.2670339206251608 Overall: -0.44385855817309067
+	Ildemaro Vargas - HR Rating: -1.2867819275915313 Overall: -0.06744951512900356
+	Jeimer Candelario - HR Rating: -1.298668899056487 Overall: 0.14195353181519502
+	Tony Kemp - HR Rating: -1.3326210324973422 Overall: 0.12029215741878305
+	Marwin Gonzalez - HR Rating: -1.3544423031660167 Overall: 1.9921401197891373
+	Donovan Walton - HR Rating: -1.4079919253783255 Overall: -0.8525589699277122
+	Ryan McKenna - HR Rating: -1.4291858338809682 Overall: -0.28767737935369597
+	Jonathan India - HR Rating: -1.450081225489657 Overall: -0.4798989253978685
+	Niko Goodrum - HR Rating: -1.5095585698088512 Overall: 0.5187224551415756
+	Nick Solak - HR Rating: -1.585037880186577 Overall: 0.6380433598102798
+	Austin Barnes - HR Rating: -1.589426923954327 Overall: -0.2982579921569185
+	Manny Pina - HR Rating: -1.6110360648018516 Overall: 0.3266813262521787
+	Zack Collins - HR Rating: -1.6295428532926364 Overall: -0.17106863107517345
+	Nicky Lopez - HR Rating: -1.7277825786710332 Overall: 0.34959755655161573
+	Brett Gardner - HR Rating: -1.7307215586193878 Overall: 1.0327125322723512
+	Ramon Urias - HR Rating: -1.7483923777679362 Overall: -0.4687030975170721
+	Yoshi Tsutsugo - HR Rating: -1.9065196592472653 Overall: -0.3749947400354294
+	Magneuris Sierra - HR Rating: -1.9171245352427215 Overall: -0.11081084902425824
+	Yadiel Hernandez - HR Rating: -1.9544433694427281 Overall: -0.5620096664190406
+	Andrelton Simmons - HR Rating: -2.043548345631589 Overall: 0.4512919092545508
+	Jose Trevino - HR Rating: -2.053263523576452 Overall: 0.20641710328152224
+	Erik Gonzalez - HR Rating: -2.065285013571145 Overall: 0.8034186609688849
+	Chris Taylor - HR Rating: -2.06784595045037 Overall: 1.4804384307408784
+	Christian Vazquez - HR Rating: -2.073735932627573 Overall: 0.39845023689248305
+	Josh Rojas - HR Rating: -2.1233460981929757 Overall: -1.2162398556601608
+	Victor Robles - HR Rating: -2.1283719771351186 Overall: -1.358402709005972
+	Tyrone Taylor - HR Rating: -2.2930210793807824 Overall: 0.4653444445555591
+	Daniel Robertson - HR Rating: -2.4874579006321316 Overall: 0.25187745084859564
+	Anthony Santander - HR Rating: -2.616592751792908 Overall: -1.0225821726335038
+	Edmundo Sosa - HR Rating: -2.6431550451598262 Overall: 0.350483545765593
+	Tommy Edman - HR Rating: -2.6475262186587476 Overall: 1.8941224582845242
+	Eric Hosmer - HR Rating: -2.7177056983422387 Overall: -0.6551483265236154
+	Myles Straw - HR Rating: -2.7603014711563185 Overall: -1.2587422284636705
+	Tim Locastro - HR Rating: -2.7980721162776083 Overall: -0.2883112112131778
+	Nick Ahmed - HR Rating: -2.8100516915431863 Overall: -0.8908588712106069
+	Billy Hamilton - HR Rating: -2.814905328877739 Overall: -0.2972896491899764
+	Josh Harrison - HR Rating: -2.864431272195991 Overall: -1.8532195280793728
+	Keston Hiura - HR Rating: -2.8724565225383576 Overall: 1.7581615161861772
+	Andrew Stevenson - HR Rating: -2.9013535174291842 Overall: -0.7229876147889942
+	Stevie Wilkerson - HR Rating: -2.9449492969084834 Overall: -0.5948061819623418
+	Kevin Kiermaier - HR Rating: -2.9656061331904056 Overall: 0.812354607631647
+	Yonathan Daza - HR Rating: -3.04342515224845 Overall: 0.10530746328466514
+	Manuel Margot - HR Rating: -3.0716517004185544 Overall: 0.3505938551672908
+	Christian Yelich - HR Rating: -3.0772322913546093 Overall: 0.6406822522072056
+	Isiah Kiner-Falefa - HR Rating: -3.3767185265485864 Overall: 0.23524912940369655
+	Yoan Moncada - HR Rating: -3.3823990220742592 Overall: 1.0621599722277784
+	Jose Abreu - HR Rating: -3.3984432914981575 Overall: 2.1820992272922095
+	Joey Wendle - HR Rating: -3.445006652040236 Overall: 0.4450399221763472
+	Josh Naylor - HR Rating: -3.729468860753164 Overall: -0.4193156239463979
+	Travis Shaw - HR Rating: -3.7376024797142775 Overall: 1.4222361958198804
+	Nate Lowe - HR Rating: -3.7758619718370237 Overall: 0.3809659012400349
+	Randy Arozarena - HR Rating: -3.7921913787335053 Overall: 1.254684178119374
+	Daniel Vogelbach - HR Rating: -3.8549543350884314 Overall: 0.674483914968999
+	Ty France - HR Rating: -3.8848390295020416 Overall: -0.06218946729192327
+	J.P. Crawford - HR Rating: -3.9680020128520814 Overall: -0.08770334155975948
+	Yermin Mercedes - HR Rating: -4.40132543374915 Overall: -0.19593344349838485
+	Adam Eaton - HR Rating: -4.463608013242821 Overall: 1.596491633046659
+	Pedro Severino - HR Rating: -4.6940427310066 Overall: -2.122025551301466
+	Starlin Castro - HR Rating: -4.89834772105883 Overall: -0.9444529265693308
+	Freddy Galvis - HR Rating: -4.9903509299551425 Overall: -2.304430183362382
+	Ryan Mountcastle - HR Rating: -5.420820086573899 Overall: -1.5721236303180088
+	Omar Narvaez - HR Rating: -5.531378206993342 Overall: -0.4437996469899128
+	Trey Mancini - HR Rating: -5.532344441984057 Overall: -1.1878434383839531
+	Avisail Garcia - HR Rating: -5.540964303409811 Overall: 0.6413586575330729
+	Tim Anderson - HR Rating: -5.701639059309524 Overall: -0.4367049596845618
+	Elvis Andrus - HR Rating: -6.497616547917183 Overall: 0.35735984298122986
+	Willy Adames - HR Rating: -6.53069254353553 Overall: 0.4857537906797329
+	Luis Urias - HR Rating: -6.642285310332295 Overall: -1.35364924169262
+	Jackie Bradley Jr. - HR Rating: -6.827214564585273 Overall: 1.2833974304980147
+	Yandy Diaz - HR Rating: -6.933168257022128 Overall: 0.5618769400268577
+	Maikel Franco - HR Rating: -7.1458598964256135 Overall: -1.4083675280722303
+	Leury Garcia - HR Rating: -8.309094721509128 Overall: -1.1715752807794508
+	DJ LeMahieu - HR Rating: -9.134222049431338 Overall: 1.1783591619046265
+	Nick Madrigal - HR Rating: -13.180921177564633 Overall: -0.6795522324780704
 
 Stacks to Consider:
-St. Louis Cardinals - Avg Overall: 8.167212412663744
-	[OF] Dylan Carlson $2200 - Overall: 27.4 Value Rating: 12.45
-	[OF] Tyler O'Neill $3000 - Overall: 7.48 Value Rating: 2.49
-	[2B] Max Moroff $2000 - Overall: 0.11 Value Rating: 0.05
-	[2B] Matt Carpenter $2000 - Overall: 3.42 Value Rating: 1.71
-	[3B] Nolan Arenado $3600 - Overall: 9.34 Value Rating: 2.59
-	[1B] Paul Goldschmidt $3100 - Overall: 7.3 Value Rating: 2.36
-	[C] Yadier Molina $2700 - Overall: 2.12 Value Rating: 0.79
-Seattle Mariners - Avg Overall: 5.053189587493115
-	[OF] Mitch Haniger $3700 - Overall: 13.5 Value Rating: 3.65
-	[3B] Kyle Seager $2800 - Overall: 11.47 Value Rating: 4.1
-	[OF] Jarred Kelenic $2400 - Overall: 4.74 Value Rating: 1.97
-	[OF] Kyle Lewis $2500 - Overall: 7.55 Value Rating: 3.02
-	[C] Tom Murphy $2100 - Overall: 3.73 Value Rating: 1.78
-	[C] Jose Godoy $2000 - Overall: 0.68 Value Rating: 0.34
-	[C] Jacob Nottingham $2000 - Overall: 0.52 Value Rating: 0.26
-	[3B] Eric Campbell $2000 - Overall: 0.01 Value Rating: 0.01
-	[2B] Ty France $2500 - Overall: 4.73 Value Rating: 1.89
-	[SS] J.P. Crawford $2300 - Overall: 3.59 Value Rating: 1.56
-Texas Rangers - Avg Overall: 4.8449649808683075
-	[OF] Adolis Garcia $4300 - Overall: 12.39 Value Rating: 2.88
-	[OF] Joey Gallo $3200 - Overall: 10.68 Value Rating: 3.34
-	[1B] Nate Lowe $2900 - Overall: 9.47 Value Rating: 3.26
-	[OF] Willie Calhoun $3000 - Overall: 6.93 Value Rating: 2.31
-	[OF] Khris Davis $2000 - Overall: 1.3 Value Rating: 0.65
-	[2B] Nick Solak $2800 - Overall: 6.23 Value Rating: 2.23
-	[C] Jonah Heim $2000 - Overall: 1.08 Value Rating: 0.54
-	[3B] Charlie Culberson $2000 - Overall: 1.43 Value Rating: 0.72
-	[3B] Brock Holt $2500 - Overall: 1.37 Value Rating: 0.55
-	[C] Jose Trevino $2100 - Overall: 0.32 Value Rating: 0.15
-	[SS] Isiah Kiner-Falefa $2600 - Overall: 2.09 Value Rating: 0.8
-Arizona Diamondbacks - Avg Overall: 4.229036944434607
-	[2B] Eduardo Escobar $2700 - Overall: 12.19 Value Rating: 4.51
-	[2B] Andrew Young $2000 - Overall: 3.99 Value Rating: 2.0
-	[C] Stephen Vogt $2000 - Overall: 5.75 Value Rating: 2.87
-	[C] Carson Kelly $3200 - Overall: 6.29 Value Rating: 1.97
-	[OF] Josh Reddick $2000 - Overall: 1.43 Value Rating: 0.72
-	[OF] Ketel Marte $3300 - Overall: 2.88 Value Rating: 0.87
-	[2B] Domingo Leyba $2000 - Overall: 0.12 Value Rating: 0.06
-	[OF] Josh Rojas $2300 - Overall: 6.81 Value Rating: 2.96
-	[SS] Nick Ahmed $2200 - Overall: 3.95 Value Rating: 1.8
-	[OF] Tim Locastro $2000 - Overall: 1.33 Value Rating: 0.67
-	[OF] David Peralta $2500 - Overall: 3.75 Value Rating: 1.5
-	[OF] Pavin Smith $2600 - Overall: 2.25 Value Rating: 0.86
-Atlanta Braves - Avg Overall: 3.7360687799204166
-	[OF] Ronald Acuna Jr. $4500 - Overall: 10.02 Value Rating: 2.23
-	[C] William Contreras $2700 - Overall: 2.79 Value Rating: 1.04
-	[1B] Pablo Sandoval $2000 - Overall: 2.05 Value Rating: 1.03
-	[1B] Freddie Freeman $3700 - Overall: 7.04 Value Rating: 1.9
-	[OF] Ehire Adrianza $2100 - Overall: 1.02 Value Rating: 0.49
-	[3B] Austin Riley $3400 - Overall: 5.28 Value Rating: 1.55
-	[OF] Guillermo Heredia $2200 - Overall: 0.25 Value Rating: 0.11
-	[2B] Ozzie Albies $3100 - Overall: 3.57 Value Rating: 1.15
-	[SS] Dansby Swanson $2500 - Overall: 1.6 Value Rating: 0.64
-San Francisco Giants - Avg Overall: 2.099791336405615
-	[OF] Mike Yastrzemski $2900 - Overall: 10.17 Value Rating: 3.51
-	[OF] Alex Dickerson $2100 - Overall: 5.14 Value Rating: 2.45
-	[3B] Evan Longoria $2800 - Overall: 3.59 Value Rating: 1.28
-	[C] Buster Posey $3300 - Overall: 2.82 Value Rating: 0.85
-	[OF] Austin Slater $2400 - Overall: 2.61 Value Rating: 1.09
-	[OF] Mike Yastrzemski $2900 - Overall: 0.79 Value Rating: 0.27
-	[OF] Mike Tauchman $2300 - Overall: 2.27 Value Rating: 0.99
-	[SS] Brandon Crawford $2500 - Overall: 0.77 Value Rating: 0.31
-	[3B] Jason Vosler $2000 - Overall: 1.01 Value Rating: 0.51
-	[SS] Mauricio Dubon $2100 - Overall: 0.29 Value Rating: 0.14
-	[C] Curt Casali $2000 - Overall: 0.11 Value Rating: 0.06
-	[SS] Brandon Crawford $2500 - Overall: 1.37 Value Rating: 0.55
-	[OF] Steven Duggar $2300 - Overall: 0.18 Value Rating: 0.08
-	[3B] Evan Longoria $2800 - Overall: 0.17 Value Rating: 0.06
-	[C] Buster Posey $3300 - Overall: 0.21 Value Rating: 0.06
-New York Mets - Avg Overall: 0.5252843498097882
-	[C] Patrick Mazeika $2000 - Overall: 0.58 Value Rating: 0.29
-	[OF] Billy McKinney $2000 - Overall: 0.77 Value Rating: 0.39
-	[OF] Dominic Smith $2500 - Overall: 0.22 Value Rating: 0.09
+Kansas City Royals - Avg Overall: 2.191090893916969
+	[1B] Carlos Santana $3200 - Overall: 4.45 Value Rating: 1.39
+	[OF] Jorge Soler $2000 - Overall: 4.1 Value Rating: 2.05
+	[C] Salvador Perez $3000 - Overall: 1.79 Value Rating: 0.6
+	[3B] Hunter Dozier $2500 - Overall: 3.8 Value Rating: 1.52
+	[OF] Andrew Benintendi $2900 - Overall: 2.24 Value Rating: 0.77
+	[OF] Michael A. Taylor $2400 - Overall: 1.16 Value Rating: 0.48
+	[2B] Whit Merrifield $3300 - Overall: 3.26 Value Rating: 0.99
+	[C] Cam Gallagher $2000 - Overall: 0.4 Value Rating: 0.2
+	[OF] Jarrod Dyson $2000 - Overall: 0.34 Value Rating: 0.17
+	[SS] Nicky Lopez $2100 - Overall: 0.35 Value Rating: 0.17
+Miami Marlins - Avg Overall: 1.9978668311194603
+	[OF] Adam Duvall $2700 - Overall: 3.19 Value Rating: 1.18
+	[1B] Jesus Aguilar $2900 - Overall: 3.92 Value Rating: 1.35
+	[2B] Jazz Chisholm Jr. $3200 - Overall: 0.76 Value Rating: 0.24
+	[OF] Corey Dickerson $2500 - Overall: 3.62 Value Rating: 1.45
+	[2B] Isan Diaz $2000 - Overall: 0.89 Value Rating: 0.44
+	[OF] Starling Marte $3700 - Overall: 1.31 Value Rating: 0.35
+	[C] Sandy Leon $2000 - Overall: 1.33 Value Rating: 0.67
+	[OF] Garrett Cooper $2300 - Overall: 2.57 Value Rating: 1.12
+	[C] Jorge Alfaro $2200 - Overall: 0.75 Value Rating: 0.34
+	[3B] Jon Berti $2000 - Overall: 1.65 Value Rating: 0.83
+Colorado Rockies - Avg Overall: 1.9442975268495768
+	[2B] Ryan McMahon $3800 - Overall: 4.27 Value Rating: 1.12
+	[C] Dom Nunez $3000 - Overall: 2.35 Value Rating: 0.78
+	[OF] Charlie Blackmon $3500 - Overall: 4.72 Value Rating: 1.35
+	[1B] C.J. Cron $3400 - Overall: 1.8 Value Rating: 0.53
+	[OF] Garrett Hampson $3000 - Overall: 2.59 Value Rating: 0.86
+	[3B] Joshua Fuentes $3000 - Overall: 2.21 Value Rating: 0.74
+	[1B] Matt Adams $2500 - Overall: 0.81 Value Rating: 0.33
+	[OF] Raimel Tapia $3300 - Overall: 3.58 Value Rating: 1.08
+	[2B] Alan Trejo $2500 - Overall: 0.11 Value Rating: 0.04
+	[C] Elias Diaz $2500 - Overall: 0.78 Value Rating: 0.31
+	[2B] Brendan Rodgers $2500 - Overall: 0.01 Value Rating: 0.01
+	[OF] Yonathan Daza $2500 - Overall: 0.11 Value Rating: 0.04
+Arizona Diamondbacks - Avg Overall: 1.8668148643675537
+	[2B] Eduardo Escobar $3200 - Overall: 1.27 Value Rating: 0.4
+	[C] Stephen Vogt $2100 - Overall: 1.02 Value Rating: 0.49
+	[OF] David Peralta $2600 - Overall: 3.9 Value Rating: 1.5
+	[OF] Pavin Smith $2700 - Overall: 1.85 Value Rating: 0.69
+	[1B] Christian Walker $2300 - Overall: 1.29 Value Rating: 0.56
+Oakland Athletics - Avg Overall: 1.8187587982140152
+	[1B] Matt Olson $4100 - Overall: 4.22 Value Rating: 1.03
+	[OF] Seth Brown $3000 - Overall: 3.55 Value Rating: 1.18
+	[1B] Mitch Moreland $3300 - Overall: 2.12 Value Rating: 0.64
+	[C] Aramis Garcia $2500 - Overall: 1.46 Value Rating: 0.58
+	[3B] Matt Chapman $3700 - Overall: 3.59 Value Rating: 0.97
+	[OF] Mark Canha $4000 - Overall: 2.82 Value Rating: 0.71
+	[C] Sean Murphy $3000 - Overall: 1.76 Value Rating: 0.59
+	[OF] Skye Bolt $2500 - Overall: 0.01 Value Rating: 0.01
+	[OF] Chad Pinder $3200 - Overall: 0.04 Value Rating: 0.01
+	[OF] Stephen Piscotty $3000 - Overall: 1.39 Value Rating: 0.46
+	[2B] Jed Lowrie $3600 - Overall: 2.19 Value Rating: 0.61
+	[2B] Tony Kemp $3000 - Overall: 0.12 Value Rating: 0.04
+	[SS] Elvis Andrus $3000 - Overall: 0.36 Value Rating: 0.12
+St. Louis Cardinals - Avg Overall: 1.8146943025628108
+	[OF] Tyler O'Neill $3400 - Overall: 2.18 Value Rating: 0.64
+	[3B] Nolan Arenado $3600 - Overall: 4.62 Value Rating: 1.28
+	[1B] Paul Goldschmidt $3300 - Overall: 5.16 Value Rating: 1.56
+	[OF] Dylan Carlson $2800 - Overall: 2.34 Value Rating: 0.83
+	[2B] Matt Carpenter $2100 - Overall: 2.85 Value Rating: 1.36
+	[OF] Justin Williams $2000 - Overall: 0.53 Value Rating: 0.27
+	[C] Yadier Molina $2500 - Overall: 1.01 Value Rating: 0.4
+	[OF] Lane Thomas $2000 - Overall: 0.63 Value Rating: 0.32
+	[SS] Jose Rondon $2000 - Overall: 0.06 Value Rating: 0.03
+	[C] Andrew Knizner $2000 - Overall: 0.15 Value Rating: 0.07
+	[SS] Edmundo Sosa $2000 - Overall: 0.35 Value Rating: 0.18
+	[2B] Tommy Edman $3000 - Overall: 1.89 Value Rating: 0.63
+Los Angeles Angels - Avg Overall: 1.8019643134746708
+	[1B] Jared Walsh $3600 - Overall: 5.32 Value Rating: 1.48
+	[OF] Justin Upton $2900 - Overall: 4.41 Value Rating: 1.52
+	[3B] Anthony Rendon $3200 - Overall: 2.43 Value Rating: 0.76
+	[3B] Jose Rojas $2100 - Overall: 0.59 Value Rating: 0.28
+	[OF] Taylor Ward $2800 - Overall: 1.33 Value Rating: 0.47
+	[C] Kurt Suzuki $2000 - Overall: 0.94 Value Rating: 0.47
+	[C] Max Stassi $2100 - Overall: 0.2 Value Rating: 0.09
+	[OF] Juan Lagares $2000 - Overall: 0.36 Value Rating: 0.18
+	[3B] Phil Gosselin $2000 - Overall: 0.46 Value Rating: 0.23
+	[2B] David Fletcher $2700 - Overall: 1.98 Value Rating: 0.74
+Toronto Blue Jays - Avg Overall: 1.7888101607317357
+	[1B] Vladimir Guerrero Jr. $4500 - Overall: 3.16 Value Rating: 0.7
+	[2B] Marcus Semien $3700 - Overall: 0.22 Value Rating: 0.06
+	[OF] Randal Grichuk $2800 - Overall: 3.2 Value Rating: 1.14
+	[SS] Bo Bichette $3800 - Overall: 3.84 Value Rating: 1.01
+	[OF] Teoscar Hernandez $3100 - Overall: 2.04 Value Rating: 0.66
+	[C] Danny Jansen $2100 - Overall: 0.75 Value Rating: 0.36
+	[OF] Lourdes Gurriel Jr. $2500 - Overall: 2.23 Value Rating: 0.89
+	[1B] Rowdy Tellez $2300 - Overall: 1.65 Value Rating: 0.72
+	[C] Reese McGuire $2000 - Overall: 0.49 Value Rating: 0.24
+	[3B] Joe Panik $2100 - Overall: 0.3 Value Rating: 0.14
+New York Yankees - Avg Overall: 1.686276346282513
+	[OF] Aaron Judge $3500 - Overall: 5.23 Value Rating: 1.49
+	[DH] Giancarlo Stanton $3400 - Overall: 2.68 Value Rating: 0.79
+	[C] Gary Sanchez $2600 - Overall: 1.87 Value Rating: 0.72
+	[OF] Clint Frazier $2300 - Overall: 2.55 Value Rating: 1.11
+	[C] Kyle Higashioka $2200 - Overall: 0.75 Value Rating: 0.34
+	[2B] Rougned Odor $2400 - Overall: 1.47 Value Rating: 0.61
+	[OF] Miguel Andujar $2500 - Overall: 0.54 Value Rating: 0.22
+	[3B] Gio Urshela $2500 - Overall: 1.18 Value Rating: 0.47
+	[SS] Gleyber Torres $2900 - Overall: 1.56 Value Rating: 0.54
+	[SS] Tyler Wade $2000 - Overall: 0.2 Value Rating: 0.1
+	[OF] Brett Gardner $2200 - Overall: 1.03 Value Rating: 0.47
+	[2B] DJ LeMahieu $3000 - Overall: 1.18 Value Rating: 0.39
+Minnesota Twins - Avg Overall: 1.634086314730421
+	[1B] Miguel Sano $2500 - Overall: 3.81 Value Rating: 1.52
+	[DH] Nelson Cruz $3400 - Overall: 3.81 Value Rating: 1.12
+	[3B] Josh Donaldson $3000 - Overall: 3.78 Value Rating: 1.26
+	[OF] Alex Kirilloff $2700 - Overall: 0.96 Value Rating: 0.35
+	[1B] Willians Astudillo $2000 - Overall: 1.02 Value Rating: 0.51
+	[C] Ryan Jeffers $2100 - Overall: 0.71 Value Rating: 0.34
+	[C] Ben Rortvedt $2000 - Overall: 0.17 Value Rating: 0.08
+	[2B] Jorge Polanco $3100 - Overall: 2.5 Value Rating: 0.81
+	[OF] Kyle Garlick $2500 - Overall: 0.06 Value Rating: 0.02
+	[OF] Trevor Larnach $2400 - Overall: 0.71 Value Rating: 0.29
+	[SS] Andrelton Simmons $2000 - Overall: 0.45 Value Rating: 0.23
+Los Angeles Dodgers - Avg Overall: 1.6188128618415072
+	[C] Will Smith $2400 - Overall: 2.7 Value Rating: 1.13
+	[1B] Max Muncy $3700 - Overall: 2.44 Value Rating: 0.66
+	[OF] Zach McKinstry $2600 - Overall: 0.83 Value Rating: 0.32
+	[OF] Cody Bellinger $4200 - Overall: 0.52 Value Rating: 0.12
+	[1B] Albert Pujols $2500 - Overall: 2.98 Value Rating: 1.19
+	[OF] AJ Pollock $2000 - Overall: 0.74 Value Rating: 0.37
+	[OF] Mookie Betts $3900 - Overall: 2.87 Value Rating: 0.73
+	[2B] Gavin Lux $2700 - Overall: 1.06 Value Rating: 0.39
+	[3B] Justin Turner $3000 - Overall: 1.5 Value Rating: 0.5
+	[OF] Matt Beaty $2100 - Overall: 0.68 Value Rating: 0.32
+	[OF] Chris Taylor $3300 - Overall: 1.48 Value Rating: 0.45
+Philadelphia Phillies - Avg Overall: 1.4832919209691708
+	[1B] Rhys Hoskins $3200 - Overall: 2.91 Value Rating: 0.91
+	[OF] Andrew McCutchen $3000 - Overall: 4.04 Value Rating: 1.35
+	[C] J.T. Realmuto $2900 - Overall: 0.58 Value Rating: 0.2
+	[OF] Brad Miller $2500 - Overall: 0.37 Value Rating: 0.15
+	[OF] Odubel Herrera $2700 - Overall: 1.19 Value Rating: 0.44
+	[OF] Matt Joyce $2100 - Overall: 1.49 Value Rating: 0.71
+	[C] Andrew Knapp $2000 - Overall: 0.54 Value Rating: 0.27
+	[3B] Alec Bohm $2400 - Overall: 2.08 Value Rating: 0.87
+	[SS] Ronald Torreyes $2000 - Overall: 0.16 Value Rating: 0.08
+Chicago White Sox - Avg Overall: 1.4593264320575832
+	[C] Yasmani Grandal $2700 - Overall: 3.23 Value Rating: 1.19
+	[OF] Jake Lamb $2400 - Overall: 0.55 Value Rating: 0.23
+	[SS] Danny Mendick $2000 - Overall: 0.14 Value Rating: 0.07
+	[3B] Yoan Moncada $3400 - Overall: 1.06 Value Rating: 0.31
+	[1B] Jose Abreu $3600 - Overall: 2.18 Value Rating: 0.61
+	[OF] Adam Eaton $2500 - Overall: 1.6 Value Rating: 0.64
+Boston Red Sox - Avg Overall: 1.4541752403367374
+	[3B] Rafael Devers $3500 - Overall: 3.66 Value Rating: 1.05
+	[OF] J.D. Martinez $4000 - Overall: 2.28 Value Rating: 0.57
+	[OF] Hunter Renfroe $2800 - Overall: 1.79 Value Rating: 0.64
+	[OF] Alex Verdugo $2900 - Overall: 1.93 Value Rating: 0.66
+	[SS] Xander Bogaerts $3300 - Overall: 1.43 Value Rating: 0.43
+	[1B] Bobby Dalbec $2100 - Overall: 1.29 Value Rating: 0.62
+	[OF] Danny Santana $2500 - Overall: 0.88 Value Rating: 0.35
+	[2B] Christian Arroyo $2100 - Overall: 0.23 Value Rating: 0.11
+	[C] Kevin Plawecki $2000 - Overall: 0.11 Value Rating: 0.05
+	[2B] Marwin Gonzalez $2100 - Overall: 1.99 Value Rating: 0.95
+	[C] Christian Vazquez $2200 - Overall: 0.4 Value Rating: 0.18
+Tampa Bay Rays - Avg Overall: 1.4161870664726135
+	[OF] Austin Meadows $4300 - Overall: 4.23 Value Rating: 0.98
+	[C] Mike Zunino $2400 - Overall: 1.99 Value Rating: 0.83
+	[2B] Brandon Lowe $2900 - Overall: 3.08 Value Rating: 1.06
+	[2B] Mike Brosseau $2500 - Overall: 0.92 Value Rating: 0.37
+	[C] Francisco Mejia $2100 - Overall: 0.52 Value Rating: 0.25
+	[OF] Kevin Kiermaier $2300 - Overall: 0.81 Value Rating: 0.35
+	[OF] Manuel Margot $2600 - Overall: 0.35 Value Rating: 0.13
+	[3B] Joey Wendle $3100 - Overall: 0.45 Value Rating: 0.14
+	[OF] Randy Arozarena $3500 - Overall: 1.25 Value Rating: 0.36
+	[1B] Yandy Diaz $2200 - Overall: 0.56 Value Rating: 0.26
+San Diego Padres - Avg Overall: 1.2682764104117263
+	[SS] Fernando Tatis Jr. $4600 - Overall: 1.6 Value Rating: 0.35
+	[3B] Manny Machado $3800 - Overall: 2.19 Value Rating: 0.58
+	[OF] Tommy Pham $3000 - Overall: 2.0 Value Rating: 0.67
+	[OF] Wil Myers $2900 - Overall: 1.75 Value Rating: 0.6
+	[SS] Ha-Seong Kim $2200 - Overall: 0.41 Value Rating: 0.19
+	[OF] Jurickson Profar $2600 - Overall: 0.79 Value Rating: 0.3
+	[2B] Jake Cronenworth $3300 - Overall: 0.15 Value Rating: 0.04
+San Francisco Giants - Avg Overall: 1.2103247202362928
+	[SS] Brandon Crawford $2700 - Overall: 0.78 Value Rating: 0.29
+	[3B] Evan Longoria $3200 - Overall: 2.01 Value Rating: 0.63
+	[OF] Alex Dickerson $2200 - Overall: 3.14 Value Rating: 1.43
+	[C] Buster Posey $3300 - Overall: 1.58 Value Rating: 0.48
+	[2B] Wilmer Flores $2200 - Overall: 1.18 Value Rating: 0.54
+	[OF] Mike Tauchman $2300 - Overall: 1.73 Value Rating: 0.75
+	[SS] Mauricio Dubon $2100 - Overall: 0.59 Value Rating: 0.28
+	[OF] Austin Slater $2500 - Overall: 0.75 Value Rating: 0.3
+	[2B] Donovan Solano $2600 - Overall: 0.32 Value Rating: 0.12
+	[C] Chadwick Tromp $2000 - Overall: 0.01 Value Rating: 0.01
+Houston Astros - Avg Overall: 1.006641363570705
+	[3B] Alex Bregman $3500 - Overall: 2.06 Value Rating: 0.59
+	[OF] Kyle Tucker $3300 - Overall: 1.51 Value Rating: 0.46
+	[1B] Yuli Gurriel $2500 - Overall: 0.93 Value Rating: 0.37
+	[DH] Yordan Alvarez $3200 - Overall: 2.31 Value Rating: 0.72
+	[C] Martin Maldonado $2000 - Overall: 0.22 Value Rating: 0.11
+	[2B] Robel Garcia $2000 - Overall: 0.03 Value Rating: 0.02
+	[C] Garrett Stubbs $2000 - Overall: 0.03 Value Rating: 0.01
+	[2B] Jose Altuve $4000 - Overall: 0.87 Value Rating: 0.22
+	[SS] Carlos Correa $3200 - Overall: 1.12 Value Rating: 0.35
+Cleveland Indians - Avg Overall: 1.0050314587678697
+	[3B] Jose Ramirez $3900 - Overall: 1.65 Value Rating: 0.42
+	[2B] Cesar Hernandez $2600 - Overall: 1.51 Value Rating: 0.58
+	[SS] Amed Rosario $2400 - Overall: 1.11 Value Rating: 0.46
+	[C] Austin Hedges $2300 - Overall: 0.42 Value Rating: 0.18
+	[OF] Eddie Rosario $3300 - Overall: 0.93 Value Rating: 0.28
+	[OF] Harold Ramirez $2500 - Overall: 0.4 Value Rating: 0.16
+Pittsburgh Pirates - Avg Overall: 0.9891140093127663
+	[OF] Bryan Reynolds $3000 - Overall: 3.49 Value Rating: 1.16
+	[C] Michael Perez $2100 - Overall: 0.56 Value Rating: 0.27
+	[2B] Adam Frazier $3000 - Overall: 0.97 Value Rating: 0.32
+	[3B] Ke'Bryan Hayes $3000 - Overall: 0.58 Value Rating: 0.19
+	[C] Jacob Stallings $2400 - Overall: 0.28 Value Rating: 0.12
+	[1B] Will Craig $2100 - Overall: 0.05 Value Rating: 0.03
+	[SS] Kevin Newman $2500 - Overall: 1.18 Value Rating: 0.47
+	[3B] Erik Gonzalez $2100 - Overall: 0.8 Value Rating: 0.38
+Seattle Mariners - Avg Overall: 0.9631426703620104
+	[OF] Taylor Trammell $2200 - Overall: 1.49 Value Rating: 0.68
+	[OF] Mitch Haniger $3200 - Overall: 1.2 Value Rating: 0.37
+	[3B] Kyle Seager $2800 - Overall: 1.14 Value Rating: 0.41
+	[C] Tom Murphy $2200 - Overall: 0.95 Value Rating: 0.43
+	[OF] Jake Fraley $2400 - Overall: 0.03 Value Rating: 0.01
+Chicago Cubs - Avg Overall: 0.8751360620874881
+	[1B] Anthony Rizzo $3200 - Overall: 3.82 Value Rating: 1.19
+	[OF] Joc Pederson $2700 - Overall: 2.04 Value Rating: 0.76
+	[OF] Kris Bryant $4000 - Overall: 0.92 Value Rating: 0.23
+	[C] Willson Contreras $2900 - Overall: 0.66 Value Rating: 0.23
+	[SS] Javier Baez $3600 - Overall: 1.53 Value Rating: 0.42
+	[3B] Patrick Wisdom $2900 - Overall: 0.24 Value Rating: 0.08
+	[OF] Ian Happ $2500 - Overall: 0.04 Value Rating: 0.02
+	[SS] Sergio Alcantara $2300 - Overall: 0.23 Value Rating: 0.1
+	[2B] Eric Sogard $2000 - Overall: 0.08 Value Rating: 0.04
+	[C] P.J. Higgins $2000 - Overall: 0.02 Value Rating: 0.01
+	[OF] Rafael Ortega $2000 - Overall: 0.05 Value Rating: 0.02
+Milwaukee Brewers - Avg Overall: 0.7949976979549416
+	[C] Manny Pina $2100 - Overall: 0.33 Value Rating: 0.16
+	[OF] Tyrone Taylor $2100 - Overall: 0.47 Value Rating: 0.22
+	[SS] Daniel Robertson $2000 - Overall: 0.25 Value Rating: 0.13
+	[1B] Keston Hiura $2200 - Overall: 1.76 Value Rating: 0.8
+	[OF] Christian Yelich $3600 - Overall: 0.64 Value Rating: 0.18
+	[3B] Travis Shaw $2300 - Overall: 1.42 Value Rating: 0.62
+	[1B] Daniel Vogelbach $2200 - Overall: 0.67 Value Rating: 0.31
+	[OF] Avisail Garcia $3000 - Overall: 0.64 Value Rating: 0.21
+	[SS] Willy Adames $2400 - Overall: 0.49 Value Rating: 0.2
+	[OF] Jackie Bradley Jr. $2100 - Overall: 1.28 Value Rating: 0.61
+Atlanta Braves - Avg Overall: 0.7518317958147019
+	[OF] Ronald Acuna Jr. $4400 - Overall: 1.19 Value Rating: 0.27
+	[3B] Austin Riley $3000 - Overall: 0.82 Value Rating: 0.27
+	[2B] Ozzie Albies $3300 - Overall: 1.47 Value Rating: 0.45
+	[C] William Contreras $2500 - Overall: 0.57 Value Rating: 0.23
+	[SS] Dansby Swanson $2900 - Overall: 0.34 Value Rating: 0.12
+	[1B] Freddie Freeman $3200 - Overall: 1.49 Value Rating: 0.47
+	[OF] Abraham Almonte $2000 - Overall: 0.02 Value Rating: 0.01
+	[C] Kevan Smith $2000 - Overall: 0.1 Value Rating: 0.05
+Washington Nationals - Avg Overall: 0.7436803865110435
+	[OF] Kyle Schwarber $2400 - Overall: 0.98 Value Rating: 0.41
+	[1B] Josh Bell $2500 - Overall: 0.42 Value Rating: 0.17
+	[OF] Juan Soto $3600 - Overall: 1.52 Value Rating: 0.42
+	[C] Alex Avila $2000 - Overall: 0.06 Value Rating: 0.03
+New York Mets - Avg Overall: 0.7192642342622486
+	[1B] Pete Alonso $3400 - Overall: 1.71 Value Rating: 0.5
+	[SS] Francisco Lindor $3000 - Overall: 1.59 Value Rating: 0.53
+	[C] James McCann $2700 - Overall: 0.88 Value Rating: 0.33
+	[C] Tomas Nido $2000 - Overall: 0.56 Value Rating: 0.28
+	[3B] Jonathan Villar $2900 - Overall: 0.58 Value Rating: 0.2
+	[OF] Kevin Pillar $2300 - Overall: 0.37 Value Rating: 0.16
+	[2B] Jose Peraza $2200 - Overall: 0.57 Value Rating: 0.26
+	[3B] Brandon Drury $2100 - Overall: 0.11 Value Rating: 0.05
+	[OF] Mason Williams $2000 - Overall: 0.12 Value Rating: 0.06
+Detroit Tigers - Avg Overall: 0.45851526097491696
+	[C] Eric Haase $2900 - Overall: 0.68 Value Rating: 0.23
+	[C] Jake Rogers $2000 - Overall: 0.47 Value Rating: 0.24
+	[1B] Jonathan Schoop $2800 - Overall: 0.45 Value Rating: 0.16
+	[1B] Miguel Cabrera $2600 - Overall: 1.13 Value Rating: 0.43
+	[OF] Nomar Mazara $2200 - Overall: 0.1 Value Rating: 0.05
+	[2B] Willi Castro $2800 - Overall: 0.55 Value Rating: 0.2
+	[SS] Zack Short $2300 - Overall: 0.08 Value Rating: 0.04
+	[3B] Jeimer Candelario $2700 - Overall: 0.14 Value Rating: 0.05
+	[SS] Niko Goodrum $2500 - Overall: 0.52 Value Rating: 0.21
+Cincinnati Reds - Avg Overall: 0.4086763043944113
+	[OF] Nick Castellanos $4100 - Overall: 0.29 Value Rating: 0.07
+	[SS] Eugenio Suarez $3200 - Overall: 1.57 Value Rating: 0.49
+	[C] Tyler Stephenson $2500 - Overall: 0.28 Value Rating: 0.11
+	[OF] Scott Heineman $2000 - Overall: 0.14 Value Rating: 0.07
+	[OF] Tyler Naquin $3400 - Overall: 0.07 Value Rating: 0.02
+	[2B] Mike Freeman $2000 - Overall: 0.05 Value Rating: 0.03
+	[SS] Kyle Farmer $2100 - Overall: 0.46 Value Rating: 0.22
+Texas Rangers - Avg Overall: 0.3760560582588073
+	[OF] Joey Gallo $3000 - Overall: 1.21 Value Rating: 0.4
+	[OF] Adolis Garcia $3900 - Overall: 0.61 Value Rating: 0.16
+	[OF] Jason Martin $2000 - Overall: 0.04 Value Rating: 0.02
+	[C] Jonah Heim $2000 - Overall: 0.05 Value Rating: 0.03
+	[OF] Khris Davis $2300 - Overall: 0.27 Value Rating: 0.12
+	[OF] Willie Calhoun $2800 - Overall: 0.12 Value Rating: 0.04
+	[2B] Nick Solak $2700 - Overall: 0.64 Value Rating: 0.24
+	[C] Jose Trevino $2000 - Overall: 0.21 Value Rating: 0.1
+	[SS] Isiah Kiner-Falefa $2600 - Overall: 0.24 Value Rating: 0.09
+	[1B] Nate Lowe $3100 - Overall: 0.38 Value Rating: 0.12
+Baltimore Orioles - Avg Overall: 0.0688042338352525
+	[C] Austin Wynns $2000 - Overall: 0.07 Value Rating: 0.03
