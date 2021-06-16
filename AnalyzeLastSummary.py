@@ -75,11 +75,14 @@ def analyze():
                 
                 sheet.append(dataRow)
 
-                if len(optimalPerformance[key]) != 0:
-                    if float(score) > float(optimalPerformance[key][-1]['Score']):
+                try:
+                    if len(optimalPerformance[key]) != 0:
+                        if float(score) > float(optimalPerformance[key][-1]['Score']):
+                            optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
+                    else:
                         optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
-                else:
-                    optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
+                except:
+                    pass
 
                 count += 1
 
@@ -137,11 +140,14 @@ def analyze():
                 
                 sheet.append(dataRow)
 
-                if len(optimalPerformance[key]) != 0:
-                    if float(score) > float(optimalPerformance[key][-1]['Score']):
+                try:
+                    if len(optimalPerformance[key]) != 0:
+                        if float(score) > float(optimalPerformance[key][-1]['Score']):
+                            optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
+                    else:
                         optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
-                else:
-                    optimalPerformance[key].append({'Name': name, 'Score': score, 'Salary': salaries[count]})
+                except:
+                    pass
 
                 count += 1
         
@@ -159,20 +165,29 @@ def analyze():
     dataRow.append('Pitcher')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     #Find Best C/1B
     dataRow = []
-    if float(optimalPerformance['C'][-1]['Score']) > float(optimalPerformance['1B'][-1]['Score']):
+    try:
+        if float(optimalPerformance['C'][-1]['Score']) > float(optimalPerformance['1B'][-1]['Score']):
+            player = optimalPerformance['C'].pop()
+        else:
+            player = optimalPerformance['1B'].pop()
+    except:
         player = optimalPerformance['C'].pop()
-    else:
-        player = optimalPerformance['1B'].pop()
 
     dataRow.append('C/1B')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     #Find Best 2B
@@ -182,7 +197,10 @@ def analyze():
     dataRow.append('2B')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     #Find Best 3B
@@ -192,7 +210,10 @@ def analyze():
     dataRow.append('3B')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     #Find Best SS
@@ -202,18 +223,27 @@ def analyze():
     dataRow.append('SS')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     #Find Best OF x 3
     for x in range(0, 3):
         dataRow = []
-        player = optimalPerformance['OF'].pop()
+        try:
+            player = optimalPerformance['OF'].pop()
+        except:
+            continue
 
         dataRow.append('OF')
         dataRow.append(player['Name'])
         dataRow.append(player['Salary'])
-        dataRow.append(float(player['Score']))
+        try:
+            dataRow.append(float(player['Score']))
+        except:
+            dataRow.append(0)
         sheet.append(dataRow)
 
     #Find Best UTIL
@@ -222,7 +252,10 @@ def analyze():
     keys = ['C', '1B', '2B', '3B', 'SS', 'OF']
     for key in keys:
         if player == None:
-            player = optimalPerformance[key].pop()
+            try:
+                player = optimalPerformance[key].pop()
+            except:
+                continue
         else:
             try:
                 if float(player['Score']) < float(optimalPerformance[key][-1]['Score']):
@@ -233,7 +266,10 @@ def analyze():
     dataRow.append('Util')
     dataRow.append(player['Name'])
     dataRow.append(player['Salary'])
-    dataRow.append(float(player['Score']))
+    try:
+        dataRow.append(float(player['Score']))
+    except:
+        dataRow.append(0)
     sheet.append(dataRow)
 
     sheet.freeze_panes = "A2"

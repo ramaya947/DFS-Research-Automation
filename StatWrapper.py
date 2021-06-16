@@ -568,6 +568,11 @@ def getCellColor(value, standard, over):
     elif num <= .85:
         return lowColor
 
+def as_text(value):
+    if value is None:
+        return ""
+    return str(value)
+
 def writeSummaryToCSV(hitters, pitchers):
     avgs = leagueAvg.averages
     wb = Workbook()
@@ -581,7 +586,7 @@ def writeSummaryToCSV(hitters, pitchers):
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
     for pos in positions:
         sheet = wb.create_sheet(pos)
-        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Order", "FD Pos", "Opp IP", "Opp Career IP"]
+        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Order", "FD Pos", "Opp IP", "Opp Career IP"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
             hrHitters.append(hitter)
@@ -609,8 +614,6 @@ def writeSummaryToCSV(hitters, pitchers):
                 appendRow.append(0) #Career BABIP
                 appendRow.append(0) #Opp BABIP
                 appendRow.append(0) #Opp Career BABIP
-                appendRow.append(0) #Recent FB% Diff
-                appendRow.append(0) #Career FB% Diff
                 appendRow.append(0) #Recent HR/FB Diff
                 appendRow.append(0) #Career HR/FB Diff
             else:
@@ -623,8 +626,6 @@ def writeSummaryToCSV(hitters, pitchers):
                 appendRow.append(round(hitter.careerMatchupStats['BABIP'], 3))
                 appendRow.append(round(hitter.oppMatchupStats['BABIP'], 3))
                 appendRow.append(round(hitter.careerOppMatchupStats['BABIP'], 3))
-                appendRow.append(round( ((hitter.matchupStats['FB%'] + hitter.oppMatchupStats['FB%']) / 2) - avgs['FB'], 3 ))
-                appendRow.append(round( ((hitter.careerMatchupStats['FB%'] + hitter.careerOppMatchupStats['FB%']) / 2) - avgs['FB'], 3 ))
                 appendRow.append(round( ((hitter.matchupStats['HR/FB'] + hitter.oppMatchupStats['HR/FB']) / 2) - avgs['HR/FB'], 3 ))
                 appendRow.append(round( ((hitter.careerMatchupStats['HR/FB'] + hitter.careerOppMatchupStats['HR/FB']) / 2) - avgs['HR/FB'], 3 ))
             try:
@@ -634,10 +635,6 @@ def writeSummaryToCSV(hitters, pitchers):
             
             appendRow.append(round((hitter.hrRating), 2))
             appendRow.append(hitter.parkFactors['hr'])
-            appendRow.append(hitter.gameCard.windDirection)
-            appendRow.append(hitter.gameCard.windSpeed)
-            appendRow.append(hitter.gameCard.humidity)
-            appendRow.append(hitter.gameCard.temperature)
 
             battingOrder = hitter.gameCard.getPlayerBattingOrder(hitter.name)
             appendRow.append(battingOrder)
@@ -652,6 +649,11 @@ def writeSummaryToCSV(hitters, pitchers):
                 appendRow.append(hitter.careerOppMatchupStats['IP'])
 
             sheet.append(appendRow)
+
+        for column_cells in sheet.columns:
+            length = max(len(as_text(cell.value)) for cell in column_cells)
+            worksheet.column_dimensions[column_cells[0].column].width = length
+
         sheet.freeze_panes = "A2"
 
         #Apply Color to Weather - B
@@ -748,6 +750,10 @@ def writeSummaryToCSV(hitters, pitchers):
         
         pitcherSheet.append(appendRow)
 
+    for column_cells in pitcherSheet.columns:
+            length = max(len(as_text(cell.value)) for cell in column_cells)
+            worksheet.column_dimensions[column_cells[0].column].width = length
+
     pitcherSheet.freeze_panes = "A2"
 
     #Apply Color to Weather - B
@@ -780,6 +786,93 @@ def writeSummaryToCSV(hitters, pitchers):
     #    cell = pitcherSheet["S{}".format(i)]
     #    c = getCellColor(cell.value, avgs['BABIP'], False)
     #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
+
+    #Add sheet for Stacks
+    stacks = {}
+    ous = []
+    stack = {}
+    for hitter in hrHitters:
+        if hitter.teamName not in stacks:
+            stack = {
+                'ou': hitter.gameCard.getTeamOU(hitter.teamName),
+                'hitters': [],
+            }
+
+            ous.append({ 'teamName': hitter.teamName, 'ou': float(hitter.gameCard.getTeamOU(hitter.teamName)) })
+        else:
+            stack = stacks[hitter.teamName]
+
+        stack['hitters'].append(hitter)
+        stacks[hitter.teamName] = stack
+
+    stacksSheet = wb.create_sheet("Stacks")
+    ous.sort(key=lambda x: x['ou'], reverse=True)
+    for team in ous:
+        stacksSheet.append([team['teamName']])
+        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "SB%", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Order", "FD Pos", "Opp IP", "Opp Career IP"]
+        stacksSheet.append(appendRow)
+        stack = stacks[team['teamName']]
+        for hitter in stack['hitters']:
+            appendRow = []
+            appendRow.append(stack['ou'])
+            appendRow.append(hitter.gameCard.weatherIcon)
+            appendRow.append(hitter.position)
+            appendRow.append(hitter.name)
+            appendRow.append(hitter.teamName)
+            appendRow.append(hitter.salary)
+            appendRow.append(hitter.handedness)
+            appendRow.append(hitter.oppPitcher.name)
+            appendRow.append(round(hitter.overall, 2))
+            appendRow.append(round((hitter.overall / (float(hitter.salary) / 1000)), 2))
+
+            if hitter.matchupStats == None:
+                appendRow.append(0) #AB
+                appendRow.append(0) #Recent wOBA Diff
+                appendRow.append(0) #Career wOBA Diff
+                appendRow.append(0) #Recent ISO Diff
+                appendRow.append(0) #Career ISO Diff
+                appendRow.append(0) #BABIP
+                appendRow.append(0) #Career BABIP
+                appendRow.append(0) #Opp BABIP
+                appendRow.append(0) #Opp Career BABIP
+            else:
+                appendRow.append(round(hitter.matchupStats['AB'], 3))
+                appendRow.append(round( ((hitter.matchupStats['wOBA'] + hitter.oppMatchupStats['wOBA']) / 2) - avgs['wOBA'], 3 ))
+                appendRow.append(round( ((hitter.careerMatchupStats['wOBA'] + hitter.careerOppMatchupStats['wOBA']) / 2) - avgs['wOBA'], 3 ))
+                appendRow.append(round( ((hitter.matchupStats['ISO'] + hitter.oppMatchupStats['ISO']) / 2) - avgs['ISO'], 3 ))
+                appendRow.append(round( ((hitter.careerMatchupStats['ISO'] + hitter.careerOppMatchupStats['ISO']) / 2) - avgs['ISO'], 3 ))
+                appendRow.append(round(hitter.matchupStats['BABIP'], 3))
+                appendRow.append(round(hitter.careerMatchupStats['BABIP'], 3))
+                appendRow.append(round(hitter.oppMatchupStats['BABIP'], 3))
+                appendRow.append(round(hitter.careerOppMatchupStats['BABIP'], 3))
+            try:
+                appendRow.append(round(hitter.matchupStats['SB'] / (hitter.matchupStats['1B'] + hitter.matchupStats['HBP'] + hitter.matchupStats['BB']), 2))
+            except:
+                appendRow.append(0)
+            
+            appendRow.append(hitter.parkFactors['hr'])
+            appendRow.append(hitter.gameCard.windDirection)
+            appendRow.append(hitter.gameCard.windSpeed)
+            appendRow.append(hitter.gameCard.humidity)
+            appendRow.append(hitter.gameCard.temperature)
+
+            battingOrder = hitter.gameCard.getPlayerBattingOrder(hitter.name)
+            appendRow.append(battingOrder)
+
+            appendRow.append(hitter.FDPos)
+
+            if hitter.matchupStats == None:
+                appendRow.append(0) #Opp IP
+                appendRow.append(0) #Opp Career IP
+            else:
+                appendRow.append(hitter.oppMatchupStats['IP'])
+                appendRow.append(hitter.careerOppMatchupStats['IP'])
+
+            stacksSheet.append(appendRow)
+
+    for column_cells in stacksSheet.columns:
+            length = max(len(as_text(cell.value)) for cell in column_cells)
+            worksheet.column_dimensions[column_cells[0].column].width = length
 
     #Add sheet for HR list
     sheet = wb.create_sheet("HR")

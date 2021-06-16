@@ -155,6 +155,6 @@ class Test:
         sw.cleanUp()
 
 manualFill = True
-ss = datetime.datetime(2021, 6, 4, 19, 0, 0)
-date = "06/4/2021"
+ss = datetime.datetime(2021, 6, 15, 19, 0, 0)
+date = "06/15/2021"
 Test().runManually(manualFill, ss, date, "after")
