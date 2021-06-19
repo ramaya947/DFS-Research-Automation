@@ -91,6 +91,11 @@ class RotogrindersLineups:
                 overUnderSoup = card.find("div", {"class": "ou"}).find_all("a")
                 awayOU = overUnderSoup[0].text
                 homeOU = overUnderSoup[1].text
+
+                if awayOU == 0:
+                    awayOU = input("Please input today's projected total for {}".format(awayTeam))
+                if homeOU == 0:
+                    homeOU = input("Please input today's projected total for {}".format(homeTeam))
             except AttributeError:
                 print("Error: OU Data not yet available for {} @ {}".format(awayTeam, homeTeam))
                 awayOU = 0

@@ -20,6 +20,7 @@ def analyze():
     }
 
     namesToScores = getNamesToScores()
+    hittersForStackResults = {}
 
     for key in hitterSheetKeys:
         sheet = wb.create_sheet(key)
@@ -273,6 +274,15 @@ def analyze():
     sheet.append(dataRow)
 
     sheet.freeze_panes = "A2"
+
+    #Give Results for Stacks
+    excelData = pd.read_excel('SummaryLast.xlsx', sheet_name="Stacks", header=None, index_col=0)
+    colZero = excelData[0].tolist()
+    colTwoPosition = excelData[2].tolist()
+    colThreeNames = excelData[3].tolist()
+
+    count = 0
+    
     
     wb.save("SummaryAnalyzed {}.xlsx".format(getDateForFileName()))
 

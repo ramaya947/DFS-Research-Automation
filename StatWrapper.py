@@ -1,7 +1,7 @@
 import csv, statsapi, datetime, PitcherClass, HitterClass, requests, json, TeamAverages, LeagueAverages, RotogrindersLineups
 from pybaseball import playerid_reverse_lookup
 from dateutil import tz
-from openpyxl import Workbook
+from openpyxl import Workbook, utils
 from openpyxl.styles import PatternFill
 from Colors import Colors
 
@@ -652,7 +652,7 @@ def writeSummaryToCSV(hitters, pitchers):
 
         for column_cells in sheet.columns:
             length = max(len(as_text(cell.value)) for cell in column_cells)
-            worksheet.column_dimensions[column_cells[0].column].width = length
+            sheet.column_dimensions[utils.get_column_letter(column_cells[0].column)].width = length
 
         sheet.freeze_panes = "A2"
 
@@ -752,7 +752,7 @@ def writeSummaryToCSV(hitters, pitchers):
 
     for column_cells in pitcherSheet.columns:
             length = max(len(as_text(cell.value)) for cell in column_cells)
-            worksheet.column_dimensions[column_cells[0].column].width = length
+            pitcherSheet.column_dimensions[utils.get_column_letter(column_cells[0].column)].width = length
 
     pitcherSheet.freeze_panes = "A2"
 
@@ -872,7 +872,7 @@ def writeSummaryToCSV(hitters, pitchers):
 
     for column_cells in stacksSheet.columns:
             length = max(len(as_text(cell.value)) for cell in column_cells)
-            worksheet.column_dimensions[column_cells[0].column].width = length
+            stacksSheet.column_dimensions[utils.get_column_letter(column_cells[0].column)].width = length
 
     #Add sheet for HR list
     sheet = wb.create_sheet("HR")
