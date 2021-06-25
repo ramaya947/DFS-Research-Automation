@@ -1,6 +1,7 @@
 class HitterClass:
     pid = None
     fid = None
+    fanduelID = None
     name = None
     position = None
     salary = None

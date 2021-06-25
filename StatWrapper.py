@@ -467,6 +467,7 @@ def getPlayerSalaries(players):
                     if name == csvName and teamKey == row[9]:
                         player.salary = row[7]
                         player.FDPos = row[1]
+                        player.fanduelID = row[0]
                         result.append(player)
                 except:
                     player.salary = -1000
@@ -586,7 +587,7 @@ def writeSummaryToCSV(hitters, pitchers):
     positions = ["C", "1B", "2B", "3B", "SS", "OF"]
     for pos in positions:
         sheet = wb.create_sheet(pos)
-        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Order", "FD Pos", "Opp IP", "Opp Career IP"]
+        appendRow = ["OU", "Weather", "Pos", "Name", "Team", "Salary", "Hand", "Opp Pitcher", "Overall", "Value", "AB", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent HR/FB Diff", "Career HR/FB Diff", "SB%", "HR Rating", "Park HR Factor", "Order", "FD Pos", "Opp IP", "Opp Career IP", "Fanduel ID"]
         sheet.append(appendRow)
         for hitter in hitters[pos]:
             hrHitters.append(hitter)
@@ -648,6 +649,8 @@ def writeSummaryToCSV(hitters, pitchers):
                 appendRow.append(hitter.oppMatchupStats['IP'])
                 appendRow.append(hitter.careerOppMatchupStats['IP'])
 
+            appendRow.append(hitter.fanduelID)
+
             sheet.append(appendRow)
 
         for column_cells in sheet.columns:
@@ -695,7 +698,7 @@ def writeSummaryToCSV(hitters, pitchers):
             c = getCellColor(cell.value, avgs['BABIP'], False)
             cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
 
-    appendRow = ["OU", "Weather", "Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Career wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "xFIP", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature"]
+    appendRow = ["OU", "Weather", "Name", "Team", "Salary", "Hand", "Opp Team", "Overall", "Value", "IP", "K% vs L", "K% vs R", "Opp K%", "wOBA", "Career wOBA", "Opp wOBA", "ISO", "Opp ISO", "BABIP", "Opp BABIP", "xFIP", "Park HR Factor", "Wind Direction", "Wind Speed", "Humidity", "Temperature", "Fanduel ID"]
     pitcherSheet.append(appendRow)
     for pitcher in pitchers:
         teamOU = pitcher.gameCard.getTeamOU(pitcher.oppTeamName)
@@ -747,6 +750,7 @@ def writeSummaryToCSV(hitters, pitchers):
         appendRow.append(pitcher.gameCard.windSpeed)
         appendRow.append(pitcher.gameCard.humidity)
         appendRow.append(pitcher.gameCard.temperature)
+        appendRow.append(pitcher.fanduelID)
         
         pitcherSheet.append(appendRow)
 

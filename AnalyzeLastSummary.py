@@ -100,13 +100,11 @@ def analyze():
             carBABIP = excelData['Career BABIP'].tolist()
             oppBABIP = excelData['Opp BABIP'].tolist()
             oppCarBABIP = excelData['Opp Career BABIP'].tolist()
-            recFBDiff = excelData['Recent FB% Diff'].tolist()
-            carFBDiff = excelData['Career FB% Diff'].tolist()
             recHRFBDiff = excelData['Recent HR/FB Diff'].tolist()
             carHRFBDiff = excelData['Career HR/FB Diff'].tolist()
             hrRating = excelData['HR Rating'].tolist()
 
-            header = ["OU", "Name", "Salary", "Overall", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent FB% Diff", "Career FB% Diff", "Recent HR/FB Diff", "Career HR/FB Diff", "HR Rating", "Points"]
+            header = ["OU", "Name", "Salary", "Overall", "Recent wOBA Diff", "Career wOBA Diff", "Recent ISO Diff", "Career ISO Diff", "BABIP", "Career BABIP", "Opp BABIP", "Opp Career BABIP", "Recent HR/FB Diff", "Career HR/FB Diff", "HR Rating", "Points"]
             sheet.append(header)
 
             count = 0
@@ -132,8 +130,6 @@ def analyze():
                 dataRow.append(carBABIP[count])
                 dataRow.append(oppBABIP[count])
                 dataRow.append(oppCarBABIP[count])
-                dataRow.append(recFBDiff[count])
-                dataRow.append(carFBDiff[count])
                 dataRow.append(recHRFBDiff[count])
                 dataRow.append(carHRFBDiff[count])
                 dataRow.append(hrRating[count])
@@ -276,12 +272,13 @@ def analyze():
     sheet.freeze_panes = "A2"
 
     #Give Results for Stacks
-    excelData = pd.read_excel('SummaryLast.xlsx', sheet_name="Stacks", header=None, index_col=0)
-    colZero = excelData[0].tolist()
-    colTwoPosition = excelData[2].tolist()
-    colThreeNames = excelData[3].tolist()
+    #excelData = pd.read_excel('SummaryLast.xlsx', sheet_name="Stacks", header=None, index_col=None)
+    #print(excelData)
+    #colZero = excelData['0'].tolist()
+    #colTwoPosition = excelData['2'].tolist()
+    #colThreeNames = excelData['3'].tolist()
 
-    count = 0
+    #count = 0
     
     
     wb.save("SummaryAnalyzed {}.xlsx".format(getDateForFileName()))
