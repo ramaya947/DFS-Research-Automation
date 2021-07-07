@@ -703,6 +703,9 @@ def writeSummaryToCSV(hitters, pitchers):
     for pitcher in pitchers:
         teamOU = pitcher.gameCard.getTeamOU(pitcher.oppTeamName)
 
+        #if teamOU == '0' or teamOU == 0 or teamOU == None:
+        #    raise Exception("Team total is 0 for {}".format(pitcher.name))
+
         appendRow = []
         appendRow.append(teamOU)
         appendRow.append(pitcher.gameCard.weatherIcon)

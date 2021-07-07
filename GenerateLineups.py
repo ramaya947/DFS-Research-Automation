@@ -26,6 +26,7 @@ def generateLineups():
     greenRGB = "FF00FF00"
 
     #Get All Selected Players
+    playerPercentage = {}
     for sheetName in keys:
         sheet = wb.get_sheet_by_name(sheetName)
         working = True
@@ -45,6 +46,8 @@ def generateLineups():
             if fill != greenRGB:
                 count += 1
                 continue
+
+            playerPercentage[nameCell.value] = 0
 
             fanduelIDCell = sheet['{}{}'.format(fanduelIDColKey, count)]
 
@@ -96,39 +99,43 @@ def generateLineups():
         for first in players['C/1B']:
             if stop:
                 break
-            for second in players['2B']:
+            secondList = removeFromList(first, players['2B'][:])
+            for second in secondList:
                 if stop:
                     break
-                for third in players['3B']:
+                thirdList = removePlayersFromList([first, second], players['3B'][:])
+                for third in thirdList:
                     if stop:
                         break
-                    for ss in players['SS']:
+                    ssList = removePlayersFromList([first, second, third], players['SS'][:])
+                    for ss in ssList:
                         if stop:
                             break
-                        for OF1 in players['OF']:
+                        OF1List = removePlayersFromList([first, second, third, ss], players['OF'][:])
+                        for OF1 in OF1List:
                             if stop:
                                 break
-                            if comboCount > 5:
+                            if comboCount > 10:
                                 comboCount = 0 
                                 break
-                            OF2List = removeFromList(OF1, players['OF'][:])
+                            OF2List = removePlayersFromList([first, second, third, ss, OF1], players['OF'][:])
                             for OF2 in OF2List:
                                 if stop:
                                     break
-                                if comboCount > 5: 
+                                if comboCount > 10: 
                                     break
-                                OF3List = removeFromList(OF2, OF2List[:])
+                                OF3List = removePlayersFromList([first, second, third, ss, OF1, OF2], OF2List[:])
                                 for OF3 in OF3List:
                                     if stop:
                                         break
-                                    if comboCount > 5: 
+                                    if comboCount > 10: 
                                         break
                                     #Remove all other players from a copy of the Utils List
                                     utilsFiltered = players['Utils'][:]
                                     removePlayersFromList([first, second, third, ss, OF1, OF2, OF3], utilsFiltered)
                                     
                                     for util in utilsFiltered:
-                                        if comboCount > 5: 
+                                        if comboCount > 10: 
                                             break
 
                                         lineup = {
@@ -158,7 +165,7 @@ def generateLineups():
                                         lineupCount += 1
                                         print ("Total lineups created: {}".format(lineupCount), end="\r")
 
-                                        if (lineupCount >= 1000):
+                                        if (lineupCount >= 7500):
                                             stop = True
                                             break
 
@@ -179,7 +186,7 @@ def generateLineups():
         if (len(lineups[key]) == 0):
             nothingLeft = True
             for k in stackKeys:
-                if (len(lineups[key]) != 0):
+                if (len(lineups[k]) != 0):
                     nothingLeft = False
             if nothingLeft:
                 break
@@ -197,13 +204,33 @@ def generateLineups():
         appendRow.append(l['OF3']['Fanduel ID'])
         appendRow.append(l['Util']['Fanduel ID'])
 
+        #Count amount of times a player has been added to a lineup
+        playerPercentage[l['Pitcher']['Name']] += 1
+        playerPercentage[l['C/1B']['Name']] += 1
+        playerPercentage[l['2B']['Name']] += 1
+        playerPercentage[l['3B']['Name']] += 1
+        playerPercentage[l['SS']['Name']] += 1
+        playerPercentage[l['OF1']['Name']] += 1
+        playerPercentage[l['OF2']['Name']] += 1
+        playerPercentage[l['OF3']['Name']] += 1
+        playerPercentage[l['Util']['Name']] += 1
+
         printLineup(l, key)
 
         sheet.append(appendRow)
 
         count += 1
 
+    print("Created {} lineup(s)".format(count))
+
+    printPlayerLineupPercentage(playerPercentage, count)
+
     lineupWB.save("Lineups.xlsx")
+
+def printPlayerLineupPercentage(makeup, total):
+    print("Player Appearance Percentage")
+    for key in makeup:
+        print("{}: {}%".format(key, round(makeup[key] / total, 2)))
 
 def printLineup(l, stackName):
     output = "Stack: ({}) - [P] {} [C/1B] {} [2B] {} [3B] {} [SS] {} [OF] {}, {}, {} [Util] {}".format(stackName, l['Pitcher']['Name'], l['C/1B']['Name'], l['2B']['Name'], l['3B']['Name'], l['SS']['Name'], l['OF1']['Name'], l['OF2']['Name'], l['OF3']['Name'], l['Util']['Name'])
