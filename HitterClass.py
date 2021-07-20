@@ -184,7 +184,8 @@ class HitterClass:
                     else:
                         self.overall -= (lgAvg / hvp) * 2
             except ZeroDivisionError as e:
-                print(e)
+                pass
+                #print(e)
 
         self.calcHRRating(hs, ps)
         self.applyAtBat(hs['PA'], avgPA)
