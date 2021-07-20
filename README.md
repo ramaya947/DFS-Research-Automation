@@ -6,3 +6,5 @@ It scrapes relevant data, such as starting pitchers, lineups, schedules, stats, 
 It also is able to take a modified version of that resulting Excel file, containing player selections made by me upon review of the matchup data, and generate a desired amount lineups for Fanduel. These lineups are roughly evenly distributed by the dominant stack of each lineup.
 
 Support for a ReactJS frontend client, using SocketIO, was started but not yet completed.
+
+![Cover Photo](https://github.com/ramaya947/DFS-Research-Automation/blob/main/res/Cover.png?raw=true)
