@@ -112,7 +112,6 @@ class Test:
         pitchers = sw.getPlayerSalaries(pitchers)
 
         hitters.sort(key=lambda x: x.hrRating, reverse=True)
-        sw.writeSummary(players, pitchers, hitters)
         sw.writeSummaryToCSV(players, pitchers)
         sw.cleanUp()
 
