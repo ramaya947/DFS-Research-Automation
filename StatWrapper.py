@@ -767,32 +767,13 @@ def writeSummaryToCSV(hitters, pitchers):
     for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
         cell = pitcherSheet["B{}".format(i)]
         c = Colors['Green']
-        if cell == "Stormy":
+        if cell.value == "Stormy":
             c = Colors['Red']
-        elif cell == "Rainy":
+        elif cell.value == "Rainy":
             c = Colors['Orange']
-        elif cell == "Cloudy":
+        elif cell.value == "Cloudy":
             c = Colors['Yellow']
         cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
-
-    #Apply Colors to wOBA Diff - N, O
-    #for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
-    #    cell = pitcherSheet["N{}".format(i)]
-    #    c = getCellColor(cell.value, avgs['wOBA'], False)
-    #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
-    #for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
-    #    cell = pitcherSheet["O{}".format(i)]
-    #    c = getCellColor(cell.value, avgs['wOBA'], True)
-    #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
-    #Apply Colors to BABIP Diff - R, S
-    #for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
-    #    cell = pitcherSheet["R{}".format(i)]
-    #    c = getCellColor(cell.value, avgs['BABIP'], False)
-    #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
-    #for i in range(pitcherSheet.min_row + 1, pitcherSheet.max_row):
-    #    cell = pitcherSheet["S{}".format(i)]
-    #    c = getCellColor(cell.value, avgs['BABIP'], False)
-    #    cell.fill = PatternFill(start_color=c, end_color=c, fill_type = "solid")
 
     #Add sheet for Stacks
     stacks = {}

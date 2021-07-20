@@ -115,27 +115,27 @@ def generateLineups():
                         for OF1 in OF1List:
                             if stop:
                                 break
-                            if comboCount > 10:
+                            if comboCount > 5:
                                 comboCount = 0 
                                 break
                             OF2List = removePlayersFromList([first, second, third, ss, OF1], players['OF'][:])
                             for OF2 in OF2List:
                                 if stop:
                                     break
-                                if comboCount > 10: 
+                                if comboCount > 5: 
                                     break
                                 OF3List = removePlayersFromList([first, second, third, ss, OF1, OF2], OF2List[:])
                                 for OF3 in OF3List:
                                     if stop:
                                         break
-                                    if comboCount > 10: 
+                                    if comboCount > 5: 
                                         break
                                     #Remove all other players from a copy of the Utils List
                                     utilsFiltered = players['Utils'][:]
                                     removePlayersFromList([first, second, third, ss, OF1, OF2, OF3], utilsFiltered)
                                     
                                     for util in utilsFiltered:
-                                        if comboCount > 10: 
+                                        if comboCount > 5: 
                                             break
 
                                         lineup = {
@@ -177,7 +177,7 @@ def generateLineups():
 
     count = 0
     stackIndex = 0
-    while count < 150:
+    while count < 60:
         key = stackKeys[stackIndex]
         stackIndex += 1
         if (stackIndex >= len(stackKeys)):
