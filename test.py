@@ -27,14 +27,10 @@ class Test:
         sio = socket
 
     def testWait(self, sio):
-        print('A')
-
         sio.emit('Message to Client', { "message": "How much wood would a wood chuck chuck?", "isQuestion": "true"})
         while (self.response == None):
             eventlet.sleep(1)
         
-        print('B')
-
     def askQuestion(self, question):
         global sio
 
@@ -92,8 +88,7 @@ class Test:
 
         for pitcher in pitchers:
             sw.createHitters(pitcher, hitters)
-            print("{} is facing off against the {} [ {} ]".format(pitcher.name, pitcher.oppTeamName, round(pitcher.overall, 2)))
-            print("Total Innings Pitched: {}".format(pitcher.stats['vsL']['IP'] + pitcher.stats['vsR']['IP']))
+            print("{} is facing off against the {} [ {} ]\n".format(pitcher.name, pitcher.oppTeamName, round(pitcher.overall, 2)))
 
         sw.assessHitters(hitters)
 
@@ -101,9 +96,8 @@ class Test:
 
         hitters = sw.getPlayerSalaries(hitters)
 
-        players = {"C": [], "1B": [], "2B": [], "3B": [], "SS": [], "OF": []}
+        players = {"C": [], "1B": [], "2B": [], "3B": [], "SS": [], "OF": [], "DH": []}
         for hitter in hitters:
-            #print("({}) {} [ {} ]".format(hitter.position, hitter.name, hitter.overall))
             try:
                 players[hitter.position].append(hitter)
             except Exception as e:
@@ -129,8 +123,7 @@ class Test:
 
         for pitcher in pitchers:
             sw.createHitters(pitcher, hitters)
-            print("{} is facing off against the {} [ {} ]".format(pitcher.name, pitcher.oppTeamName, round(pitcher.overall, 2)))
-            print("Total Innings Pitched: {}".format(pitcher.stats['vsL']['IP'] + pitcher.stats['vsR']['IP']))
+            print("{} is facing off against the {} [ {} ]\n".format(pitcher.name, pitcher.oppTeamName, round(pitcher.overall, 2)))
 
         sw.assessHitters(hitters)
 
@@ -138,9 +131,8 @@ class Test:
 
         hitters = sw.getPlayerSalaries(hitters)
 
-        players = {"C": [], "1B": [], "2B": [], "3B": [], "SS": [], "OF": []}
+        players = {"C": [], "1B": [], "2B": [], "3B": [], "SS": [], "OF": [], "DH": []}
         for hitter in hitters:
-            #print("({}) {} [ {} ]".format(hitter.position, hitter.name, hitter.overall))
             try:
                 players[hitter.position].append(hitter)
             except Exception as e:

@@ -148,7 +148,6 @@ def getGamesProbablePitchers(game, pitchers):
     if pitcherHome != '':
         for p in homeRoster:
             if pitcherHome in p["person"]["fullName"]:
-                print("Found {} with pid: {}".format(pitcherHome, p["person"]["id"]))
                 homePitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher)
@@ -203,7 +202,6 @@ def getGamesProbablePitchers(game, pitchers):
     if pitcherAway != '':
         for p in awayRoster:
             if pitcherAway in p["person"]["fullName"]:
-                print("Found {} with pid: {}".format(pitcherAway, p["person"]["id"]))
                 awayPitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, homeRoster, game, parkFactorsForVenue)
                 pitcher.fid = getFangraphsId(pitcher)
@@ -367,7 +365,6 @@ def askUserForFID(name):
     #fid = askQuestion("Please provide {}'s confirmed Fangraphs ID:\n".format(name))
 
     if fid == None or fid == "":
-        print("Returning None")
         return None
     else:
         return fid
@@ -723,30 +720,30 @@ def writeSummaryToCSV(hitters, pitchers):
         try:
             appendRow.append(round((pitcher.stats['vsL']['wOBA'] + pitcher.stats['vsR']['wOBA']) / 2, 3))
         except:
-            print("{} Missing wOBA".format(pitcher.name))
+            #print("{} Missing wOBA".format(pitcher.name))
             appendRow.append(0)
         try:
             appendRow.append(round((pitcher.stats['careerVsL']['wOBA'] + pitcher.stats['careerVsR']['wOBA']) / 2, 3))
         except:
-            print("{} Missing Career wOBA".format(pitcher.name))
+            #print("{} Missing Career wOBA".format(pitcher.name))
             appendRow.append(0)
         appendRow.append(round(pitcher.oppMatchupStats['wOBA'], 3))
         try:
             appendRow.append(round((pitcher.stats['vsL']['ISO'] + pitcher.stats['vsR']['ISO']) / 2, 3))
         except:
-            print("{} Missing ISO".format(pitcher.name))
+            #print("{} Missing ISO".format(pitcher.name))
             appendRow.append(0)
         appendRow.append(round(pitcher.oppMatchupStats['ISO'], 3))
         try:
             appendRow.append(round((pitcher.stats['vsL']['BABIP'] + pitcher.stats['vsR']['BABIP']) / 2, 3))
         except:
-            print("{} Missing BABIP".format(pitcher.name))
+            #print("{} Missing BABIP".format(pitcher.name))
             appendRow.append(0)
         appendRow.append(round(pitcher.oppMatchupStats['BABIP'], 3))
         try:
             appendRow.append(round((pitcher.stats['vsL']['xFIP'] + pitcher.stats['vsR']['xFIP']) / 2, 2))
         except:
-            print("{} Missing xFIP".format(pitcher.name))
+            #print("{} Missing xFIP".format(pitcher.name))
             appendRow.append(0)
         appendRow.append(pitcher.parkFactors['hr'])
         appendRow.append(pitcher.gameCard.windDirection)

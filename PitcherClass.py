@@ -125,8 +125,8 @@ class PitcherClass:
 
             except ZeroDivisionError as e:
                 #errorString = "Error getting stats for {}. key = {}\n".format(self.name, debugKey)
-                #print(errorString)
-                print(e)
+                #print(e)
+                pass
 
         self.calcAvgRating()
 
@@ -166,7 +166,8 @@ class PitcherClass:
                     else:
                         self.overall -= (lgAvg / teamStat) * 2
             except ZeroDivisionError as e:
-                print(e)
+                pass
+                #print(e)
         
         self.applyInningWeight(avgIP)
 
