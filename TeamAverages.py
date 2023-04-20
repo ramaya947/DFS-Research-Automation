@@ -15,7 +15,7 @@ class TeamAverages:
         "Tampa Bay Rays": "TBR",
         "Boston Red Sox": "BOS",
         "New York Yankees": "NYY",
-        "Cleveland Indians": "CLE",
+        "Cleveland Guardians": "CLE",
         "Kansas City Royals": "KCR",
         "Detroit Tigers": "DET",
         "Minnesota Twins": "MIN",
@@ -47,7 +47,7 @@ class TeamAverages:
         "Tampa Bay Rays": "TB",
         "Boston Red Sox": "BOS",
         "New York Yankees": "NYY",
-        "Cleveland Indians": "CLE",
+        "Cleveland Guardians": "CLE",
         "Kansas City Royals": "KC",
         "Detroit Tigers": "DET",
         "Minnesota Twins": "MIN",
@@ -84,13 +84,13 @@ class TeamAverages:
         url = self.URL.format(lastYear, self.SPLIT_KEY['vsL'], lastYear)
         page = requests.get(url)
         dfs = pd.read_html(page.text)
-        table = dfs[16] #May change in the future, watch out
+        table = dfs[7] #May change in the future, watch out
         self.getData(table, "vsL")
         
         url = self.URL.format(lastYear, self.SPLIT_KEY['vsR'], lastYear)
         page = requests.get(url)
         dfs = pd.read_html(page.text)
-        table = dfs[16] #May change in the future, watch out
+        table = dfs[7] #May change in the future, watch out
         self.getData(table, "vsR")
 
     def getData(self, table, split):

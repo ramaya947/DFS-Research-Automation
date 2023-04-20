@@ -378,13 +378,20 @@ def getMostRecentStats(pid, pos):
     while (offset <= 2 and statsL == None and statsR == None):
         adjustedYear = year - offset
 
-        #if adjustedYear == 2021:
-        #    offset += 1
-        #    continue
+        if adjustedYear == 2023:
+           offset += 1
+           continue
         #TODO: REMOVE WHEN 2021 SAMPLE SIZE IS LARGE ENOUGH
 
         url = PLAYER_STATS_URL.format(pid, pos, adjustedYear)
-        data = requests.get(url)
+        attempts = 0
+        successfullRequest = False
+        while (not successfullRequest) & (attempts < 5):
+            try:
+                data = requests.get(url)
+                successfullRequest = True
+            except:
+                attempts += 1
         data = json.loads(data.text)
         #print("Data from {}".format(url))
         #print(data)
@@ -408,7 +415,14 @@ def getMostRecentStats(pid, pos):
     careerStatsL = None
     careerStatsR = None
     url = PLAYER_STATS_URL.format(pid, pos, 0)
-    data = requests.get(url)
+    attempts = 0
+    successfullRequest = False
+    while (not successfullRequest) & (attempts < 5):
+        try:
+            data = requests.get(url)
+            successfullRequest = True
+        except:
+            attempts += 1
     data = json.loads(data.text)
 
     for obj in data:
