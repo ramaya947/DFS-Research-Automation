@@ -146,6 +146,6 @@ class Test:
         sw.cleanUp()
 
 manualFill = True
-ss = datetime.datetime(2023, 4, 24, 19, 0, 0)
-date = "04/24/2023"
+ss = datetime.datetime(2023, 4, 25, 19, 0, 0)
+date = "04/25/2023"
 Test().runManually(manualFill, ss, date, "after")

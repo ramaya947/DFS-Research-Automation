@@ -17,7 +17,7 @@ class LeagueAverages:
         url = self.URL.format(lastYear, lastYear)
         page = requests.get(url)
         dfs = pd.read_html(page.text)
-        table = dfs[7] #May change in the future, watch out
+        table = dfs[11] #May change in the future, watch out
         count = 0
         for x in table:
             value = table.at[0,x]

@@ -1,0 +1,17 @@
+{
+    "datedPlayerSplitsStats": {
+        "strPlayerId": "{}",
+        "strSplitArr": [],
+        "strGroup": "{}",
+        "strPosition": "B",
+        "strType": {},
+        "strStartDate": "{}",
+        "strEndDate": "{}",
+        "strSplitTeams": false,
+        "dctFilters": [],
+        "strStatType": "player",
+        "strAutoPt": "false",
+        "arrPlayerId": [],
+        "strSplitArrPitch": []
+    }
+}

@@ -381,7 +381,7 @@ def getMostRecentStats(pid, pos):
         if adjustedYear == 2023:
            offset += 1
            continue
-        #TODO: REMOVE WHEN 2021 SAMPLE SIZE IS LARGE ENOUGH
+        #TODO: REMOVE WHEN 2023 SAMPLE SIZE IS LARGE ENOUGH
 
         url = PLAYER_STATS_URL.format(pid, pos, adjustedYear)
         attempts = 0

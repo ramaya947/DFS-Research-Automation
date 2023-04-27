@@ -67,7 +67,7 @@ def getPlayer(collection, queryParams, name = None):
                 return response
 
             # Add to PB database
-            payload = { 'pid': player['id'], 'name': player['fullName']}
+            payload = { 'pid': player['id'], 'name': name}
             response = addPlayer(collection, payload)
             return response
     else:
@@ -93,9 +93,42 @@ def getPlayer(collection, queryParams, name = None):
                 return response
 
             # Add to PB database
-            payload = { 'pid': player['id'], 'name': player['fullName']}
+            payload = { 'pid': player['id'], 'name': name}
             response = addPlayer(collection, payload)
             return response
+
+def getEntireSeasonsStats(collection, queryParams):
+    response = None
+
+    try:
+        response = requests.get(apiURL.format(collection) + '?filter=({})'.format(queryParams))
+
+        # Request was successful, parse JSON and see if anything was found
+        JSON = json.loads(response.text)
+        if 'code' in JSON.keys():
+            if JSON['code'] != 200:
+                response = None
+        return JSON['items'][0]
+    except:
+        print('ERROR: PB request failed')
+        return None
+
+def addEntireSeasonsStats(collection, payload):
+    response = None
+    
+    # Check that record is not already there
+    response = getEntireSeasonsStats(collection, 'pid=\'{}\')(season={})(type={}'.format(payload['pid'], payload['season'], payload['type']))
+    if response is not None:
+        print("Entry was already found")
+        return response
+
+    try:
+        response = requests.post(apiURL.format(collection), json = payload)
+    except:
+        print('ERROR: Failed to add stats to PB database')
+        return None
+    
+    return json.loads(response.text)
 
 # Example request to getPlayer
 # getPlayer('players', 'name=Shohei Ohtani', 'Shohei Ohtani')
