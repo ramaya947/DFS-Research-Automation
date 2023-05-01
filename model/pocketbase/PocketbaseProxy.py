@@ -110,7 +110,7 @@ def getEntireSeasonsStats(collection, queryParams):
                 response = None
         return JSON['items'][0]
     except:
-        print('ERROR: PB request failed')
+        #print('ERROR: PB request failed')
         return None
 
 def addEntireSeasonsStats(collection, payload):
@@ -119,13 +119,30 @@ def addEntireSeasonsStats(collection, payload):
     # Check that record is not already there
     response = getEntireSeasonsStats(collection, 'pid=\'{}\')(season={})(type={}'.format(payload['pid'], payload['season'], payload['type']))
     if response is not None:
-        print("Entry was already found")
+        #print("Entry was already found")
         return response
 
     try:
         response = requests.post(apiURL.format(collection), json = payload)
     except:
         print('ERROR: Failed to add stats to PB database')
+        return None
+    
+    return json.loads(response.text)
+
+def addPerformanceRecord(collection, payload):
+    response = None
+    
+    # Check that record is not already there
+    response = getEntireSeasonsStats(collection, 'pid=\'{}\')(date=\'{}\''.format(payload['pid'], payload['date']))
+    if response is not None:
+        #print("Entry was already found")
+        return response
+
+    try:
+        response = requests.post(apiURL.format(collection), json = payload)
+    except:
+        print('ERROR: Failed to add performance to PB database')
         return None
     
     return json.loads(response.text)
