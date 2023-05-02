@@ -97,6 +97,22 @@ def getPlayer(collection, queryParams, name = None):
             response = addPlayer(collection, payload)
             return response
 
+def getAllPlayers(collection):
+  response = None
+  
+    try:
+        response = requests.get(apiURL.format(collection))
+
+        # Request was successful, parse JSON and see if anything was found
+        JSON = json.loads(response.text)
+        if 'code' in JSON.keys():
+            if JSON['code'] != 200:
+                response = None
+
+    except:
+        print('ERROR: PB request failed')
+        return response
+
 def getEntireSeasonsStats(collection, queryParams):
     response = None
 
