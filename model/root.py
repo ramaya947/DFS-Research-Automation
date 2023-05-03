@@ -47,7 +47,7 @@ file = open("MissingPlayerIds.csv", "a+")
 currDate = "2022-04-23"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
 
-while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 20)):
+while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 60)):
     currDateTime += datetime.timedelta(days = 1)
     
     # First: Grab his total points for that day
