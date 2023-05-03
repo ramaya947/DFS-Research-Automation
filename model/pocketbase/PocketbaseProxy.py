@@ -98,16 +98,18 @@ def getPlayer(collection, queryParams, name = None):
             return response
 
 def getAllPlayers(collection):
-  response = None
+    response = None
   
     try:
-        response = requests.get(apiURL.format(collection))
+        response = requests.get(apiURL.format(collection) + '?perPage=1000')
 
         # Request was successful, parse JSON and see if anything was found
         JSON = json.loads(response.text)
         if 'code' in JSON.keys():
             if JSON['code'] != 200:
                 response = None
+                return response
+        return JSON['items']
 
     except:
         print('ERROR: PB request failed')
@@ -162,6 +164,22 @@ def addPerformanceRecord(collection, payload):
         return None
     
     return json.loads(response.text)
+
+def getAllPerformanceRecords(collection, queryParams):
+    response = None
+
+    try:
+        response = requests.get(apiURL.format(collection) + '?filter=({})'.format(queryParams))
+
+        # Request was successful, parse JSON and see if anything was found
+        JSON = json.loads(response.text)
+        if 'code' in JSON.keys():
+            if JSON['code'] != 200:
+                response = None
+        return JSON['items']
+    except:
+        #print('ERROR: PB request failed')
+        return None
 
 # Example request to getPlayer
 # getPlayer('players', 'name=Shohei Ohtani', 'Shohei Ohtani')
