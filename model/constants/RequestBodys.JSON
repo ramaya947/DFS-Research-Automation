@@ -13,5 +13,11 @@
         "strAutoPt": "false",
         "arrPlayerId": [],
         "strSplitArrPitch": []
+    },
+    "vs": {
+        "L": 1,
+        "R": 2,
+        "Home": 7,
+        "Away": 8
     }
 }

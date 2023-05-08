@@ -10,7 +10,7 @@ from pybaseball import playerid_reverse_lookup
 #       - Season stats up to that date
 # The date was 2022-04-08
 
-def getStats(fid, startDate, endDate, groupingType, statType):
+def getStats(fid, startDate, endDate, groupingType, statType, filters):
     """
    Get Player Stats
 
@@ -19,17 +19,25 @@ def getStats(fid, startDate, endDate, groupingType, statType):
    :param str endDate: YYYY-MM-DD
    :param groupingType: Could be season, week, day, month, etc.
    :parm num statType: 1: Standard Stats, 2: Advanced, 3: Batted Balls
+   :param array filters: vs L, vs R, etc.
    :return: Player stats
    :rtype: Object
    """
     
-    body = json.load(open('./model/constants/RequestBodys.JSON', 'r'))['datedPlayerSplitsStats']
+    RequestBodyJSON = json.load(open('./model/constants/RequestBodys.JSON', 'r'))
+
+    requestFilters = []
+    for filter in filters:
+        requestFilters.append(RequestBodyJSON['vs'][filter])
+
+    body = RequestBodyJSON['datedPlayerSplitsStats']
     
     body['strPlayerId'] = fid
     body['strStartDate'] = startDate
     body['strEndDate'] = endDate
     body['strGroup'] = groupingType
     body['strType'] = statType
+    body['strSplitArr'] = requestFilters
 
     response = requests.post(DATED_PLAYER_SPLITS_STATS_URL, json = body)
 
@@ -65,30 +73,51 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         awayTeam = teamsSoup[0].text
         homeTeam = teamsSoup[1].text
 
+        # TODO: Find pitcher and get handedness
+        pitcherHandedness = { 'away': None, 'home': None }
+        # Find Away Pitcher first
+        awaySoup = card.find("div", {"class": "blk away-team"})
+        awayPitcherSoup = awaySoup.find("div", {"class": "pitcher players"}).find("span", {"class": "meta stats"})
+        pitcherHandedness['away'] = awayPitcherSoup.find("span", { "class": "stats"}).text.strip()
+
+        # Now find Home Pitcher
+        homeSoup = card.find("div", {"class": "blk home-team"})
+        homePitcherSoup = homeSoup.find("div", {"class": "pitcher players"}).find("span", {"class": "meta stats"})
+        pitcherHandedness['home'] = homePitcherSoup.find("span", { "class": "stats"}).text.strip()
+
         players = []
         battingOrderSoup = card.find("div", {"class": "blk away-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
         for player in battingOrderSoup:
             name = player.find("a", {"class": "player-popup"}).text
-            players.append(name)
+            players.append(
+                {
+                    'name': name,
+                    'vs': pitcherHandedness['away']
+                }
+            )
         
         battingOrderSoup = card.find("div", {"class": "blk home-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
         for player in battingOrderSoup:
             name = player.find("a", {"class": "player-popup"}).text
-            players.append(name)
+            players.append(
+                {
+                    'name': name,
+                    'vs': pitcherHandedness['home']
+                }
+            )
 
         for player in players:
-            playerSoup = soup.find("a", {"title": "{}".format(player)})
+            playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
             positions = playerSoup.parent.parent.parent.attrs['data-pos']
             fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text
             if fpts and fpts != None and fpts != "" and fpts != "" and fpts != '':
-                if "'" in player:
-                    player = player.replace("'", "\\'")
-                print("{}: {}".format(player, fpts))
-                playerInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(player), player)
+                if "'" in player['name']:
+                    player['name'] = player['name'].replace("'", "\\'")
+                playerInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(player['name']), player['name'])
                 try:
                     playerId = playerInfo['pid']
                 except:
-                    print('ERROR: Could not find id for {} in returned Data: {}'.format(player, playerInfo))
+                    print('ERROR: Could not find id for {} in returned Data: {}'.format(player['name'], playerInfo))
                     continue
 
                 if playerInfo['fid'] == '':
@@ -113,11 +142,11 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                                     pass
                             line_count += 1
                         if fid == None:
-                            print("Failed final attempt to get player fangraphsId for {}".format(player))
+                            print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
                             continue
 
                     playerInfo = pocketbase.updatePlayer('players', playerInfo['id'], { 'fid': '{}'.format(fid) })
-                    print('Updated entry for {}. FID is now {}'.format(player, playerInfo['fid']))
+                    print('Updated entry for {}. FID is now {}'.format(player['name'], playerInfo['fid']))
                 
 
 
@@ -136,8 +165,12 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 prevYearDelta = datetime.timedelta(days = 365)
                 prevYearDate = (date - prevYearDelta).strftime("%Y-%m-%d")
                 prevYearEndDate = (endDate - prevYearDelta).strftime("%Y-%m-%d")
+
+                # Set request filters
+                requestFilters = []
+                requestFilters.append(player['vs'])
                 
-                lastYearStandardStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeStandard)
+                lastYearStandardStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeStandard, requestFilters)
                 
                 # Add stats to PB DB
                 lastYearStandardStats = pocketbase.addEntireSeasonsStats("seasonStats", {
@@ -147,7 +180,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "type": typeStandard
                 })
 
-                lastYearAvancedStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeAdvanced)
+                lastYearAvancedStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeAdvanced, requestFilters)
                 
                 # Add stats to PB DB
                 lastYearAvancedStats = pocketbase.addEntireSeasonsStats("seasonStats", {
@@ -157,7 +190,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "type": typeAdvanced
                 })
 
-                lastYearBattedBallStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeBattedBall)
+                lastYearBattedBallStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeBattedBall, requestFilters)
                 
                 # Add stats to PB DB
                 lastYearBattedBallStats = pocketbase.addEntireSeasonsStats("seasonStats", {
@@ -170,28 +203,28 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 d = datetime.datetime.strptime(currDate, "%Y-%m-%d")
                 ########################################################################
                 # Get stats for current season up to this date
-                standardCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard)
+                standardCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard, requestFilters)
                 # If standardCurrSeasonStats is empty, then skip this player. They didn't have any prev performance data to go off of for this season, yet.
                 if len(standardCurrSeasonStats) == 0:
                     continue
 
                 # If not, continue on
-                advancedCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced)
-                battedBallCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall)
+                advancedCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters)
+                battedBallCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters)
                 ########################################################################
 
                 ########################################################################
                 # Get stats for last week of current season
-                standardLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard)
-                advancedLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced)
-                battedBallLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall)
+                standardLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard, requestFilters)
+                advancedLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters)
+                battedBallLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters)
                 ########################################################################
 
                 ########################################################################
                 # Get stats for last 2 weeks of current season
-                standardLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard)
-                advancedLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced)
-                battedBallLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall)
+                standardLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeStandard, requestFilters)
+                advancedLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters)
+                battedBallLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters)
                 ########################################################################
 
                 # TODO: Add to performance table
@@ -210,6 +243,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "advancedTwoWeekStats": advancedLastTwoWeeksStats,
                     "battedBallTwoWeekStats": battedBallLastTwoWeeksStats
                 })
+                pass
                 #while(date <= endDate):
                     # "{}-{}-{}".format(date.year, date.month, date.day)
 
@@ -222,3 +256,5 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             #break
         #break
 
+
+# TODO: I just realized that I don't think these stats are filtered by handedness...
