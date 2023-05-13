@@ -19,11 +19,15 @@ count = 0
 for player in players:
 	performances = pocketbase.getAllPerformanceRecords('performances', 'pid=\'{}\''.format(player['pid']))
 	
-	prevSeasonStats = {
-		'standard': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 1))['stats'],
-		'advanced': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 2))['stats'],
-		'battedBall': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 3))['stats']
-	}
+	try:
+		prevSeasonStats = {
+			'standard': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 1))['stats'],
+			'advanced': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 2))['stats'],
+			'battedBall': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 3))['stats']
+		}
+	except:
+		count += 1
+		continue
 
 	if (
 		len(prevSeasonStats['standard']) == 0 or
@@ -72,6 +76,8 @@ for player in players:
 					statRow.append(statDict[stat])
 
 		headerRow.append('FPTS')
+		if not isinstance(performance['fpts'], int):
+			continue
 		statRow.append(performance['fpts'])
 		for sheet in sheets:
 			# After first pass through a performance, headers should be added and can be set to True
@@ -83,4 +89,5 @@ for player in players:
 
 	count += 1
 	print('Player {} out of {}'.format(count + 1, len(players)), flush=True)
+wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
 wb.save("Analysis.xlsx")
