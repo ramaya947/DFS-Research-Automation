@@ -123,6 +123,79 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             )
 
         # TODO: Find splits for pitchers
+        # Home Pitcher
+        if "'" in pitcherHandedness['homeName']:
+            pitcherHandedness['homeName'] = pitcherHandedness['homeName'].replace("'", "\\'")
+        homePitcherInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(pitcherHandedness['homeName']), pitcherHandedness['homeName'])
+        try:
+            pitcherId = homePitcherInfo['pid']
+        except:
+            print('ERROR: Could not find id for {} in returned Data: {}'.format(pitcherHandedness['homeName'], homePitcherInfo))
+            continue
+        if homePitcherInfo['fid'] == '':
+            data = playerid_reverse_lookup([int(pitcherId)], "mlbam")
+
+            fid = None
+            try:
+                fid = data.at[0, "key_fangraphs"]
+            except Exception as e: print(e)
+
+            if fid == None:
+                file.seek(0)
+                csv_reader = csv.reader(file, delimiter=',')
+                line_count = 0
+                for row in csv_reader:
+                    if line_count > 0:
+                        try:
+                            if row[0] == playerId:
+                                fid = row[1]
+                                break
+                        except:
+                            pass
+                    line_count += 1
+                if fid == None:
+                    print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
+                    continue
+
+            homePitcherInfo = pocketbase.updatePlayer('players', homePitcherInfo['id'], { 'fid': '{}'.format(fid) })
+            print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['homeName'], homePitcherInfo['fid']))
+
+        # Away Pitcher
+        if "'" in pitcherHandedness['awayName']:
+            pitcherHandedness['awayName'] = pitcherHandedness['awayName'].replace("'", "\\'")
+        awayPitcherInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(pitcherHandedness['awayName']), pitcherHandedness['awayName'])
+        try:
+            pitcherId = awayPitcherInfo['pid']
+        except:
+            print('ERROR: Could not find id for {} in returned Data: {}'.format(pitcherHandedness['awayName'], awayPitcherInfo))
+            continue
+        if awayPitcherInfo['fid'] == '':
+            data = playerid_reverse_lookup([int(pitcherId)], "mlbam")
+
+            fid = None
+            try:
+                fid = data.at[0, "key_fangraphs"]
+            except Exception as e: print(e)
+
+            if fid == None:
+                file.seek(0)
+                csv_reader = csv.reader(file, delimiter=',')
+                line_count = 0
+                for row in csv_reader:
+                    if line_count > 0:
+                        try:
+                            if row[0] == playerId:
+                                fid = row[1]
+                                break
+                        except:
+                            pass
+                    line_count += 1
+                if fid == None:
+                    print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
+                    continue
+
+            awayPitcherInfo = pocketbase.updatePlayer('players', awayPitcherInfo['id'], { 'fid': '{}'.format(fid) })
+            print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['awayName'], awayPitcherInfo['fid']))
 
         for player in players:
             playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
