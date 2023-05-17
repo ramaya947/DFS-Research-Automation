@@ -10,6 +10,19 @@ from pybaseball import playerid_reverse_lookup
 #       - Season stats up to that date
 # The date was 2022-04-08
 
+def filterStats(entries, filterBy, desiredStats = []):
+    data = {}
+    for entry in entries:
+        if entry['Season'] == filterBy:
+            data = entry
+        
+    response = {}
+    for desiredStat in desiredStats:
+        if desiredStat in data:
+            response[desiredStat] = data[desiredStat]
+    
+    return response
+
 def getStats(fid, startDate, endDate, groupingType, statType, filters, desiredStats = []):
     """
    Get Player Stats
@@ -55,6 +68,8 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, desiredSt
 
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 DATED_PLAYER_SPLITS_STATS_URL = "https://www.fangraphs.com/api/leaders/splits/splits-leaders"
+
+PITCHER_STATS_URL = "https://www.fangraphs.com/api/players/splits?playerid={}&position=P&season=0&split=0.{}"
 
 LAST_SEASON_START_DATE = "2022-04-07"
 LAST_SEASON_END_DATE = "2022-10-28"
@@ -196,6 +211,42 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
             awayPitcherInfo = pocketbase.updatePlayer('players', awayPitcherInfo['id'], { 'fid': '{}'.format(fid) })
             print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['awayName'], awayPitcherInfo['fid']))
+
+        # Grab Stats for each pitcher
+        start = LAST_SEASON_START_DATE
+        date = datetime.datetime.strptime(start,"%Y-%m-%d")
+
+        desiredPitcherStats = [
+            'wOBA', 'BABIP', 'ISO', 'SLG', 'OBP', 'LD%', 'FB%', 'Hard%'
+        ]
+        #TODO: You are suppose to be getting career stats - minus the current year, and season stats
+        # Based on the current date in question.
+        formattedPitcherURLvsL = PITCHER_STATS_URL.format(homePitcherInfo['fid'], 1)
+        formattedPitcherURLvsR = PITCHER_STATS_URL.format(homePitcherInfo['fid'], 2)
+        homePitcherStatsvsL = json.loads(requests.get(formattedPitcherURLvsL).text)
+        homePitcherStatsvsR = json.loads(requests.get(formattedPitcherURLvsR).text)
+        homePitcherCareerStatsFiltered = {
+            'vsL': filterStats(homePitcherStatsvsL, 'Total', desiredPitcherStats),
+            'vsR': filterStats(homePitcherStatsvsR, 'Total', desiredPitcherStats)
+        }
+        homePitcherCurrentStatsFiltered = {
+            'vsL': filterStats(homePitcherStatsvsL, "{}".format(date.year), desiredPitcherStats),
+            'vsR': filterStats(homePitcherStatsvsR, "{}".format(date.year), desiredPitcherStats)
+        }
+
+        formattedPitcherURLvsL = PITCHER_STATS_URL.format(awayPitcherInfo['fid'], 1)
+        formattedPitcherURLvsR = PITCHER_STATS_URL.format(awayPitcherInfo['fid'], 2)
+        awayPitcherStatsvsL = json.loads(requests.get(formattedPitcherURLvsL).text)
+        awayPitcherStatsvsR = json.loads(requests.get(formattedPitcherURLvsR).text)
+        awayPitcherCareerStatsFiltered = {
+            'vsL': filterStats(awayPitcherStatsvsL, 'Total', desiredPitcherStats),
+            'vsR': filterStats(awayPitcherStatsvsR, 'Total', desiredPitcherStats)
+        }
+        awayPitcherCurrentStatsFiltered = {
+            'vsL': filterStats(awayPitcherStatsvsL, "{}".format(date.year), desiredPitcherStats),
+            'vsR': filterStats(awayPitcherStatsvsR, "{}".format(date.year), desiredPitcherStats)
+        }
+        pass
 
         for player in players:
             playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
