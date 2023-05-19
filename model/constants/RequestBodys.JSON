@@ -3,7 +3,7 @@
         "strPlayerId": "{}",
         "strSplitArr": [],
         "strGroup": "{}",
-        "strPosition": "B",
+        "strPosition": {},
         "strType": {},
         "strStartDate": "{}",
         "strEndDate": "{}",
@@ -17,7 +17,11 @@
     "vs": {
         "L": 1,
         "R": 2,
+        "pL": 5,
+        "pR": 6,
         "Home": 7,
-        "Away": 8
+        "Away": 8,
+        "SP": 42,
+        "RP": 43
     }
 }

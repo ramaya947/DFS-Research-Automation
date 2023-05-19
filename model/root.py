@@ -10,11 +10,13 @@ from pybaseball import playerid_reverse_lookup
 #       - Season stats up to that date
 # The date was 2022-04-08
 
-def filterStats(entries, filterBy, desiredStats = []):
+def filterStats(entries, filterBy, desiredStats = [], latestYear = None):
     data = {}
     for entry in entries:
         if entry['Season'] == filterBy:
             data = entry
+
+    
         
     response = {}
     for desiredStat in desiredStats:
@@ -23,7 +25,7 @@ def filterStats(entries, filterBy, desiredStats = []):
     
     return response
 
-def getStats(fid, startDate, endDate, groupingType, statType, filters, desiredStats = []):
+def getStats(fid, startDate, endDate, groupingType, statType, filters, positionType, desiredStats = []):
     """
    Get Player Stats
 
@@ -33,6 +35,7 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, desiredSt
    :param groupingType: Could be season, week, day, month, etc.
    :parm num statType: 1: Standard Stats, 2: Advanced, 3: Batted Balls
    :param array filters: vs L, vs R, etc.
+   :param str positionType: P -> Pitcher B -> Batter
    :param array desiredStats: The stats that you want to be returned
    :return: Player stats
    :rtype: Object
@@ -51,6 +54,7 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, desiredSt
     body['strEndDate'] = endDate
     body['strGroup'] = groupingType
     body['strType'] = statType
+    body['strPosition'] = positionType
     body['strSplitArr'] = requestFilters
 
     response = requests.post(DATED_PLAYER_SPLITS_STATS_URL, json = body)
@@ -121,7 +125,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 {
                     'name': name,
                     'vs': pitcherHandedness['home'],
-                    'handedness': handedness
+                    'handedness': handedness,
+                    'vsLocation': 'H'
                 }
             )
         
@@ -133,7 +138,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 {
                     'name': name,
                     'vs': pitcherHandedness['home'],
-                    'handedness': handedness
+                    'handedness': handedness,
+                    'vsLocation': 'A'
                 }
             )
 
@@ -212,46 +218,69 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             awayPitcherInfo = pocketbase.updatePlayer('players', awayPitcherInfo['id'], { 'fid': '{}'.format(fid) })
             print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['awayName'], awayPitcherInfo['fid']))
 
+        # Define Stat Types for Pitchers and Batters
+        typeStandard = 1
+        typeAdvanced = 2
+        typeBattedBall = 3
+
         # Grab Stats for each pitcher
         start = LAST_SEASON_START_DATE
         date = datetime.datetime.strptime(start,"%Y-%m-%d")
 
         desiredPitcherStats = [
-            'wOBA', 'BABIP', 'ISO', 'SLG', 'OBP', 'LD%', 'FB%', 'Hard%'
+            'IP', 'wOBA', 'BABIP', 'ISO', 'SLG', 'OBP', 'LD%', 'FB%', 'Hard%'
         ]
         #TODO: You are suppose to be getting career stats - minus the current year, and season stats
         # Based on the current date in question.
-        formattedPitcherURLvsL = PITCHER_STATS_URL.format(homePitcherInfo['fid'], 1)
-        formattedPitcherURLvsR = PITCHER_STATS_URL.format(homePitcherInfo['fid'], 2)
-        homePitcherStatsvsL = json.loads(requests.get(formattedPitcherURLvsL).text)
-        homePitcherStatsvsR = json.loads(requests.get(formattedPitcherURLvsR).text)
         homePitcherCareerStatsFiltered = {
-            'vsL': filterStats(homePitcherStatsvsL, 'Total', desiredPitcherStats),
-            'vsR': filterStats(homePitcherStatsvsR, 'Total', desiredPitcherStats)
+            'vsL': {},
+            'vsR': {}
         }
-        homePitcherCurrentStatsFiltered = {
-            'vsL': filterStats(homePitcherStatsvsL, "{}".format(date.year), desiredPitcherStats),
-            'vsR': filterStats(homePitcherStatsvsR, "{}".format(date.year), desiredPitcherStats)
-        }
+        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
 
-        formattedPitcherURLvsL = PITCHER_STATS_URL.format(awayPitcherInfo['fid'], 1)
-        formattedPitcherURLvsR = PITCHER_STATS_URL.format(awayPitcherInfo['fid'], 2)
-        awayPitcherStatsvsL = json.loads(requests.get(formattedPitcherURLvsL).text)
-        awayPitcherStatsvsR = json.loads(requests.get(formattedPitcherURLvsR).text)
+        homePitcherCurrentStatsFiltered = {
+            'vsL': {},
+            'vsR': {}
+        }
+        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+    
         awayPitcherCareerStatsFiltered = {
-            'vsL': filterStats(awayPitcherStatsvsL, 'Total', desiredPitcherStats),
-            'vsR': filterStats(awayPitcherStatsvsR, 'Total', desiredPitcherStats)
+            'vsL': {},
+            'vsR': {}
         }
+        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+
         awayPitcherCurrentStatsFiltered = {
-            'vsL': filterStats(awayPitcherStatsvsL, "{}".format(date.year), desiredPitcherStats),
-            'vsR': filterStats(awayPitcherStatsvsR, "{}".format(date.year), desiredPitcherStats)
+            'vsL': {},
+            'vsR': {}
         }
+        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
         pass
 
         for player in players:
             playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
             positions = playerSoup.parent.parent.parent.attrs['data-pos']
-            battingOrder = positions = playerSoup.parent.parent.parent.find("span", {"class": "order"}).text.strip()
+            battingOrder = playerSoup.parent.parent.parent.find("span", {"class": "order"}).text.strip()
             if battingOrder.isdigit():
                 battingOrder = int(battingOrder)
             fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text
@@ -296,76 +325,72 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
 
                 # Now that we have both pid and fid, start grabbing stats for the player
-
-                start = LAST_SEASON_START_DATE
-                end = LAST_SEASON_END_DATE
-                typeStandard = 1
-                typeAdvanced = 2
-                typeBattedBall = 3
-
-                desiredAdvancedStats = [
-                    'wOBA', 'BABIP', 'ISO', 'SLG', 'OBP', 'wRC+'
+                desiredStats = [
+                    'PA', 'wOBA', 'BABIP', 'ISO', 'SLG', 'OBP', 'wRC+', 'LD%', 'FB%', 'Hard%'
                 ]
-                desiredBattedBallStats = [
-                    'LD%', 'FB%', 'Hard%'
-                ]
-
-                date = datetime.datetime.strptime(start,"%Y-%m-%d")
-                endDate = datetime.datetime.strptime(end,"%Y-%m-%d")
-                dateDelta = datetime.timedelta(days = 1)
-
-                prevYearDelta = datetime.timedelta(days = 365)
-                prevYearDate = (date - prevYearDelta).strftime("%Y-%m-%d")
-                prevYearEndDate = (endDate - prevYearDelta).strftime("%Y-%m-%d")
 
                 # Set request filters
                 requestFilters = []
                 requestFilters.append(player['vs'])
 
-                lastYearAvancedStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeAdvanced, requestFilters, desiredAdvancedStats)
-                
-                # Add stats to PB DB
-                lastYearAvancedStats = pocketbase.addEntireSeasonsStats("seasonStats", {
-                    "pid": playerId,
-                    "stats": lastYearAvancedStats,
-                    "season": (date - prevYearDelta).year,
-                    "type": typeAdvanced
-                })
+                careerStats = {}
+                careerStats.update(getStats(playerInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, requestFilters, "B", desiredStats)[0])
+                careerStats.update(getStats(playerInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, requestFilters, "B", desiredStats)[0])
 
-                lastYearBattedBallStats = getStats(playerInfo['fid'], prevYearDate, prevYearEndDate, "season", typeBattedBall, requestFilters, desiredBattedBallStats)
-                
-                # Add stats to PB DB
-                lastYearBattedBallStats = pocketbase.addEntireSeasonsStats("seasonStats", {
-                    "pid": playerId,
-                    "stats": lastYearBattedBallStats,
-                    "season": (date - prevYearDelta).year,
-                    "type": typeBattedBall
-                })
+                currentStats = {}
+                currentStats.update(getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, requestFilters, "B", desiredStats)[0])
+                currentStats.update(getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, requestFilters, "B", desiredStats)[0])
 
-                d = datetime.datetime.strptime(currDate, "%Y-%m-%d")
-                ########################################################################
-                # Get stats for current season up to this date
-                advancedCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters, desiredAdvancedStats)
-                # If standardCurrSeasonStats is empty, then skip this player. They didn't have any prev performance data to go off of for this season, yet.
-                # If not, continue on
-                if len(advancedCurrSeasonStats) == 0:
+                #TODO: Create stats now
+                #player['handedness']
+                oppPitcherCareer = (homePitcherCareerStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCareerStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                if careerStats['PA'] == 0 and oppPitcherCareer['IP'] == 0:
                     continue
-                battedBallCurrSeasonStats = getStats(playerInfo['fid'], date.strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters, desiredBattedBallStats)
-                ########################################################################
+                wOBASplitCareer = ((careerStats['wOBA'] if careerStats['PA'] != 0 else oppPitcherCareer['wOBA']) + (oppPitcherCareer['wOBA'] if oppPitcherCareer['IP'] != 0 else careerStats['wOBA'])) / 2
+                ISOSplitCareer =  careerStats['ISO']
+                SLGSplitCareer = ((careerStats['SLG'] if careerStats['PA'] != 0 else oppPitcherCareer['SLG']) + (oppPitcherCareer['SLG'] if oppPitcherCareer['IP'] != 0 else careerStats['SLG'])) / 2
+                OBPSplitCareer = ((careerStats['OBP'] if careerStats['PA'] != 0 else oppPitcherCareer['OBP']) + (oppPitcherCareer['OBP'] if oppPitcherCareer['IP'] != 0 else careerStats['OBP'])) / 2
+                LDSplitCareer = ((careerStats['LD%'] if careerStats['PA'] != 0 else oppPitcherCareer['LD%']) + (oppPitcherCareer['LD%'] if oppPitcherCareer['IP'] != 0 else careerStats['LD%'])) / 2
+                FBSplitCareer = ((careerStats['FB%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%']) + (oppPitcherCareer['FB%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'])) / 2
+                HardFBSplitCareer = ((careerStats['FB%'] * careerStats['Hard%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%']) + (oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'] * careerStats['Hard%'])) / 2
 
-                ########################################################################
-                # Get stats for last week of current season
-                advancedLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters, desiredAdvancedStats)
-                battedBallLastWeekStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 1, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters, desiredBattedBallStats)
-                ########################################################################
+                orderMultiplier = 1.25 if battingOrder < 6 else 1
+                orderedwOBASplitCareer = wOBASplitCareer * orderMultiplier
+                orderedISOSplitCareer = ISOSplitCareer * orderMultiplier
+                orderedSLGSplitCareer = SLGSplitCareer * orderMultiplier
+                orderedOBPSplitCareer = OBPSplitCareer * orderMultiplier
+                orderedLDSplitCareer = LDSplitCareer * orderMultiplier
+                orderedFBSplitCareer = FBSplitCareer * orderMultiplier
+                orderedHardFBSplitCareer = HardFBSplitCareer * orderMultiplier
 
-                ########################################################################
-                # Get stats for last 2 weeks of current season
-                advancedLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeAdvanced, requestFilters, desiredAdvancedStats)
-                battedBallLastTwoWeeksStats = getStats(playerInfo['fid'], (d - datetime.timedelta(weeks = 2, days = 1)).strftime("%Y-%m-%d"), (d - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "season", typeBattedBall, requestFilters, desiredBattedBallStats)
-                ########################################################################
+                # CURRENT STATS
+                oppPitcherCurrent = (homePitcherCurrentStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCurrentStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                if currentStats['PA'] == 0 and oppPitcherCurrent['IP'] == 0:
+                    continue
+                wOBASplitCurrent = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA'])) / 2
+                ISOSplitCurrent =  currentStats['ISO']
+                SLGSplitCurrent = ((currentStats['SLG'] if currentStats['PA'] != 0 else oppPitcherCurrent['SLG']) + (oppPitcherCurrent['SLG'] if oppPitcherCurrent['IP'] != 0 else currentStats['SLG'])) / 2
+                OBPSplitCurrent = ((currentStats['OBP'] if currentStats['PA'] != 0 else oppPitcherCurrent['OBP']) + (oppPitcherCurrent['OBP'] if oppPitcherCurrent['IP'] != 0 else currentStats['OBP'])) / 2
+                LDSplitCurrent = ((currentStats['LD%'] if currentStats['PA'] != 0 else oppPitcherCurrent['LD%']) + (oppPitcherCurrent['LD%'] if oppPitcherCurrent['IP'] != 0 else currentStats['LD%'])) / 2
+                FBSplitCurrent = ((currentStats['FB%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%']) + (oppPitcherCurrent['FB%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'])) / 2
+                HardFBSplitCurrent = ((currentStats['FB%'] * currentStats['Hard%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%']) + (oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'] * currentStats['Hard%'])) / 2
 
-                # TODO: Add to performance table
+                orderMultiplier = 1.25 if battingOrder < 6 else 1
+                orderedwOBASplitCurrent = wOBASplitCurrent * orderMultiplier
+                orderedISOSplitCurrent = ISOSplitCurrent * orderMultiplier
+                orderedSLGSplitCurrent = SLGSplitCurrent * orderMultiplier
+                orderedOBPSplitCurrent = OBPSplitCurrent * orderMultiplier
+                orderedLDSplitCurrent = LDSplitCurrent * orderMultiplier
+                orderedFBSplitCurrent = FBSplitCurrent * orderMultiplier
+                orderedHardFBSplitCurrent = HardFBSplitCurrent * orderMultiplier
+
+                bReality = (currentStats['BABIP'] if currentStats['PA'] != 0 else 1) / (careerStats['BABIP'] if careerStats['PA'] != 0 else 1)
+                pReality = (oppPitcherCurrent['BABIP'] if oppPitcherCurrent['IP'] != 0 else 1) / (oppPitcherCareer['BABIP'] if oppPitcherCareer['IP'] != 0 else 1)
+
+                wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
+
+                #TODO: It seems to be pairing the incorrect pitchjer and batter
+
                 performanceRecord = pocketbase.addPerformanceRecord('performances', {
                     "pid": playerId,
                     "positions": positions,
@@ -379,12 +404,6 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "battedBallTwoWeekStats": battedBallLastTwoWeeksStats
                 })
                 pass
-                #while(date <= endDate):
-                    # "{}-{}-{}".format(date.year, date.month, date.day)
-
-
-                #    date += dateDelta
-                
 
                 #stats = getStats(playerInfo['fid'], "2022-04-05", "2022-04-25", "season", 2)
                 #print(stats)
