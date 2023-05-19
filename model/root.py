@@ -62,6 +62,9 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, positionT
     if len(desiredStats) == 0:
         return data
 
+    if len(data) == 0:
+        return [{ 'IP': 0}]
+
     data = data[0]
     response = {}
     for desiredStat in desiredStats:
@@ -85,8 +88,6 @@ currDate = "2022-04-23"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
 
 while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 90)):
-    currDateTime += datetime.timedelta(days = 1)
-    
     # First: Grab his total points for that day
     url = "https://rotogrinders.com/lineups/mlb?date={}&site=fanduel"
     formattedUrl = url.format(currDateTime.strftime("%Y-%m-%d"))
@@ -126,7 +127,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'name': name,
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
-                    'vsLocation': 'H'
+                    'vsLocation': 'H',
+                    'facing': pitcherHandedness['homeName']
                 }
             )
         
@@ -139,7 +141,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'name': name,
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
-                    'vsLocation': 'A'
+                    'vsLocation': 'A',
+                    'facing': pitcherHandedness['awayName']
                 }
             )
 
@@ -389,6 +392,38 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
                 wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
 
+                stats = {
+                    "wOBASplitCareer": wOBASplitCareer,
+                    "ISOSplitCareer": ISOSplitCareer,
+                    "SLGSplitCareer": SLGSplitCareer,
+                    "OBPSplitCareer": OBPSplitCareer,
+                    "LDSplitCareer": LDSplitCareer,
+                    "FBSplitCareer": FBSplitCareer,
+                    "HardFBSplitCareer": HardFBSplitCareer,
+                    "orderedwOBASplitCareer": orderedwOBASplitCareer,
+                    "orderedISOSplitCareer": orderedISOSplitCareer,
+                    "orderedSLGSplitCareer": orderedSLGSplitCareer,
+                    "orderedOBPSplitCareer": orderedOBPSplitCareer,
+                    "orderedLDSplitCareer": orderedLDSplitCareer,
+                    "orderedFBSplitCareer": orderedFBSplitCareer,
+                    "orderedHardFBSplitCareer": orderedHardFBSplitCareer,
+                    "wOBASplitCurrent": wOBASplitCurrent,
+                    "ISOSplitCurrent": ISOSplitCurrent,
+                    "SLGSplitCurrent": SLGSplitCurrent,
+                    "OBPSplitCurrent": OBPSplitCurrent,
+                    "LDSplitCurrent": LDSplitCurrent,
+                    "FBSplitCurrent": FBSplitCurrent,
+                    "HardFBSplitCurrent": HardFBSplitCurrent,
+                    "orderedwOBASplitCurrent": orderedwOBASplitCurrent,
+                    "orderedISOSplitCurrent": orderedISOSplitCurrent,
+                    "orderedSLGSplitCurrent": orderedSLGSplitCurrent,
+                    "orderedOBPSplitCurrent": orderedOBPSplitCurrent,
+                    "orderedLDSplitCurrent": orderedLDSplitCurrent,
+                    "orderedFBSplitCurrent": orderedFBSplitCurrent,
+                    "orderedHardFBSplitCurrent": orderedHardFBSplitCurrent,
+                    "wOBASplitReal": wOBASplitReal
+                }
+
                 #TODO: It seems to be pairing the incorrect pitchjer and batter
 
                 performanceRecord = pocketbase.addPerformanceRecord('performances', {
@@ -396,12 +431,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "positions": positions,
                     "date": currDateTime.strftime("%Y-%m-%d"),
                     "fpts": float(fpts),
-                    "advancedCurrSeasonStats": advancedCurrSeasonStats,
-                    "battedBallCurrSeasonStats": battedBallCurrSeasonStats,
-                    "advancedLastWeekStats": advancedLastWeekStats,
-                    "battedBallLastWeekStats": battedBallLastWeekStats,
-                    "advancedTwoWeekStats": advancedLastTwoWeeksStats,
-                    "battedBallTwoWeekStats": battedBallLastTwoWeeksStats
+                    "order": battingOrder,
+                    "stats": stats
                 })
                 pass
 
@@ -410,5 +441,4 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             #break
         #break
 
-
-# TODO: I just realized that I don't think these stats are filtered by handedness...
+    currDateTime += datetime.timedelta(days = 1)
