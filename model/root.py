@@ -388,8 +388,18 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     orderedFBSplitCurrent = FBSplitCurrent * orderMultiplier
                     orderedHardFBSplitCurrent = HardFBSplitCurrent * orderMultiplier
 
+                    if currentStats['BABIP'] == 0 or currentStats['BABIP'] == 0.0:
+                        currentStats['BABIP'] = 1
+                    if careerStats['BABIP'] == 0 or careerStats['BABIP'] == 0.0:
+                        careerStats['BABIP'] = 1
+                    if oppPitcherCurrent['BABIP'] == 0 or oppPitcherCurrent['BABIP'] == 0.0:
+                        oppPitcherCurrent['BABIP'] = 1
+                    if oppPitcherCareer['BABIP'] == 0 or oppPitcherCareer['BABIP'] == 0.0:
+                        oppPitcherCareer['BABIP'] = 1
+
                     bReality = (currentStats['BABIP'] if currentStats['PA'] != 0 else 1) / (careerStats['BABIP'] if careerStats['PA'] != 0 else 1)
                     pReality = (oppPitcherCurrent['BABIP'] if oppPitcherCurrent['IP'] != 0 else 1) / (oppPitcherCareer['BABIP'] if oppPitcherCareer['IP'] != 0 else 1)
+                    
 
                     wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
                 except:
