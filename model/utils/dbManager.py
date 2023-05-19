@@ -38,3 +38,4 @@ def deleteAllRecords(collection):
     return deleteAllRecords(collection)
 
 deleteAllRecords('seasonStats')
+deleteAllRecords('performances')
