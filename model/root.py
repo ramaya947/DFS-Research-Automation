@@ -346,51 +346,54 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
                 #TODO: Create stats now
                 #player['handedness']
-                oppPitcherCareer = (homePitcherCareerStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCareerStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
-                if careerStats['PA'] == 0 and oppPitcherCareer['IP'] == 0:
-                    continue
-                wOBASplitCareer = ((careerStats['wOBA'] if careerStats['PA'] != 0 else oppPitcherCareer['wOBA']) + (oppPitcherCareer['wOBA'] if oppPitcherCareer['IP'] != 0 else careerStats['wOBA'])) / 2
-                ISOSplitCareer =  careerStats['ISO']
-                SLGSplitCareer = ((careerStats['SLG'] if careerStats['PA'] != 0 else oppPitcherCareer['SLG']) + (oppPitcherCareer['SLG'] if oppPitcherCareer['IP'] != 0 else careerStats['SLG'])) / 2
-                OBPSplitCareer = ((careerStats['OBP'] if careerStats['PA'] != 0 else oppPitcherCareer['OBP']) + (oppPitcherCareer['OBP'] if oppPitcherCareer['IP'] != 0 else careerStats['OBP'])) / 2
-                LDSplitCareer = ((careerStats['LD%'] if careerStats['PA'] != 0 else oppPitcherCareer['LD%']) + (oppPitcherCareer['LD%'] if oppPitcherCareer['IP'] != 0 else careerStats['LD%'])) / 2
-                FBSplitCareer = ((careerStats['FB%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%']) + (oppPitcherCareer['FB%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'])) / 2
-                HardFBSplitCareer = ((careerStats['FB%'] * careerStats['Hard%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%']) + (oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'] * careerStats['Hard%'])) / 2
+                try:
+                    oppPitcherCareer = (homePitcherCareerStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCareerStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                    if careerStats['PA'] == 0 and oppPitcherCareer['IP'] == 0:
+                        continue
+                    wOBASplitCareer = ((careerStats['wOBA'] if careerStats['PA'] != 0 else oppPitcherCareer['wOBA']) + (oppPitcherCareer['wOBA'] if oppPitcherCareer['IP'] != 0 else careerStats['wOBA'])) / 2
+                    ISOSplitCareer =  careerStats['ISO']
+                    SLGSplitCareer = ((careerStats['SLG'] if careerStats['PA'] != 0 else oppPitcherCareer['SLG']) + (oppPitcherCareer['SLG'] if oppPitcherCareer['IP'] != 0 else careerStats['SLG'])) / 2
+                    OBPSplitCareer = ((careerStats['OBP'] if careerStats['PA'] != 0 else oppPitcherCareer['OBP']) + (oppPitcherCareer['OBP'] if oppPitcherCareer['IP'] != 0 else careerStats['OBP'])) / 2
+                    LDSplitCareer = ((careerStats['LD%'] if careerStats['PA'] != 0 else oppPitcherCareer['LD%']) + (oppPitcherCareer['LD%'] if oppPitcherCareer['IP'] != 0 else careerStats['LD%'])) / 2
+                    FBSplitCareer = ((careerStats['FB%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%']) + (oppPitcherCareer['FB%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'])) / 2
+                    HardFBSplitCareer = ((careerStats['FB%'] * careerStats['Hard%'] if careerStats['PA'] != 0 else oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%']) + (oppPitcherCareer['FB%'] * oppPitcherCareer['Hard%'] if oppPitcherCareer['IP'] != 0 else careerStats['FB%'] * careerStats['Hard%'])) / 2
 
-                orderMultiplier = 1.25 if battingOrder < 6 else 1
-                orderedwOBASplitCareer = wOBASplitCareer * orderMultiplier
-                orderedISOSplitCareer = ISOSplitCareer * orderMultiplier
-                orderedSLGSplitCareer = SLGSplitCareer * orderMultiplier
-                orderedOBPSplitCareer = OBPSplitCareer * orderMultiplier
-                orderedLDSplitCareer = LDSplitCareer * orderMultiplier
-                orderedFBSplitCareer = FBSplitCareer * orderMultiplier
-                orderedHardFBSplitCareer = HardFBSplitCareer * orderMultiplier
+                    orderMultiplier = 1.25 if battingOrder < 6 else 1
+                    orderedwOBASplitCareer = wOBASplitCareer * orderMultiplier
+                    orderedISOSplitCareer = ISOSplitCareer * orderMultiplier
+                    orderedSLGSplitCareer = SLGSplitCareer * orderMultiplier
+                    orderedOBPSplitCareer = OBPSplitCareer * orderMultiplier
+                    orderedLDSplitCareer = LDSplitCareer * orderMultiplier
+                    orderedFBSplitCareer = FBSplitCareer * orderMultiplier
+                    orderedHardFBSplitCareer = HardFBSplitCareer * orderMultiplier
 
-                # CURRENT STATS
-                oppPitcherCurrent = (homePitcherCurrentStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCurrentStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
-                if currentStats['PA'] == 0 and oppPitcherCurrent['IP'] == 0:
-                    continue
-                wOBASplitCurrent = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA'])) / 2
-                ISOSplitCurrent =  currentStats['ISO']
-                SLGSplitCurrent = ((currentStats['SLG'] if currentStats['PA'] != 0 else oppPitcherCurrent['SLG']) + (oppPitcherCurrent['SLG'] if oppPitcherCurrent['IP'] != 0 else currentStats['SLG'])) / 2
-                OBPSplitCurrent = ((currentStats['OBP'] if currentStats['PA'] != 0 else oppPitcherCurrent['OBP']) + (oppPitcherCurrent['OBP'] if oppPitcherCurrent['IP'] != 0 else currentStats['OBP'])) / 2
-                LDSplitCurrent = ((currentStats['LD%'] if currentStats['PA'] != 0 else oppPitcherCurrent['LD%']) + (oppPitcherCurrent['LD%'] if oppPitcherCurrent['IP'] != 0 else currentStats['LD%'])) / 2
-                FBSplitCurrent = ((currentStats['FB%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%']) + (oppPitcherCurrent['FB%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'])) / 2
-                HardFBSplitCurrent = ((currentStats['FB%'] * currentStats['Hard%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%']) + (oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'] * currentStats['Hard%'])) / 2
+                    # CURRENT STATS
+                    oppPitcherCurrent = (homePitcherCurrentStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCurrentStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                    if currentStats['PA'] == 0 and oppPitcherCurrent['IP'] == 0:
+                        continue
+                    wOBASplitCurrent = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA'])) / 2
+                    ISOSplitCurrent =  currentStats['ISO']
+                    SLGSplitCurrent = ((currentStats['SLG'] if currentStats['PA'] != 0 else oppPitcherCurrent['SLG']) + (oppPitcherCurrent['SLG'] if oppPitcherCurrent['IP'] != 0 else currentStats['SLG'])) / 2
+                    OBPSplitCurrent = ((currentStats['OBP'] if currentStats['PA'] != 0 else oppPitcherCurrent['OBP']) + (oppPitcherCurrent['OBP'] if oppPitcherCurrent['IP'] != 0 else currentStats['OBP'])) / 2
+                    LDSplitCurrent = ((currentStats['LD%'] if currentStats['PA'] != 0 else oppPitcherCurrent['LD%']) + (oppPitcherCurrent['LD%'] if oppPitcherCurrent['IP'] != 0 else currentStats['LD%'])) / 2
+                    FBSplitCurrent = ((currentStats['FB%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%']) + (oppPitcherCurrent['FB%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'])) / 2
+                    HardFBSplitCurrent = ((currentStats['FB%'] * currentStats['Hard%'] if currentStats['PA'] != 0 else oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%']) + (oppPitcherCurrent['FB%'] * oppPitcherCurrent['Hard%'] if oppPitcherCurrent['IP'] != 0 else currentStats['FB%'] * currentStats['Hard%'])) / 2
 
-                orderMultiplier = 1.25 if battingOrder < 6 else 1
-                orderedwOBASplitCurrent = wOBASplitCurrent * orderMultiplier
-                orderedISOSplitCurrent = ISOSplitCurrent * orderMultiplier
-                orderedSLGSplitCurrent = SLGSplitCurrent * orderMultiplier
-                orderedOBPSplitCurrent = OBPSplitCurrent * orderMultiplier
-                orderedLDSplitCurrent = LDSplitCurrent * orderMultiplier
-                orderedFBSplitCurrent = FBSplitCurrent * orderMultiplier
-                orderedHardFBSplitCurrent = HardFBSplitCurrent * orderMultiplier
+                    orderMultiplier = 1.25 if battingOrder < 6 else 1
+                    orderedwOBASplitCurrent = wOBASplitCurrent * orderMultiplier
+                    orderedISOSplitCurrent = ISOSplitCurrent * orderMultiplier
+                    orderedSLGSplitCurrent = SLGSplitCurrent * orderMultiplier
+                    orderedOBPSplitCurrent = OBPSplitCurrent * orderMultiplier
+                    orderedLDSplitCurrent = LDSplitCurrent * orderMultiplier
+                    orderedFBSplitCurrent = FBSplitCurrent * orderMultiplier
+                    orderedHardFBSplitCurrent = HardFBSplitCurrent * orderMultiplier
 
-                bReality = (currentStats['BABIP'] if currentStats['PA'] != 0 else 1) / (careerStats['BABIP'] if careerStats['PA'] != 0 else 1)
-                pReality = (oppPitcherCurrent['BABIP'] if oppPitcherCurrent['IP'] != 0 else 1) / (oppPitcherCareer['BABIP'] if oppPitcherCareer['IP'] != 0 else 1)
+                    bReality = (currentStats['BABIP'] if currentStats['PA'] != 0 else 1) / (careerStats['BABIP'] if careerStats['PA'] != 0 else 1)
+                    pReality = (oppPitcherCurrent['BABIP'] if oppPitcherCurrent['IP'] != 0 else 1) / (oppPitcherCareer['BABIP'] if oppPitcherCareer['IP'] != 0 else 1)
 
-                wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
+                    wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
+                except:
+                    print('An issues occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
 
                 stats = {
                     "wOBASplitCareer": wOBASplitCareer,
