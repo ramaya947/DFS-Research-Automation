@@ -402,8 +402,10 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     
 
                     wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
-                except:
-                    print('An issues occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
+                except Exception as ex:
+                    print(str(ex))
+                    print('An issue occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
+                    exit()
 
                 stats = {
                     "wOBASplitCareer": wOBASplitCareer,
