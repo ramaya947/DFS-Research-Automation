@@ -1,0 +1,77 @@
+Top 50 rValues for C
+{'Position': 'C', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': 'C', 'stat': 'orderedwOBASplitCareer', 'rValue': 1.08}
+{'Position': 'C', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.05}
+{'Position': 'C', 'stat': 'orderedSLGSplitCareer', 'rValue': 0.9299999999999999}
+{'Position': 'C', 'stat': 'orderedOBPSplitCurrent', 'rValue': 0.8500000000000001}
+{'Position': 'C', 'stat': 'orderedwOBASplitCurrent', 'rValue': 0.8200000000000001}
+{'Position': 'C', 'stat': 'orderedISOSplitCareer', 'rValue': 0.75}
+{'Position': 'C', 'stat': 'orderedSLGSplitCurrent', 'rValue': 0.63}
+{'Position': 'C', 'stat': 'orderedFBSplitCareer', 'rValue': 0.5499999999999999}
+{'Position': 'C', 'stat': 'orderedHardFBSplitCareer', 'rValue': 0.45999999999999996}
+Top 50 rValues for 1B
+{'Position': '1B', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': '1B', 'stat': 'orderedSLGSplitCareer', 'rValue': 0.7000000000000001}
+{'Position': '1B', 'stat': 'orderedwOBASplitCareer', 'rValue': 0.62}
+{'Position': '1B', 'stat': 'SLGSplitCareer', 'rValue': 0.47000000000000003}
+{'Position': '1B', 'stat': 'orderedOBPSplitCareer', 'rValue': 0.44999999999999996}
+{'Position': '1B', 'stat': 'orderedFBSplitCurrent', 'rValue': 0.38}
+{'Position': '1B', 'stat': 'wOBASplitCareer', 'rValue': 0.38}
+{'Position': '1B', 'stat': 'orderedOBPSplitCurrent', 'rValue': 0.33999999999999997}
+{'Position': '1B', 'stat': 'orderedLDSplitCurrent', 'rValue': 0.33}
+{'Position': '1B', 'stat': 'orderedISOSplitCareer', 'rValue': 0.25}
+Top 50 rValues for 2B
+{'Position': '2B', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': '2B', 'stat': 'orderedSLGSplitCareer', 'rValue': 1.87}
+{'Position': '2B', 'stat': 'orderedwOBASplitCareer', 'rValue': 1.77}
+{'Position': '2B', 'stat': 'SLGSplitCareer', 'rValue': 1.6}
+{'Position': '2B', 'stat': 'wOBASplitCareer', 'rValue': 1.5699999999999998}
+{'Position': '2B', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.47}
+{'Position': '2B', 'stat': 'orderedwOBASplitCurrent', 'rValue': 1.17}
+{'Position': '2B', 'stat': 'orderedISOSplitCareer', 'rValue': 1.16}
+{'Position': '2B', 'stat': 'OBPSplitCareer', 'rValue': 1.0999999999999999}
+{'Position': '2B', 'stat': 'orderedOBPSplitCurrent', 'rValue': 1.05}
+Top 50 rValues for 3B
+{'Position': '3B', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': '3B', 'stat': 'orderedSLGSplitCareer', 'rValue': 2.06}
+{'Position': '3B', 'stat': 'orderedwOBASplitCareer', 'rValue': 1.96}
+{'Position': '3B', 'stat': 'orderedISOSplitCareer', 'rValue': 1.6400000000000001}
+{'Position': '3B', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.6400000000000001}
+{'Position': '3B', 'stat': 'orderedHardFBSplitCareer', 'rValue': 1.53}
+{'Position': '3B', 'stat': 'SLGSplitCareer', 'rValue': 1.29}
+{'Position': '3B', 'stat': 'orderedOBPSplitCurrent', 'rValue': 1.25}
+{'Position': '3B', 'stat': 'orderedHardFBSplitCurrent', 'rValue': 1.24}
+{'Position': '3B', 'stat': 'ISOSplitCareer', 'rValue': 1.23}
+Top 50 rValues for SS
+{'Position': 'SS', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': 'SS', 'stat': 'orderedSLGSplitCareer', 'rValue': 2.23}
+{'Position': 'SS', 'stat': 'orderedwOBASplitCareer', 'rValue': 2.15}
+{'Position': 'SS', 'stat': 'SLGSplitCareer', 'rValue': 1.8900000000000001}
+{'Position': 'SS', 'stat': 'wOBASplitCareer', 'rValue': 1.81}
+{'Position': 'SS', 'stat': 'orderedISOSplitCareer', 'rValue': 1.77}
+{'Position': 'SS', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.77}
+{'Position': 'SS', 'stat': 'ISOSplitCareer', 'rValue': 1.6400000000000001}
+{'Position': 'SS', 'stat': 'orderedwOBASplitCurrent', 'rValue': 1.5}
+{'Position': 'SS', 'stat': 'orderedOBPSplitCurrent', 'rValue': 1.47}
+Top 50 rValues for OF
+{'Position': 'OF', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': 'OF', 'stat': 'orderedSLGSplitCareer', 'rValue': 1.4000000000000001}
+{'Position': 'OF', 'stat': 'orderedISOSplitCareer', 'rValue': 1.3}
+{'Position': 'OF', 'stat': 'orderedwOBASplitCareer', 'rValue': 1.29}
+{'Position': 'OF', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.03}
+{'Position': 'OF', 'stat': 'orderedHardFBSplitCareer', 'rValue': 0.95}
+{'Position': 'OF', 'stat': 'ISOSplitCareer', 'rValue': 0.91}
+{'Position': 'OF', 'stat': 'SLGSplitCareer', 'rValue': 0.8099999999999999}
+{'Position': 'OF', 'stat': 'wOBASplitCareer', 'rValue': 0.66}
+{'Position': 'OF', 'stat': 'orderedwOBASplitCurrent', 'rValue': 0.64}
+Top 50 rValues for General
+{'Position': 'General', 'stat': 'FPTS', 'rValue': 100.0}
+{'Position': 'General', 'stat': 'orderedSLGSplitCareer', 'rValue': 1.79}
+{'Position': 'General', 'stat': 'orderedwOBASplitCareer', 'rValue': 1.76}
+{'Position': 'General', 'stat': 'orderedOBPSplitCareer', 'rValue': 1.5}
+{'Position': 'General', 'stat': 'orderedISOSplitCareer', 'rValue': 1.48}
+{'Position': 'General', 'stat': 'ISOSplitCareer', 'rValue': 1.06}
+{'Position': 'General', 'stat': 'SLGSplitCareer', 'rValue': 1.03}
+{'Position': 'General', 'stat': 'orderedHardFBSplitCareer', 'rValue': 0.98}
+{'Position': 'General', 'stat': 'orderedwOBASplitCurrent', 'rValue': 0.96}
+{'Position': 'General', 'stat': 'orderedOBPSplitCurrent', 'rValue': 0.9199999999999999}

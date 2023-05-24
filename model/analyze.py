@@ -14,69 +14,38 @@ for pos in positions:
 		'sheet': wb.create_sheet(pos),
 		'hasHeaders': False
 	}
+dict['General'] = {
+	'sheet': wb.create_sheet('General'),
+	'hasHeaders': False
+}
 
 count = 0
 for player in players:
-	performances = pocketbase.getAllPerformanceRecords('performances', 'pid=\'{}\''.format(player['pid']))
-	
-	try:
-		prevSeasonStats = {
-			'standard': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 1))['stats'],
-			'advanced': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 2))['stats'],
-			'battedBall': pocketbase.getEntireSeasonsStats('seasonStats', 'pid=\'{}\')(season={})(type={}'.format(player['pid'], 2021, 3))['stats']
-		}
-	except:
-		count += 1
-		continue
-
-	if (
-		len(prevSeasonStats['standard']) == 0 or
-		len(prevSeasonStats['advanced']) == 0 or
-		len(prevSeasonStats['battedBall']) == 0
-	):
-		count += 1
-		continue
+	performances = pocketbase.getAllPerformanceRecords('performances', 'fid=\'{}\''.format(player['fid']))
 
 	for performance in performances:
+		if performance['positions'] == '':
+			continue
+
 		positions = performance['positions'].split('/')
 		sheets = []
 		for pos in positions:
 			sheets.append(dict[pos])
+		sheets.append(dict['General'])
 
 		headerRow = []
 		statRow = []
-		# Add all headers if needed, add stats for prev Year
-		for key in prevSeasonStats.keys():
-			stats = prevSeasonStats[key]
-			for statDict in stats:
-				for stat in statDict.keys():
-					if isinstance(statDict[stat], str) or stat == 'Season':
-						continue
-					headerRow.append('prevSeason-{}-{}'.format(key, stat))
-					statRow.append(statDict[stat])
 		# Add all headers if needed, add stats for performance
-		performanceStats = {
-			'standardCurrentSeason': performance['standardCurrSeasonStats'],
-			'advancedCurrentSeason': performance['advancedCurrSeasonStats'],
-			'battedBallCurrentSeason': performance['battedBallCurrSeasonStats'],
-			'standardLastWeek': performance['standardLastWeekStats'],
-			'advancedLastWeek': performance['advancedLastWeekStats'],
-			'battedBallLastWeek': performance['battedBallLastWeekStats'],
-			'standardTwoWeek': performance['standardTwoWeekStats'],
-			'advancedTwoWeek': performance['advancedTwoWeekStats'],
-			'battedBallTwoWeek': performance['battedBallTwoWeekStats']
-		}
+		performanceStats = performance['stats']
 		for key in performanceStats.keys():
-			stats = performanceStats[key]
-			for statDict in stats:
-				for stat in statDict.keys():
-					if isinstance(statDict[stat], str) or stat == 'Season':
-						continue
-					headerRow.append('performance-{}-{}'.format(key, stat))
-					statRow.append(statDict[stat])
+			stat = performanceStats[key]
+			if isinstance(stat, str) or key == 'Season':
+				continue
+			headerRow.append('{}'.format(key))
+			statRow.append(stat)
 
 		headerRow.append('FPTS')
-		if not isinstance(performance['fpts'], int):
+		if not isinstance(performance['fpts'], int) and not isinstance(performance['fpts'], float):
 			continue
 		statRow.append(performance['fpts'])
 		for sheet in sheets:

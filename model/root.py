@@ -58,12 +58,18 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, positionT
     body['strSplitArr'] = requestFilters
 
     response = requests.post(DATED_PLAYER_SPLITS_STATS_URL, json = body)
-    data = json.loads(response.text)['data']
-    if len(desiredStats) == 0:
-        return data
+    
+    try:
+        data = json.loads(response.text)['data']
+        if len(desiredStats) == 0:
+            return data
+    except Exception as e:
+        print('Error when getting stats from fangraphs for: {}'.format(fid))
+        print(e)
+        data = []
 
     if len(data) == 0:
-        return [{ 'IP': 0}]
+        return [{ ('IP' if positionType == 'P' else 'AB'): 0}]
 
     data = data[0]
     response = {}
@@ -84,21 +90,27 @@ LAST_SEASON_END_DATE = "2022-10-28"
 file = open("MissingPlayerIds.csv", "a+")
 
 # Setup datetime objects for loop
-currDate = "2022-04-23"
+# Usually, currDate is "2022-04-23" when starting from scratch
+currDate = "2022-06-11"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
 
 while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 90)):
+    print('Working on date: {}'.format(currDateTime.strftime('%Y-%m-%d')))
+
     # First: Grab his total points for that day
     url = "https://rotogrinders.com/lineups/mlb?date={}&site=fanduel"
     formattedUrl = url.format(currDateTime.strftime("%Y-%m-%d"))
 
     # Make request
     data = requests.get(formattedUrl)
-    soup = BeautifulSoup(data.text)
+    soup = BeautifulSoup(data.text, features="lxml")
     cards = soup.find_all("div", {"class": "blk crd lineup"})
 
     #Find all the players for that day
+    count = 0
     for card in cards:
+        count += 1
+        print('Looking at game {} out of {}'.format(count, len(cards)))
         teamsSoup = card.find("div", {"class": "teams"}).find_all("span", {"class": "shrt"})
         awayTeam = teamsSoup[0].text
         homeTeam = teamsSoup[1].text
@@ -204,32 +216,31 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             continue
 
         try:
-          awayPitcherCareerStatsFiltered = {
-              'vsL': {},
-              'vsR': {}
-          }
-          awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-  
-          awayPitcherCurrentStatsFiltered = {
-              'vsL': {},
-              'vsR': {}
-          }
-          awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-          awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-          pass
+            awayPitcherCareerStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+    
+            awayPitcherCurrentStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
         except Exception as e:
-          print('Errored out when getting stats for Home Pitcher: {}'.format(homePitcherInfo['name']))
-                      print(e)
-                      continue
+            print('Errored out when getting stats for Home Pitcher: {}'.format(homePitcherInfo['name']))
+            print(e)
+            continue
 
         for player in players:
             playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
@@ -242,44 +253,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 if "'" in player['name']:
                     player['name'] = player['name'].replace("'", "\\'")
                 playerInfo = pocketbase.getPlayerViaFangraphs('players', 'name=\'{}\''.format(player['name']), player['name'])
-                if playerInfo == None:
+                if playerInfo == None or 'fid' not in playerInfo:
                     continue
-                try:
-                    if playerInfo != None and 'pid' in playerInfo and playerInfo['pid'] != '':
-                        playerId = playerInfo['pid']
-                except:
-                    print('ERROR: Could not find id for {} in returned Data: {}'.format(pitcherHandedness['homeName'], homePitcherInfo))
-                    continue
-
-                if playerInfo['fid'] == '':
-                    data = playerid_reverse_lookup([int(playerId)], "mlbam")
-
-                    fid = None
-                    try:
-                        fid = data.at[0, "key_fangraphs"]
-                    except Exception as e: print(e)
-
-                    if fid == None:
-                        file.seek(0)
-                        csv_reader = csv.reader(file, delimiter=',')
-                        line_count = 0
-                        for row in csv_reader:
-                            if line_count > 0:
-                                try:
-                                    if row[0] == playerId:
-                                        fid = row[1]
-                                        break
-                                except:
-                                    pass
-                            line_count += 1
-                        if fid == None:
-                            print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
-                            continue
-
-                    playerInfo = pocketbase.updatePlayer('players', playerInfo['id'], { 'fid': '{}'.format(fid) })
-                    print('Updated entry for {}. FID is now {}'.format(player['name'], playerInfo['fid']))
-                
-
 
                 # Now that we have both pid and fid, start grabbing stats for the player
                 desiredStats = [
