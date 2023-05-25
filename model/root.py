@@ -25,6 +25,31 @@ def filterStats(entries, filterBy, desiredStats = [], latestYear = None):
     
     return response
 
+def getFanduelPlayers():
+    FDFile = open("FDPlayerList.csv", "r")
+    FDFile.seek(0)
+    players = {}
+
+    lineCount = 0
+    csv_reader = csv.reader(FDFile, delimiter=',')
+    for row in csv_reader:
+        if lineCount > 0:
+            try:
+                csvName = "{} {}".format(row[2], row[4])
+                player = {}
+                player['salary'] = row[7]
+                player['FDPos'] = row[1].split('/')
+                player['fanduelID'] = row[0]
+                players[csvName] = player
+            except:
+                player.salary = -1000
+        lineCount += 1
+        
+    FDFile.seek(0)
+    
+    FDFile.close()
+    return players
+
 def getStats(fid, startDate, endDate, groupingType, statType, filters, positionType, desiredStats = []):
     """
    Get Player Stats
@@ -91,8 +116,51 @@ file = open("MissingPlayerIds.csv", "a+")
 
 # Setup datetime objects for loop
 # Usually, currDate is "2022-04-23" when starting from scratch
-currDate = "2022-06-11"
+# Last date done with the modeling analysis was 2022-06-11 
+currDate = "2023-05-24"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
+getPointsForToday = True
+skipGames = 7
+
+rValues = {}
+if (getPointsForToday):
+    positions = ['P', 'C', '1B', '2B', '3B', 'SS', 'OF', 'General']
+    keys = [
+        "wOBASplitCareer",
+        "ISOSplitCareer",
+        "SLGSplitCareer",
+        "OBPSplitCareer",
+        "LDSplitCareer",
+        "FBSplitCareer",
+        "HardFBSplitCareer",
+        "orderedwOBASplitCareer",
+        "orderedISOSplitCareer",
+        "orderedSLGSplitCareer",
+        "orderedOBPSplitCareer",
+        "orderedLDSplitCareer",
+        "orderedFBSplitCareer",
+        "orderedHardFBSplitCareer",
+        "wOBASplitCurrent",
+        "ISOSplitCurrent",
+        "SLGSplitCurrent",
+        "OBPSplitCurrent",
+        "LDSplitCurrent",
+        "FBSplitCurrent",
+        "HardFBSplitCurrent",
+        "orderedwOBASplitCurrent",
+        "orderedISOSplitCurrent",
+        "orderedSLGSplitCurrent",
+        "orderedOBPSplitCurrent",
+        "orderedLDSplitCurrent",
+        "orderedFBSplitCurrent",
+        "orderedHardFBSplitCurrent",
+        "wOBASplitReal"
+    ]
+
+    for statKey in keys:
+        rValues[statKey] = {}
+        for positionKey in positions:
+            rValues[statKey][positionKey] = pocketbase.getRValue('rValues', 'position=\'{}\')(stat=\'{}\''.format(positionKey, statKey))
 
 while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 90)):
     print('Working on date: {}'.format(currDateTime.strftime('%Y-%m-%d')))
@@ -108,8 +176,21 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
     #Find all the players for that day
     count = 0
+    playersPoints = {
+        'P': [],
+        'C': [],
+        '1B': [],
+        '2B': [],
+        '3B': [],
+        'SS': [],
+        'OF': []
+    }
     for card in cards:
         count += 1
+
+        if getPointsForToday and count <= skipGames:
+            continue
+
         print('Looking at game {} out of {}'.format(count, len(cards)))
         teamsSoup = card.find("div", {"class": "teams"}).find_all("span", {"class": "shrt"})
         awayTeam = teamsSoup[0].text
@@ -248,7 +329,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             battingOrder = playerSoup.parent.parent.parent.find("span", {"class": "order"}).text.strip()
             if battingOrder.isdigit():
                 battingOrder = int(battingOrder)
-            fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text
+            fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text if not getPointsForToday else 1
             if fpts and fpts != None and fpts != "" and fpts != "" and fpts != '':
                 if "'" in player['name']:
                     player['name'] = player['name'].replace("'", "\\'")
@@ -280,6 +361,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     if 'PA' not in careerStats:
                         continue
                     if careerStats['PA'] == 0 and oppPitcherCareer['IP'] == 0:
+                        print('Stats were empty for {}, confirm that FID is correct {}'.format(playerInfo['name'] if currentStats['PA'] == 0 else playerInfo['facing']))
                         continue
                     wOBASplitCareer = ((careerStats['wOBA'] if careerStats['PA'] != 0 else oppPitcherCareer['wOBA']) + (oppPitcherCareer['wOBA'] if oppPitcherCareer['IP'] != 0 else careerStats['wOBA'])) / 2
                     ISOSplitCareer =  careerStats['ISO']
@@ -304,6 +386,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     if 'PA' not in currentStats:
                         continue
                     if currentStats['PA'] == 0 and oppPitcherCurrent['IP'] == 0:
+                        print('Stats were empty for {}, confirm that FID is correct {}'.format(playerInfo['name'] if currentStats['PA'] == 0 else playerInfo['facing']))
                         continue
                     wOBASplitCurrent = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA'])) / 2
                     ISOSplitCurrent =  currentStats['ISO']
@@ -373,21 +456,46 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "wOBASplitReal": wOBASplitReal
                 }
 
-                #TODO: It seems to be pairing the incorrect pitchjer and batter
-
-                performanceRecord = pocketbase.addPerformanceRecord('performances', {
-                    "fid": playerInfo['fid'],
-                    "positions": positions,
-                    "date": currDateTime.strftime("%Y-%m-%d"),
-                    "fpts": float(fpts),
-                    "order": battingOrder,
-                    "stats": stats
-                })
-                pass
+                if (getPointsForToday):
+                    # Calculate points
+                    fanduelPlayers = getFanduelPlayers()
+                    points = {}
+                    pName = playerInfo['name']
+                    if pName not in fanduelPlayers:
+                        # Look by substring of name in FD Player List
+                        found = False
+                        for playerName in fanduelPlayers.keys():
+                            if pName in playerName:
+                                pName = playerName
+                                found = True
+                        if not found:
+                            continue
+                    for pos in fanduelPlayers[pName]['FDPos']:
+                        total = 0
+                        for stat in stats.keys():
+                            total += rValues[stat][pos]['rValue'] * rValues[stat]['General']['rValue'] * stats[stat]
+                        points[pName] = total
+                        playersPoints[pos].append(points)
+                else:
+                    performanceRecord = pocketbase.addPerformanceRecord('performances', {
+                        "fid": playerInfo['fid'],
+                        "positions": positions,
+                        "date": currDateTime.strftime("%Y-%m-%d"),
+                        "fpts": float(fpts),
+                        "order": battingOrder,
+                        "stats": stats
+                    })
+                    pass
 
                 #stats = getStats(playerInfo['fid'], "2022-04-05", "2022-04-25", "season", 2)
                 #print(stats)
             #break
         #break
+
+    if (getPointsForToday):
+        # This means that we are only trying to get points for use toady, don't loop through
+        for key in playersPoints:
+            print('{}: {}'.format(key, playersPoints[key].sort(key=lambda x: x.points, reverse=True)))        
+        break
 
     currDateTime += datetime.timedelta(days = 1)

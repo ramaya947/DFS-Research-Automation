@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from openpyxl import load_workbook
+import pocketbase.PocketbaseProxy as pocketbase
 
 def findRValue(x, y):
     x = np.array(x).reshape((-1, 1))
@@ -40,7 +41,7 @@ for sheetKey in wb.sheetnames:
         rValue = findRValue(values, fpts)
         rValues[sheetKey].append(
             {
-                'Position': sheetKey,
+                'position': sheetKey,
                 'stat': statType,
                 'rValue': round(rValue, 4) * 100
             }
@@ -49,11 +50,6 @@ for sheetKey in wb.sheetnames:
 
 for sheetKey in wb.sheetnames:
     rValues[sheetKey].sort(key=lambda x: x['rValue'], reverse=True)
-    count = 0
-    print('Top 50 rValues for {}'.format(sheetKey))
     for val in rValues[sheetKey]:
         print(val)
-        
-        count += 1
-        if count == 10:
-            break
+        pocketbase.addRValue('rValues', val)

@@ -247,6 +247,33 @@ def getAllPerformanceRecords(collection, queryParams):
     except:
         #print('ERROR: PB request failed')
         return None
+    
+def addRValue(collection, payload):
+    response = None
+
+    try:
+        response = requests.post(apiURL.format(collection), json = payload)
+    except:
+        print('ERROR: Failed to add rValue to PB database')
+    
+    return json.loads(response.text)
+
+def getRValue(collection, queryParams):
+    response = None
+
+    response = requests.get(apiURL.format(collection) + '?filter=({})'.format(queryParams))
+
+    # Request was successful, parse JSON and see if anything was found
+    JSON = json.loads(response.text)
+    if 'code' in JSON.keys():
+        if JSON['code'] != 200:
+            response = None
+
+    if response != None and JSON['totalItems'] != 0:
+        response = JSON['items'][0]
+        return response
+    
+    return None
 
 # Example request to getPlayer
 # getPlayer('players', 'name=Shohei Ohtani', 'Shohei Ohtani')

@@ -4,7 +4,9 @@ from dateutil import tz
 from openpyxl import Workbook, utils
 from openpyxl.styles import PatternFill
 from Colors import Colors
+import model.pocketbase.PocketbaseProxy as pocketbase
 
+DATED_PLAYER_SPLITS_STATS_URL = "https://www.fangraphs.com/api/leaders/splits/splits-leaders"
 PLAYER_STATS_URL = "https://cdn.fangraphs.com/api/players/splits?playerid={}&position={}&season={}&split=&z=1614959387TEAM_CHANGE"
 teamAvg = TeamAverages.TeamAverages()
 leagueAvg = LeagueAverages.LeagueAverages()
@@ -25,6 +27,60 @@ def setAskQuestionCallback(cb):
 
 def cleanUp():
     file.close()
+
+def getStats(fid, startDate, endDate, groupingType, statType, filters, positionType, desiredStats = []):
+    """
+   Get Player Stats
+
+   :param str|num fid: The player's fangraphs ID
+   :param str startDate: YYYY-MM-DD
+   :param str endDate: YYYY-MM-DD
+   :param groupingType: Could be season, week, day, month, etc.
+   :parm num statType: 1: Standard Stats, 2: Advanced, 3: Batted Balls
+   :param array filters: vs L, vs R, etc.
+   :param str positionType: P -> Pitcher B -> Batter
+   :param array desiredStats: The stats that you want to be returned
+   :return: Player stats
+   :rtype: Object
+   """
+    
+    RequestBodyJSON = json.load(open('./model/constants/RequestBodys.JSON', 'r'))
+
+    requestFilters = []
+    for filter in filters:
+        requestFilters.append(RequestBodyJSON['vs'][filter])
+
+    body = RequestBodyJSON['datedPlayerSplitsStats']
+    
+    body['strPlayerId'] = fid
+    body['strStartDate'] = startDate
+    body['strEndDate'] = endDate
+    body['strGroup'] = groupingType
+    body['strType'] = statType
+    body['strPosition'] = positionType
+    body['strSplitArr'] = requestFilters
+
+    response = requests.post(DATED_PLAYER_SPLITS_STATS_URL, json = body)
+    
+    try:
+        data = json.loads(response.text)['data']
+        if len(desiredStats) == 0:
+            return data
+    except Exception as e:
+        print('Error when getting stats from fangraphs for: {}'.format(fid))
+        print(e)
+        data = []
+
+    if len(data) == 0:
+        return [{ ('IP' if positionType == 'P' else 'AB'): 0}]
+
+    data = data[0]
+    response = {}
+    for desiredStat in desiredStats:
+        if desiredStat in data:
+            response[desiredStat] = data[desiredStat]
+
+    return [response]
 
 def filterTime(game, slateStart, compare):
     from_zone = tz.tzutc()
@@ -120,6 +176,30 @@ def createHitters(pitcher, hitters):
 
         hitters.append(hitter)
 
+def createHittersv2(pitcher, hitters):
+    roster = pitcher.oppTeamRoster
+
+    for player in roster:
+        #Create hitter
+        hitter = HitterClass.HitterClass(player, leagueAvg, pitcher)
+        if hitter.position == "P":
+            continue
+        hitter.fid = getFangraphsIdv2(hitter.name)
+        if hitter.fid == None:
+            continue
+        hitter.stats = getMostRecentStats({'fid': hitter.fid}, hitter.position)
+        hitter.setOtherInformation(setHitterOtherInfo(pitcher.gameInfo, pitcher.home), rgl)
+        hitter.handedness = getPitcherHandedness(statsapi.get('person', {'personId': str(hitter.pid)}))
+
+        hitters.append(hitter)
+
+def getFangraphsIdv2(name):
+    response = pocketbase.getPlayerViaFangraphs('players', 'name=\'{}\''.format(name), name)
+
+    if response == None or 'fid' not in response:
+        return None
+    return response['fid']
+
 def getGamesProbablePitchers(game, pitchers):
     global askQuestion
     homeRoster = getTeamRoster(game["home_id"])["roster"]
@@ -150,7 +230,7 @@ def getGamesProbablePitchers(game, pitchers):
             if pitcherHome in p["person"]["fullName"]:
                 homePitcherFound = True
                 pitcher = PitcherClass.PitcherClass(p, teamAvg, leagueAvg, awayRoster, game, parkFactorsForVenue)
-                pitcher.fid = getFangraphsId(pitcher)
+                pitcher.fid = getFangraphsIdv2(pitcher.name)
                 if pitcher.fid == None:
                     continue
                 pitcher.stats = getMostRecentStats(pitcher.fid, 'P')
