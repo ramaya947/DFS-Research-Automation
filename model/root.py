@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests, statsapi, csv, json, datetime
 import pocketbase.PocketbaseProxy as pocketbase
 from pybaseball import playerid_reverse_lookup
+from openpyxl import Workbook, utils
 
 # POC
 # Grab the stats for Mike Trout for the second game of last season
@@ -24,6 +25,31 @@ def filterStats(entries, filterBy, desiredStats = [], latestYear = None):
             response[desiredStat] = data[desiredStat]
     
     return response
+
+def getFanduelPlayers():
+    FDFile = open("FDPlayerList.csv", "r")
+    FDFile.seek(0)
+    players = {}
+
+    lineCount = 0
+    csv_reader = csv.reader(FDFile, delimiter=',')
+    for row in csv_reader:
+        if lineCount > 0:
+            try:
+                csvName = "{} {}".format(row[2], row[4])
+                player = {}
+                player['salary'] = row[7]
+                player['FDPos'] = row[1].split('/')
+                player['fanduelID'] = row[0]
+                players[csvName] = player
+            except:
+                player.salary = -1000
+        lineCount += 1
+        
+    FDFile.seek(0)
+    
+    FDFile.close()
+    return players
 
 def getStats(fid, startDate, endDate, groupingType, statType, filters, positionType, desiredStats = []):
     """
@@ -58,12 +84,18 @@ def getStats(fid, startDate, endDate, groupingType, statType, filters, positionT
     body['strSplitArr'] = requestFilters
 
     response = requests.post(DATED_PLAYER_SPLITS_STATS_URL, json = body)
-    data = json.loads(response.text)['data']
-    if len(desiredStats) == 0:
-        return data
+    
+    try:
+        data = json.loads(response.text)['data']
+        if len(desiredStats) == 0:
+            return data
+    except Exception as e:
+        print('Error when getting stats from fangraphs for: {}'.format(fid))
+        print(e)
+        data = []
 
     if len(data) == 0:
-        return [{ 'IP': 0}]
+        return [{ ('IP' if positionType == 'P' else 'AB'): 0}]
 
     data = data[0]
     response = {}
@@ -84,21 +116,89 @@ LAST_SEASON_END_DATE = "2022-10-28"
 file = open("MissingPlayerIds.csv", "a+")
 
 # Setup datetime objects for loop
-currDate = "2022-04-23"
+# Usually, currDate is "2022-04-23" when starting from scratch
+# Last date done with the modeling analysis was 2022-06-11 
+currDate = "2023-06-20"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
+getPointsForToday = True
+skipGames = 4
+totalGames = 11
+
+rValues = {}
+if (getPointsForToday):
+    positions = ['P', 'C', '1B', '2B', '3B', 'SS', 'OF', 'General']
+    keys = [
+        "wOBASplitCareer",
+        "ISOSplitCareer",
+        "SLGSplitCareer",
+        "OBPSplitCareer",
+        "LDSplitCareer",
+        "FBSplitCareer",
+        "HardFBSplitCareer",
+        "orderedwOBASplitCareer",
+        "orderedISOSplitCareer",
+        "orderedSLGSplitCareer",
+        "orderedOBPSplitCareer",
+        "orderedLDSplitCareer",
+        "orderedFBSplitCareer",
+        "orderedHardFBSplitCareer",
+        "wOBASplitCurrent",
+        "ISOSplitCurrent",
+        "SLGSplitCurrent",
+        "OBPSplitCurrent",
+        "LDSplitCurrent",
+        "FBSplitCurrent",
+        "HardFBSplitCurrent",
+        "orderedwOBASplitCurrent",
+        "orderedISOSplitCurrent",
+        "orderedSLGSplitCurrent",
+        "orderedOBPSplitCurrent",
+        "orderedLDSplitCurrent",
+        "orderedFBSplitCurrent",
+        "orderedHardFBSplitCurrent",
+        "wOBASplitReal"
+    ]
+
+    for statKey in keys:
+        rValues[statKey] = {}
+        for positionKey in positions:
+            rValues[statKey][positionKey] = pocketbase.getRValue('rValues', 'position=\'{}\')(stat=\'{}\''.format(positionKey, statKey))
 
 while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + datetime.timedelta(days = 90)):
+    print('Working on date: {}'.format(currDateTime.strftime('%Y-%m-%d')))
+
     # First: Grab his total points for that day
     url = "https://rotogrinders.com/lineups/mlb?date={}&site=fanduel"
     formattedUrl = url.format(currDateTime.strftime("%Y-%m-%d"))
 
     # Make request
     data = requests.get(formattedUrl)
-    soup = BeautifulSoup(data.text)
+    soup = BeautifulSoup(data.text, features="lxml")
     cards = soup.find_all("div", {"class": "blk crd lineup"})
 
     #Find all the players for that day
+    count = 0
+    playersPoints = {
+        'P': [],
+        'C': [],
+        '1B': [],
+        '2B': [],
+        '3B': [],
+        'SS': [],
+        'OF': []
+    }
     for card in cards:
+        count += 1
+
+        if totalGames == -1:
+            break
+
+        if getPointsForToday and count <= skipGames:
+            continue
+
+        totalGames -= 1
+
+        print('Looking at game {} out of {}'.format(count, len(cards)))
         teamsSoup = card.find("div", {"class": "teams"}).find_all("span", {"class": "shrt"})
         awayTeam = teamsSoup[0].text
         homeTeam = teamsSoup[1].text
@@ -117,6 +217,20 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         pitcherHandedness['homeName'] = homeSoup.find("div", {"class": "pitcher players"}).find("a", {"class": "player-popup"}).text
         pitcherHandedness['home'] = homePitcherSoup.find("span", { "class": "stats"}).text.strip()
 
+        # Find implied totals for home
+        impliedTotalSoup = card.find("div", {"class": "ou"})
+        impliedTotalsSoups = impliedTotalSoup.findAll("a")
+        impliedTotals = {}
+        try:
+            impliedTotals['away'] = float(impliedTotalsSoups[0].text)
+        except:
+            impliedTotals['away'] = 1
+
+        try:
+            impliedTotals['home'] = float(impliedTotalsSoups[1].text)
+        except:
+            impliedTotals['home'] = 1
+
         players = []
         battingOrderSoup = card.find("div", {"class": "blk away-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
         for player in battingOrderSoup:
@@ -128,7 +242,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
                     'vsLocation': 'H',
-                    'facing': pitcherHandedness['homeName']
+                    'facing': pitcherHandedness['homeName'],
+                    'impliedTotal': impliedTotals['home']
                 }
             )
         
@@ -142,7 +257,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
                     'vsLocation': 'A',
-                    'facing': pitcherHandedness['awayName']
+                    'facing': pitcherHandedness['awayName'],
+                    'impliedTotal': impliedTotals['away']
                 }
             )
 
@@ -150,77 +266,17 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         # Home Pitcher
         if "'" in pitcherHandedness['homeName']:
             pitcherHandedness['homeName'] = pitcherHandedness['homeName'].replace("'", "\\'")
-        homePitcherInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(pitcherHandedness['homeName']), pitcherHandedness['homeName'])
-        try:
-            pitcherId = homePitcherInfo['pid']
-        except:
-            print('ERROR: Could not find id for {} in returned Data: {}'.format(pitcherHandedness['homeName'], homePitcherInfo))
+        homePitcherInfo = pocketbase.getPlayerViaFangraphs('players', 'name=\'{}\''.format(pitcherHandedness['homeName']), pitcherHandedness['homeName'])
+        if homePitcherInfo == None or 'fid' not in homePitcherInfo:
             continue
-        if homePitcherInfo['fid'] == '':
-            data = playerid_reverse_lookup([int(pitcherId)], "mlbam")
-
-            fid = None
-            try:
-                fid = data.at[0, "key_fangraphs"]
-            except Exception as e: print(e)
-
-            if fid == None:
-                file.seek(0)
-                csv_reader = csv.reader(file, delimiter=',')
-                line_count = 0
-                for row in csv_reader:
-                    if line_count > 0:
-                        try:
-                            if row[0] == playerId:
-                                fid = row[1]
-                                break
-                        except:
-                            pass
-                    line_count += 1
-                if fid == None:
-                    print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
-                    continue
-
-            homePitcherInfo = pocketbase.updatePlayer('players', homePitcherInfo['id'], { 'fid': '{}'.format(fid) })
-            print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['homeName'], homePitcherInfo['fid']))
-
+        
         # Away Pitcher
         if "'" in pitcherHandedness['awayName']:
             pitcherHandedness['awayName'] = pitcherHandedness['awayName'].replace("'", "\\'")
-        awayPitcherInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(pitcherHandedness['awayName']), pitcherHandedness['awayName'])
-        try:
-            pitcherId = awayPitcherInfo['pid']
-        except:
-            print('ERROR: Could not find id for {} in returned Data: {}'.format(pitcherHandedness['awayName'], awayPitcherInfo))
+        awayPitcherInfo = pocketbase.getPlayerViaFangraphs('players', 'name=\'{}\''.format(pitcherHandedness['awayName']), pitcherHandedness['awayName'])
+        if awayPitcherInfo == None or 'fid' not in awayPitcherInfo:
             continue
-        if awayPitcherInfo['fid'] == '':
-            data = playerid_reverse_lookup([int(pitcherId)], "mlbam")
-
-            fid = None
-            try:
-                fid = data.at[0, "key_fangraphs"]
-            except Exception as e: print(e)
-
-            if fid == None:
-                file.seek(0)
-                csv_reader = csv.reader(file, delimiter=',')
-                line_count = 0
-                for row in csv_reader:
-                    if line_count > 0:
-                        try:
-                            if row[0] == playerId:
-                                fid = row[1]
-                                break
-                        except:
-                            pass
-                    line_count += 1
-                if fid == None:
-                    print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
-                    continue
-
-            awayPitcherInfo = pocketbase.updatePlayer('players', awayPitcherInfo['id'], { 'fid': '{}'.format(fid) })
-            print('Updated entry for {}. FID is now {}'.format(pitcherHandedness['awayName'], awayPitcherInfo['fid']))
-
+        
         # Define Stat Types for Pitchers and Batters
         typeStandard = 1
         typeAdvanced = 2
@@ -235,50 +291,60 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         ]
         #TODO: You are suppose to be getting career stats - minus the current year, and season stats
         # Based on the current date in question.
-        homePitcherCareerStatsFiltered = {
-            'vsL': {},
-            'vsR': {}
-        }
-        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        try:
+            homePitcherCareerStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
 
-        homePitcherCurrentStatsFiltered = {
-            'vsL': {},
-            'vsR': {}
-        }
-        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCareerStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+
+            homePitcherCurrentStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
+            homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCurrentStatsFiltered['vsL'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            homePitcherCurrentStatsFiltered['vsR'].update(getStats(homePitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        except Exception as e:
+            print('Errored out when getting stats for Home Pitcher: {}'.format(homePitcherInfo['name']))
+            print(e)
+            continue
+
+        try:
+            awayPitcherCareerStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
     
-        awayPitcherCareerStatsFiltered = {
-            'vsL': {},
-            'vsR': {}
-        }
-        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCareerStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCareerStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], "2002-01-01", (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-
-        awayPitcherCurrentStatsFiltered = {
-            'vsL': {},
-            'vsR': {}
-        }
-        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
-        pass
+            awayPitcherCurrentStatsFiltered = {
+                'vsL': {},
+                'vsR': {}
+            }
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsL'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pL', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeStandard, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeAdvanced, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+            awayPitcherCurrentStatsFiltered['vsR'].update(getStats(awayPitcherInfo['fid'], date.strftime("%Y-%m-%d"), (currDateTime - datetime.timedelta(days = 1)).strftime("%Y-%m-%d"), "career", typeBattedBall, ['pR', 'SP'], "P", desiredPitcherStats)[0])
+        except Exception as e:
+            print('Errored out when getting stats for Home Pitcher: {}'.format(homePitcherInfo['name']))
+            print(e)
+            continue
 
         for player in players:
             playerSoup = soup.find("a", {"title": "{}".format(player['name'])})
@@ -286,46 +352,13 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
             battingOrder = playerSoup.parent.parent.parent.find("span", {"class": "order"}).text.strip()
             if battingOrder.isdigit():
                 battingOrder = int(battingOrder)
-            fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text
+            fpts = playerSoup.parent.parent.find("span", {"title": "Fantasy Points"}).text if not getPointsForToday else 1
             if fpts and fpts != None and fpts != "" and fpts != "" and fpts != '':
                 if "'" in player['name']:
                     player['name'] = player['name'].replace("'", "\\'")
-                playerInfo = pocketbase.getPlayer('players', 'name=\'{}\''.format(player['name']), player['name'])
-                try:
-                    playerId = playerInfo['pid']
-                except:
-                    print('ERROR: Could not find id for {} in returned Data: {}'.format(player['name'], playerInfo))
+                playerInfo = pocketbase.getPlayerViaFangraphs('players', 'name=\'{}\''.format(player['name']), player['name'])
+                if playerInfo == None or 'fid' not in playerInfo:
                     continue
-
-                if playerInfo['fid'] == '':
-                    data = playerid_reverse_lookup([int(playerId)], "mlbam")
-
-                    fid = None
-                    try:
-                        fid = data.at[0, "key_fangraphs"]
-                    except Exception as e: print(e)
-
-                    if fid == None:
-                        file.seek(0)
-                        csv_reader = csv.reader(file, delimiter=',')
-                        line_count = 0
-                        for row in csv_reader:
-                            if line_count > 0:
-                                try:
-                                    if row[0] == playerId:
-                                        fid = row[1]
-                                        break
-                                except:
-                                    pass
-                            line_count += 1
-                        if fid == None:
-                            print("Failed final attempt to get player fangraphsId for {}".format(player['name']))
-                            continue
-
-                    playerInfo = pocketbase.updatePlayer('players', playerInfo['id'], { 'fid': '{}'.format(fid) })
-                    print('Updated entry for {}. FID is now {}'.format(player['name'], playerInfo['fid']))
-                
-
 
                 # Now that we have both pid and fid, start grabbing stats for the player
                 desiredStats = [
@@ -348,7 +381,10 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                 #player['handedness']
                 try:
                     oppPitcherCareer = (homePitcherCareerStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCareerStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                    if 'PA' not in careerStats:
+                        continue
                     if careerStats['PA'] == 0 and oppPitcherCareer['IP'] == 0:
+                        print('Stats were empty for {}, confirm that FID is correct {}'.format(playerInfo['name'] if currentStats['PA'] == 0 else playerInfo['facing']))
                         continue
                     wOBASplitCareer = ((careerStats['wOBA'] if careerStats['PA'] != 0 else oppPitcherCareer['wOBA']) + (oppPitcherCareer['wOBA'] if oppPitcherCareer['IP'] != 0 else careerStats['wOBA'])) / 2
                     ISOSplitCareer =  careerStats['ISO']
@@ -369,7 +405,11 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
 
                     # CURRENT STATS
                     oppPitcherCurrent = (homePitcherCurrentStatsFiltered if player['vsLocation'] == 'H' else awayPitcherCurrentStatsFiltered)['vsL' if player['handedness'] == 'L' else 'vsR']
+                    
+                    if 'PA' not in currentStats:
+                        continue
                     if currentStats['PA'] == 0 and oppPitcherCurrent['IP'] == 0:
+                        print('Stats were empty for {}, confirm that FID is correct {}'.format(playerInfo['name'] if currentStats['PA'] == 0 else playerInfo['facing']))
                         continue
                     wOBASplitCurrent = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA'])) / 2
                     ISOSplitCurrent =  currentStats['ISO']
@@ -388,12 +428,42 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     orderedFBSplitCurrent = FBSplitCurrent * orderMultiplier
                     orderedHardFBSplitCurrent = HardFBSplitCurrent * orderMultiplier
 
+                    if currentStats['BABIP'] == 0 or currentStats['BABIP'] == 0.0:
+                        currentStats['BABIP'] = 1
+                    if careerStats['BABIP'] == 0 or careerStats['BABIP'] == 0.0:
+                        careerStats['BABIP'] = 1
+                    if oppPitcherCurrent['IP'] == 0 or oppPitcherCurrent['BABIP'] == 0 or oppPitcherCurrent['BABIP'] == 0.0:
+                        oppPitcherCurrent['BABIP'] = 1
+                    if oppPitcherCareer['IP'] == 0 or oppPitcherCareer['BABIP'] == 0 or oppPitcherCareer['BABIP'] == 0.0:
+                        oppPitcherCareer['BABIP'] = 1
+
                     bReality = (currentStats['BABIP'] if currentStats['PA'] != 0 else 1) / (careerStats['BABIP'] if careerStats['PA'] != 0 else 1)
                     pReality = (oppPitcherCurrent['BABIP'] if oppPitcherCurrent['IP'] != 0 else 1) / (oppPitcherCareer['BABIP'] if oppPitcherCareer['IP'] != 0 else 1)
+                    
 
                     wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
-                except:
-                    print('An issues occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
+                
+                    # Considering the team's implied total for the game and factoring that into consideration of the player's performance too
+                    impliedwOBASplitCurrent = wOBASplitCurrent * playerInfo['impliedTotal']
+                    impliedISOSplitCurrent = ISOSplitCurrent * playerInfo['impliedTotal']
+                    impliedSLGSplitCurrent = SLGSplitCurrent * playerInfo['impliedTotal']
+                    impliedOBPSplitCurrent = OBPSplitCurrent * playerInfo['impliedTotal']
+                    impliedLDSplitCurrent = LDSplitCurrent * playerInfo['impliedTotal']
+                    impliedFBSplitCurrent = FBSplitCurrent * playerInfo['impliedTotal']
+                    impliedHardFBSplitCurrent = HardFBSplitCurrent * playerInfo['impliedTotal']
+
+                    impliedOrderedwOBASplitCurrent = orderedwOBASplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedISOSplitCurrent = orderedISOSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedSLGSplitCurrent = orderedSLGSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedOBPSplitCurrent = orderedOBPSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedLDSplitCurrent = orderedLDSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedFBSplitCurrent = orderedFBSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedHardFBSplitCurrent = orderedHardFBSplitCurrent * playerInfo['impliedTotal']
+
+                except Exception as ex:
+                    print(str(ex))
+                    print('An issue occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
+                    exit()
 
                 stats = {
                     "wOBASplitCareer": wOBASplitCareer,
@@ -424,24 +494,94 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "orderedLDSplitCurrent": orderedLDSplitCurrent,
                     "orderedFBSplitCurrent": orderedFBSplitCurrent,
                     "orderedHardFBSplitCurrent": orderedHardFBSplitCurrent,
-                    "wOBASplitReal": wOBASplitReal
+                    "wOBASplitReal": wOBASplitReal,
+                    "impliedwOBASplitCurrent": impliedwOBASplitCurrent,
+                    "impliedISOSplitCurrent": impliedISOSplitCurrent,
+                    "impliedSLGSplitCurrent": impliedSLGSplitCurrent,
+                    "impliedOBPSplitCurrent": impliedOBPSplitCurrent,
+                    "impliedLDSplitCurrent": impliedLDSplitCurrent,
+                    "impliedFBSplitCurrent": impliedFBSplitCurrent,
+                    "impliedHardFBSplitCurrent": impliedHardFBSplitCurrent,
+                    "impliedOrderedwOBASplitCurrent": impliedOrderedwOBASplitCurrent,
+                    "impliedOrderedISOSplitCurrent": impliedOrderedISOSplitCurrent,
+                    "impliedOrderedSLGSplitCurrent": impliedOrderedSLGSplitCurrent,
+                    "impliedOrderedOBPSplitCurrent": impliedOrderedOBPSplitCurrent,
+                    "impliedOrderedLDSplitCurrent": impliedOrderedLDSplitCurrent,
+                    "impliedOrderedFBSplitCurrent": impliedOrderedFBSplitCurrent,
+                    "impliedOrderedHardFBSplitCurrent": impliedOrderedHardFBSplitCurrent,
                 }
 
-                #TODO: It seems to be pairing the incorrect pitchjer and batter
-
-                performanceRecord = pocketbase.addPerformanceRecord('performances', {
-                    "pid": playerId,
-                    "positions": positions,
-                    "date": currDateTime.strftime("%Y-%m-%d"),
-                    "fpts": float(fpts),
-                    "order": battingOrder,
-                    "stats": stats
-                })
-                pass
+                if (getPointsForToday):
+                    # Calculate points
+                    fanduelPlayers = getFanduelPlayers()
+                    points = {}
+                    pName = playerInfo['name']
+                    if pName not in fanduelPlayers:
+                        # Look by substring of name in FD Player List
+                        found = False
+                        for playerName in fanduelPlayers.keys():
+                            if pName in playerName:
+                                pName = playerName
+                                found = True
+                        if not found:
+                            continue
+                    for pos in fanduelPlayers[pName]['FDPos']:
+                        total = 0
+                        for stat in stats.keys():
+                            total += rValues[stat][pos]['rValue'] * rValues[stat]['General']['rValue'] * stats[stat]
+                        points['name'] = pName
+                        points['points'] = total
+                        points['salary'] = fanduelPlayers[pName]['salary']
+                        points['value'] = round((total / (float(fanduelPlayers[pName]['salary']) / 1000)), 2)
+                        playersPoints[pos].append(points)
+                else:
+                    performanceRecord = pocketbase.addPerformanceRecord('performances', {
+                        "fid": playerInfo['fid'],
+                        "positions": positions,
+                        "date": currDateTime.strftime("%Y-%m-%d"),
+                        "fpts": float(fpts),
+                        "order": battingOrder,
+                        "stats": stats
+                    })
+                    pass
 
                 #stats = getStats(playerInfo['fid'], "2022-04-05", "2022-04-25", "season", 2)
                 #print(stats)
             #break
         #break
+
+    if (getPointsForToday):
+        wb = Workbook()
+
+        #Append Hitters
+        positions = ["C", "1B", "2B", "3B", "SS", "OF", 'General']
+        sheets = {}
+        headerRow = ['name', 'points', 'salary', 'value']
+        for sheetName in positions:
+            sheets[sheetName] = wb.create_sheet(sheetName)
+            sheets[sheetName].append(headerRow)
+
+        # This means that we are only trying to get points for use today, don't loop through
+        generalPlayers = []
+        playersPoints.pop('P', None)
+        for key in playersPoints:
+            playersPoints[key].sort(key=lambda x: x['points'], reverse=True)
+            generalPlayers += playersPoints[key]
+            for player in playersPoints[key]:
+                appendRow = [
+                    player['name'], player['points'], player['salary'], player['value']
+                ]
+                sheets[key].append(appendRow)
+        
+        for player in generalPlayers:
+            appendRow = [
+                player['name'], player['points'], player['salary'], player['value']
+            ]
+            sheets['General'].append(appendRow)
+
+        wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+        wb.save('AnalysisV2.xlsx')
+        # Add all to General Sheet
+        break
 
     currDateTime += datetime.timedelta(days = 1)

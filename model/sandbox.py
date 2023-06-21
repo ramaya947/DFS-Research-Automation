@@ -1,6 +1,1 @@
-import json
-
-data = json.load(open('./model/constants/RequestBodys.JSON', 'r'))
-data['datedPlayerSplitsStats']['strPlayerId'] = "poop"
-
-print(data)
+print((isinstance(12, float) or isinstance(12, int)))

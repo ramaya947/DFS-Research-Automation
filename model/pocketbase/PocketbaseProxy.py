@@ -1,6 +1,47 @@
 import requests, statsapi, json
+from unidecode import unidecode
 
+FANGRAPHS_SEARCH_URL = "https://85798c555f18463c9d3ec7d18778c367.ent-search.us-east1.gcp.elastic-cloud.com/api/as/v1/engines/fangraphs/search.json"
 apiURL = 'http://127.0.0.1:8090/api/collections/{}/records'
+
+def searchForFangraphsId(name, narrowingFields = []):
+    requestHeaders = {
+        "Authorization": "Bearer search-cty1wzhqd1pqueai45ccxh7y"
+    }
+
+    body = {
+        "query": name,
+        "search_fields": {
+            "name": {},
+            "namekorean": {}
+        },
+        "result_fields": {
+            "id": {
+                "raw": {}
+            },
+            "name": {
+                "raw": {}
+            }
+        }
+    }
+
+    response = requests.post(url= FANGRAPHS_SEARCH_URL, headers = requestHeaders, json = body)
+    data = json.loads(response.text)
+    
+    # Match the name
+    matches = []
+    for player in data['results']:
+        if name in unidecode(player['name']['raw']):
+            matches.append({
+                'id': player['id']['raw'],
+                'name': name
+            })
+
+    if len(narrowingFields) == 0 and len(matches) != 0:
+        return matches[0]
+    
+    # Do the narrowing
+    return {}
 
 def checkStatsAPI(name):
     if name == None:
@@ -97,6 +138,32 @@ def getPlayer(collection, queryParams, name = None):
             response = addPlayer(collection, payload)
             return response
 
+def getPlayerViaFangraphs(collection, queryParams, name = None):
+    response = None
+
+    response = requests.get(apiURL.format(collection) + '?filter=({})'.format(queryParams))
+
+    # Request was successful, parse JSON and see if anything was found
+    JSON = json.loads(response.text)
+    if 'code' in JSON.keys():
+        if JSON['code'] != 200:
+            response = None
+
+    if response != None and JSON['totalItems'] != 0:
+        response = JSON['items'][0]
+        return response
+    
+    fangraphsResponse = searchForFangraphsId(name)
+
+    if 'id' not in fangraphsResponse:
+        return None
+
+    # Add to PB database
+    payload = { 'fid': fangraphsResponse['id'], 'name': name }
+    response = addPlayer(collection, payload)
+
+    return response
+
 def getAllPlayers(collection):
     response = None
   
@@ -152,7 +219,7 @@ def addPerformanceRecord(collection, payload):
     response = None
     
     # Check that record is not already there
-    response = getEntireSeasonsStats(collection, 'pid=\'{}\')(date=\'{}\''.format(payload['pid'], payload['date']))
+    response = getEntireSeasonsStats(collection, 'fid=\'{}\')(date=\'{}\''.format(payload['fid'], payload['date']))
     if response is not None:
         #print("Entry was already found")
         return response
@@ -180,6 +247,35 @@ def getAllPerformanceRecords(collection, queryParams):
     except:
         #print('ERROR: PB request failed')
         return None
+    
+def addRValue(collection, payload):
+    response = None
+
+    try:
+        response = requests.post(apiURL.format(collection), json = payload)
+    except:
+        print('ERROR: Failed to add rValue to PB database')
+    
+    return json.loads(response.text)
+
+def getRValue(collection, queryParams):
+    response = None
+
+    response = requests.get(apiURL.format(collection) + '?filter=({})'.format(queryParams))
+
+    # Request was successful, parse JSON and see if anything was found
+    JSON = json.loads(response.text)
+    if 'code' in JSON.keys():
+        if JSON['code'] != 200:
+            response = None
+
+    if response != None and JSON['totalItems'] != 0:
+        response = JSON['items'][0]
+        return response
+    
+    return None
 
 # Example request to getPlayer
 # getPlayer('players', 'name=Shohei Ohtani', 'Shohei Ohtani')
+#playerName = "Jazz Chisholm"
+#getPlayerViaFangraphs('players', 'name=\'{}\''.format(playerName), playerName)

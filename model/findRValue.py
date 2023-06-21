@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from openpyxl import load_workbook
+import pocketbase.PocketbaseProxy as pocketbase
 
 def findRValue(x, y):
     x = np.array(x).reshape((-1, 1))
@@ -12,10 +13,10 @@ def findRValue(x, y):
 # The source xlsx file is named as source.xlsx
 wb=load_workbook("Analysis.xlsx")
 
-rValues = []
+rValues = {}
 for sheetKey in wb.sheetnames:
     sheet = wb[sheetKey]
-    fptsColumn = sheet['GO']
+    fptsColumn = sheet['AD']
     fpts = []
     isHeaderRow = True
     for x in range(len(fptsColumn)):
@@ -24,6 +25,7 @@ for sheetKey in wb.sheetnames:
             continue
         fpts.append(fptsColumn[x].value) 
 
+    rValues[sheetKey] = []
     for x in sheet.columns:
         values = []
         isHeaderRow = True
@@ -37,20 +39,17 @@ for sheetKey in wb.sheetnames:
         isHeaderRow = True
 
         rValue = findRValue(values, fpts)
-        rValues.append(
+        rValues[sheetKey].append(
             {
-                'Position': sheetKey,
+                'position': sheetKey,
                 'stat': statType,
-                'rValue': rValue
+                'rValue': round(rValue, 4) * 100
             }
         )
         #print('R Value for {} is {}'.format(statType, rValue))
 
-rValues.sort(key=lambda x: x['rValue'], reverse=True)
-count = 0
-for val in rValues:
-    print(val)
-    
-    count += 1
-    if count == 50:
-        break
+for sheetKey in wb.sheetnames:
+    rValues[sheetKey].sort(key=lambda x: x['rValue'], reverse=True)
+    for val in rValues[sheetKey]:
+        print(val)
+        pocketbase.addRValue('rValues', val)
