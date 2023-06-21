@@ -16,7 +16,7 @@ wb=load_workbook("Analysis.xlsx")
 rValues = {}
 for sheetKey in wb.sheetnames:
     sheet = wb[sheetKey]
-    fptsColumn = sheet['AD']
+    fptsColumn = sheet['AR']
     fpts = []
     isHeaderRow = True
     for x in range(len(fptsColumn)):
