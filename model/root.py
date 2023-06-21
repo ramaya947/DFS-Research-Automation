@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests, statsapi, csv, json, datetime
 import pocketbase.PocketbaseProxy as pocketbase
 from pybaseball import playerid_reverse_lookup
+from openpyxl import Workbook, utils
 
 # POC
 # Grab the stats for Mike Trout for the second game of last season
@@ -117,10 +118,11 @@ file = open("MissingPlayerIds.csv", "a+")
 # Setup datetime objects for loop
 # Usually, currDate is "2022-04-23" when starting from scratch
 # Last date done with the modeling analysis was 2022-06-11 
-currDate = "2023-05-24"
+currDate = "2023-06-20"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
 getPointsForToday = True
-skipGames = 7
+skipGames = 4
+totalGames = 11
 
 rValues = {}
 if (getPointsForToday):
@@ -188,8 +190,13 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
     for card in cards:
         count += 1
 
+        if totalGames == -1:
+            break
+
         if getPointsForToday and count <= skipGames:
             continue
+
+        totalGames -= 1
 
         print('Looking at game {} out of {}'.format(count, len(cards)))
         teamsSoup = card.find("div", {"class": "teams"}).find_all("span", {"class": "shrt"})
@@ -210,6 +217,14 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         pitcherHandedness['homeName'] = homeSoup.find("div", {"class": "pitcher players"}).find("a", {"class": "player-popup"}).text
         pitcherHandedness['home'] = homePitcherSoup.find("span", { "class": "stats"}).text.strip()
 
+        # Find implied totals for home
+        impliedTotalSoup = card.find("div", {"class": "ou"})
+        impliedTotalsSoups = impliedTotalSoup.findAll("a")
+        impliedTotals = {
+            'away': float(impliedTotalsSoups[0].text),
+            'home': float(impliedTotalsSoups[1].text)
+        }
+
         players = []
         battingOrderSoup = card.find("div", {"class": "blk away-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
         for player in battingOrderSoup:
@@ -221,7 +236,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
                     'vsLocation': 'H',
-                    'facing': pitcherHandedness['homeName']
+                    'facing': pitcherHandedness['homeName'],
+                    'impliedTotal': impliedTotals['home']
                 }
             )
         
@@ -235,7 +251,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     'vs': pitcherHandedness['home'],
                     'handedness': handedness,
                     'vsLocation': 'A',
-                    'facing': pitcherHandedness['awayName']
+                    'facing': pitcherHandedness['awayName'],
+                    'impliedTotal': impliedTotals['away']
                 }
             )
 
@@ -474,7 +491,10 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                         total = 0
                         for stat in stats.keys():
                             total += rValues[stat][pos]['rValue'] * rValues[stat]['General']['rValue'] * stats[stat]
-                        points[pName] = total
+                        points['name'] = pName
+                        points['points'] = total
+                        points['salary'] = fanduelPlayers[pName]['salary']
+                        points['value'] = round((total / (float(fanduelPlayers[pName]['salary']) / 1000)), 2)
                         playersPoints[pos].append(points)
                 else:
                     performanceRecord = pocketbase.addPerformanceRecord('performances', {
@@ -493,9 +513,37 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         #break
 
     if (getPointsForToday):
-        # This means that we are only trying to get points for use toady, don't loop through
+        wb = Workbook()
+
+        #Append Hitters
+        positions = ["C", "1B", "2B", "3B", "SS", "OF", 'General']
+        sheets = {}
+        headerRow = ['name', 'points', 'salary', 'value']
+        for sheetName in positions:
+            sheets[sheetName] = wb.create_sheet(sheetName)
+            sheets[sheetName].append(headerRow)
+
+        # This means that we are only trying to get points for use today, don't loop through
+        generalPlayers = []
+        playersPoints.pop('P', None)
         for key in playersPoints:
-            print('{}: {}'.format(key, playersPoints[key].sort(key=lambda x: x.points, reverse=True)))        
+            playersPoints[key].sort(key=lambda x: x['points'], reverse=True)
+            generalPlayers += playersPoints[key]
+            for player in playersPoints[key]:
+                appendRow = [
+                    player['name'], player['points'], player['salary'], player['value']
+                ]
+                sheets[key].append(appendRow)
+        
+        for player in generalPlayers:
+            appendRow = [
+                player['name'], player['points'], player['salary'], player['value']
+            ]
+            sheets['General'].append(appendRow)
+
+        wb.remove_sheet(wb.get_sheet_by_name('Sheet'))
+        wb.save('AnalysisV2.xlsx')
+        # Add all to General Sheet
         break
 
     currDateTime += datetime.timedelta(days = 1)
