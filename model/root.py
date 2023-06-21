@@ -220,10 +220,16 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
         # Find implied totals for home
         impliedTotalSoup = card.find("div", {"class": "ou"})
         impliedTotalsSoups = impliedTotalSoup.findAll("a")
-        impliedTotals = {
-            'away': float(impliedTotalsSoups[0].text),
-            'home': float(impliedTotalsSoups[1].text)
-        }
+        impliedTotals = {}
+        try:
+            impliedTotals['away'] = float(impliedTotalsSoups[0].text)
+        except:
+            impliedTotals['away'] = 1
+
+        try:
+            impliedTotals['home'] = float(impliedTotalsSoups[1].text)
+        except:
+            impliedTotals['home'] = 1
 
         players = []
         battingOrderSoup = card.find("div", {"class": "blk away-team"}).find("ul", {"class": "players"}).find_all("li", {"class": "player"})
@@ -436,6 +442,24 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     
 
                     wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
+                
+                    # Considering the team's implied total for the game and factoring that into consideration of the player's performance too
+                    impliedwOBASplitCurrent = wOBASplitCurrent * playerInfo['impliedTotal']
+                    impliedISOSplitCurrent = ISOSplitCurrent * playerInfo['impliedTotal']
+                    impliedSLGSplitCurrent = SLGSplitCurrent * playerInfo['impliedTotal']
+                    impliedOBPSplitCurrent = OBPSplitCurrent * playerInfo['impliedTotal']
+                    impliedLDSplitCurrent = LDSplitCurrent * playerInfo['impliedTotal']
+                    impliedFBSplitCurrent = FBSplitCurrent * playerInfo['impliedTotal']
+                    impliedHardFBSplitCurrent = HardFBSplitCurrent * playerInfo['impliedTotal']
+
+                    impliedOrderedwOBASplitCurrent = orderedwOBASplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedISOSplitCurrent = orderedISOSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedSLGSplitCurrent = orderedSLGSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedOBPSplitCurrent = orderedOBPSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedLDSplitCurrent = orderedLDSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedFBSplitCurrent = orderedFBSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedHardFBSplitCurrent = orderedHardFBSplitCurrent * playerInfo['impliedTotal']
+
                 except Exception as ex:
                     print(str(ex))
                     print('An issue occurred with calculating the stats for {} vs {}'.format(player['name'], player['facing']))
@@ -470,7 +494,21 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     "orderedLDSplitCurrent": orderedLDSplitCurrent,
                     "orderedFBSplitCurrent": orderedFBSplitCurrent,
                     "orderedHardFBSplitCurrent": orderedHardFBSplitCurrent,
-                    "wOBASplitReal": wOBASplitReal
+                    "wOBASplitReal": wOBASplitReal,
+                    "impliedwOBASplitCurrent": impliedwOBASplitCurrent,
+                    "impliedISOSplitCurrent": impliedISOSplitCurrent,
+                    "impliedSLGSplitCurrent": impliedSLGSplitCurrent,
+                    "impliedOBPSplitCurrent": impliedOBPSplitCurrent,
+                    "impliedLDSplitCurrent": impliedLDSplitCurrent,
+                    "impliedFBSplitCurrent": impliedFBSplitCurrent,
+                    "impliedHardFBSplitCurrent": impliedHardFBSplitCurrent,
+                    "impliedOrderedwOBASplitCurrent": impliedOrderedwOBASplitCurrent,
+                    "impliedOrderedISOSplitCurrent": impliedOrderedISOSplitCurrent,
+                    "impliedOrderedSLGSplitCurrent": impliedOrderedSLGSplitCurrent,
+                    "impliedOrderedOBPSplitCurrent": impliedOrderedOBPSplitCurrent,
+                    "impliedOrderedLDSplitCurrent": impliedOrderedLDSplitCurrent,
+                    "impliedOrderedFBSplitCurrent": impliedOrderedFBSplitCurrent,
+                    "impliedOrderedHardFBSplitCurrent": impliedOrderedHardFBSplitCurrent,
                 }
 
                 if (getPointsForToday):
