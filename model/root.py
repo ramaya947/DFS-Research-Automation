@@ -117,10 +117,10 @@ file = open("MissingPlayerIds.csv", "a+")
 
 # Setup datetime objects for loop
 # Usually, currDate is "2022-04-23" when starting from scratch
-# Last date done with the modeling analysis was 2022-06-11 
-currDate = "2023-06-20"
+# Last date done with the modeling analysis was 2022-06-25 
+currDate = "2022-06-12"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
-getPointsForToday = True
+getPointsForToday = False
 skipGames = 4
 totalGames = 11
 
@@ -190,7 +190,7 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
     for card in cards:
         count += 1
 
-        if totalGames == -1:
+        if getPointsForToday and totalGames == -1:
             break
 
         if getPointsForToday and count <= skipGames:
@@ -444,21 +444,21 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                     wOBASplitReal = ((currentStats['wOBA'] if currentStats['PA'] != 0 else oppPitcherCurrent['wOBA']) * (1 / bReality) + (oppPitcherCurrent['wOBA'] if oppPitcherCurrent['IP'] != 0 else currentStats['wOBA']) * (1 / pReality)) / 2
                 
                     # Considering the team's implied total for the game and factoring that into consideration of the player's performance too
-                    impliedwOBASplitCurrent = wOBASplitCurrent * playerInfo['impliedTotal']
-                    impliedISOSplitCurrent = ISOSplitCurrent * playerInfo['impliedTotal']
-                    impliedSLGSplitCurrent = SLGSplitCurrent * playerInfo['impliedTotal']
-                    impliedOBPSplitCurrent = OBPSplitCurrent * playerInfo['impliedTotal']
-                    impliedLDSplitCurrent = LDSplitCurrent * playerInfo['impliedTotal']
-                    impliedFBSplitCurrent = FBSplitCurrent * playerInfo['impliedTotal']
-                    impliedHardFBSplitCurrent = HardFBSplitCurrent * playerInfo['impliedTotal']
+                    impliedwOBASplitCurrent = wOBASplitCurrent * player['impliedTotal']
+                    impliedISOSplitCurrent = ISOSplitCurrent * player['impliedTotal']
+                    impliedSLGSplitCurrent = SLGSplitCurrent * player['impliedTotal']
+                    impliedOBPSplitCurrent = OBPSplitCurrent * player['impliedTotal']
+                    impliedLDSplitCurrent = LDSplitCurrent * player['impliedTotal']
+                    impliedFBSplitCurrent = FBSplitCurrent * player['impliedTotal']
+                    impliedHardFBSplitCurrent = HardFBSplitCurrent * player['impliedTotal']
 
-                    impliedOrderedwOBASplitCurrent = orderedwOBASplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedISOSplitCurrent = orderedISOSplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedSLGSplitCurrent = orderedSLGSplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedOBPSplitCurrent = orderedOBPSplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedLDSplitCurrent = orderedLDSplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedFBSplitCurrent = orderedFBSplitCurrent * playerInfo['impliedTotal']
-                    impliedOrderedHardFBSplitCurrent = orderedHardFBSplitCurrent * playerInfo['impliedTotal']
+                    impliedOrderedwOBASplitCurrent = orderedwOBASplitCurrent * player['impliedTotal']
+                    impliedOrderedISOSplitCurrent = orderedISOSplitCurrent * player['impliedTotal']
+                    impliedOrderedSLGSplitCurrent = orderedSLGSplitCurrent * player['impliedTotal']
+                    impliedOrderedOBPSplitCurrent = orderedOBPSplitCurrent * player['impliedTotal']
+                    impliedOrderedLDSplitCurrent = orderedLDSplitCurrent * player['impliedTotal']
+                    impliedOrderedFBSplitCurrent = orderedFBSplitCurrent * player['impliedTotal']
+                    impliedOrderedHardFBSplitCurrent = orderedHardFBSplitCurrent * player['impliedTotal']
 
                 except Exception as ex:
                     print(str(ex))

@@ -37,6 +37,7 @@ def deleteAllRecords(collection):
     print('Successfully deleted {} records'.format(len(records)))
     return deleteAllRecords(collection)
 
-deleteAllRecords('seasonStats')
-deleteAllRecords('performances')
+#deleteAllRecords('seasonStats')
+#deleteAllRecords('performances')
 #deleteAllRecords('players')
+deleteAllRecords('rValues')
