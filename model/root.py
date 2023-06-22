@@ -118,11 +118,11 @@ file = open("MissingPlayerIds.csv", "a+")
 # Setup datetime objects for loop
 # Usually, currDate is "2022-04-23" when starting from scratch
 # Last date done with the modeling analysis was 2022-06-25 
-currDate = "2022-06-12"
+currDate = "2023-06-21"
 currDateTime = datetime.datetime.strptime(currDate, "%Y-%m-%d")
-getPointsForToday = False
-skipGames = 4
-totalGames = 11
+getPointsForToday = True
+skipGames = 8
+totalGames = 15
 
 rValues = {}
 if (getPointsForToday):
@@ -156,7 +156,21 @@ if (getPointsForToday):
         "orderedLDSplitCurrent",
         "orderedFBSplitCurrent",
         "orderedHardFBSplitCurrent",
-        "wOBASplitReal"
+        "wOBASplitReal",
+        "impliedwOBASplitCurrent",
+        "impliedISOSplitCurrent",
+        "impliedSLGSplitCurrent",
+        "impliedOBPSplitCurrent",
+        "impliedLDSplitCurrent",
+        "impliedFBSplitCurrent",
+        "impliedHardFBSplitCurrent",
+        "impliedOrderedwOBASplitCurrent",
+        "impliedOrderedISOSplitCurrent",
+        "impliedOrderedSLGSplitCurrent",
+        "impliedOrderedOBPSplitCurrent",
+        "impliedOrderedLDSplitCurrent",
+        "impliedOrderedFBSplitCurrent",
+        "impliedOrderedHardFBSplitCurrent"
     ]
 
     for statKey in keys:
@@ -526,6 +540,8 @@ while currDateTime <= (datetime.datetime.strptime(currDate, "%Y-%m-%d") + dateti
                         if not found:
                             continue
                     for pos in fanduelPlayers[pName]['FDPos']:
+                        if pos == 'P':
+                            continue
                         total = 0
                         for stat in stats.keys():
                             total += rValues[stat][pos]['rValue'] * rValues[stat]['General']['rValue'] * stats[stat]
